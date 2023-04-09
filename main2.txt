@@ -716,3 +716,424 @@ public double r2Dollor(double r){ return r/65.65; }
 public double d2Rupees(double d){ return d*65.65; }
 }
 
+
+jdbc connection
+
+import java.sql.*;
+
+public class RegistrationForm {
+
+   static final String DB_URL = "jdbc:mysql://localhost/mydatabase";
+   static final String USER = "root";
+   static final String PASS = "mypassword";
+
+   public static void main(String[] args) {
+      Connection conn = null;
+      Statement stmt = null;
+      try{
+         // Register JDBC driver
+         Class.forName("com.mysql.jdbc.Driver");
+
+         // Open a connection
+         System.out.println("Connecting to database...");
+         conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+         // Execute a query
+         System.out.println("Creating statement...");
+         stmt = conn.createStatement();
+
+         // Create registration table
+         String sql = "CREATE TABLE REGISTRATION " +
+                      "(id INTEGER not NULL, " +
+                      " username VARCHAR(255), " +
+                      " password VARCHAR(255), " +
+                      " email VARCHAR(255), " +
+                      " PRIMARY KEY ( id ))";
+         stmt.executeUpdate(sql);
+         System.out.println("Registration table created successfully...");
+
+         // Insert values into registration table
+         sql = "INSERT INTO REGISTRATION VALUES (100, 'John', 'Doe', 'john.doe@email.com')";
+         stmt.executeUpdate(sql);
+         System.out.println("Values inserted into registration table...");
+
+      }catch(SQLException se){
+         //Handle errors for JDBC
+         se.printStackTrace();
+      }catch(Exception e){
+         //Handle errors for Class.forName
+         e.printStackTrace();
+      }finally{
+         //finally block used to close resources
+         try{
+            if(stmt!=null)
+               conn.close();
+         }catch(SQLException se){
+         }// do nothing
+         try{
+            if(conn!=null)
+               conn.close();
+         }catch(SQLException se){
+            se.printStackTrace();
+         }//end finally try
+      }//end try
+      System.out.println("Goodbye!");
+   }
+}
+
+swing to create registration
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class RegistrationForm extends JFrame implements ActionListener {
+
+    // Initialize Swing components
+    JLabel heading, userNameLabel, passwordLabel, emailLabel;
+    JTextField userNameField, emailField;
+    JPasswordField passwordField;
+    JButton submitButton;
+
+    // Initialize database connection components
+    static final String DB_URL = "jdbc:mysql://localhost/mydatabase";
+    static final String USER = "root";
+    static final String PASS = "mypassword";
+    Connection conn = null;
+    Statement stmt = null;
+
+    // Constructor
+    public RegistrationForm() {
+
+        // Set window properties
+        setTitle("Registration Form");
+        setSize(400, 400);
+        setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Add heading
+        heading = new JLabel("Registration Form");
+        heading.setBounds(150, 10, 150, 30);
+        add(heading);
+
+        // Add username label and field
+        userNameLabel = new JLabel("Username");
+        userNameLabel.setBounds(30, 60, 100, 30);
+        add(userNameLabel);
+        userNameField = new JTextField();
+        userNameField.setBounds(130, 60, 200, 30);
+        add(userNameField);
+
+        // Add password label and field
+        passwordLabel = new JLabel("Password");
+        passwordLabel.setBounds(30, 100, 100, 30);
+        add(passwordLabel);
+        passwordField = new JPasswordField();
+        passwordField.setBounds(130, 100, 200, 30);
+        add(passwordField);
+
+        // Add email label and field
+        emailLabel = new JLabel("Email");
+        emailLabel.setBounds(30, 140, 100, 30);
+        add(emailLabel);
+        emailField = new JTextField();
+        emailField.setBounds(130, 140, 200, 30);
+        add(emailField);
+
+        // Add submit button
+        submitButton = new JButton("Submit");
+        submitButton.setBounds(150, 200, 100, 30);
+        add(submitButton);
+        submitButton.addActionListener(this);
+
+        // Initialize database connection
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Show the window
+        setVisible(true);
+    }
+
+    // Action listener for submit button
+    public void actionPerformed(ActionEvent e) {
+        String userName = userNameField.getText();
+        String password = passwordField.getText();
+        String email = emailField.getText();
+
+        // Insert data into database
+        try {
+            String sql = "INSERT INTO REGISTRATION (username, password, email) VALUES ('" + userName + "', '" + password + "', '" + email + "')";
+            stmt.executeUpdate(sql);
+            JOptionPane.showMessageDialog(this, "Registration Successful!");
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+
+        // Clear text fields after submission
+        userNameField.setText("");
+        passwordField.setText("");
+        emailField.setText("");
+    }
+
+    // Main method
+    public static void main(String[] args) {
+        RegistrationForm form = new RegistrationForm();
+    }
+}
+
+JTable  JMenu
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.*;
+
+public class TableMenuExample extends JFrame implements ActionListener {
+
+    // Initialize Swing components
+    JTable table;
+    JMenuBar menuBar;
+    JMenu fileMenu, editMenu, helpMenu;
+    JMenuItem newMenuItem, openMenuItem, saveMenuItem, exitMenuItem;
+
+    // Constructor
+    public TableMenuExample() {
+
+        // Set window properties
+        setTitle("Table and Menu Example");
+        setSize(500, 500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Add JTable
+        String[] columns = {"Name", "Age", "Gender"};
+        Object[][] data = {{"John", 25, "Male"}, {"Jane", 30, "Female"}, {"Bob", 40, "Male"}};
+        DefaultTableModel model = new DefaultTableModel(data, columns);
+        table = new JTable(model);
+        table.setBounds(50, 50, 400, 200);
+        add(new JScrollPane(table));
+
+        // Add JMenu
+        menuBar = new JMenuBar();
+        fileMenu = new JMenu("File");
+        editMenu = new JMenu("Edit");
+        helpMenu = new JMenu("Help");
+        newMenuItem = new JMenuItem("New");
+        openMenuItem = new JMenuItem("Open");
+        saveMenuItem = new JMenuItem("Save");
+        exitMenuItem = new JMenuItem("Exit");
+        fileMenu.add(newMenuItem);
+        fileMenu.add(openMenuItem);
+        fileMenu.add(saveMenuItem);
+        fileMenu.addSeparator();
+        fileMenu.add(exitMenuItem);
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+        menuBar.add(helpMenu);
+        setJMenuBar(menuBar);
+
+        // Add action listeners for menu items
+        newMenuItem.addActionListener(this);
+        openMenuItem.addActionListener(this);
+        saveMenuItem.addActionListener(this);
+        exitMenuItem.addActionListener(this);
+
+        // Show the window
+        setVisible(true);
+    }
+
+    // Action listener for menu items
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == newMenuItem) {
+            JOptionPane.showMessageDialog(this, "New menu item clicked");
+        } else if (e.getSource() == openMenuItem) {
+            JOptionPane.showMessageDialog(this, "Open menu item clicked");
+        } else if (e.getSource() == saveMenuItem) {
+            JOptionPane.showMessageDialog(this, "Save menu item clicked");
+        } else if (e.getSource() == exitMenuItem) {
+            System.exit(0);
+        }
+    }
+
+    // Main method
+    public static void main(String[] args) {
+        TableMenuExample example = new TableMenuExample();
+    }
+}
+
+
+•AIM: Create cookies object and accessing it in another servlet.
+Code:
+index.html
+<html>
+<head>
+<title>Cookie Demo</title>
+</head>
+<body>
+<form action="Page1" >
+Enter Your Name <input type="text" name="txtName"><br>
+<input type="submit" value=" Click to Enter ">
+</form>
+</body>
+</html>
+Page1.java
+package mypack;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Cookie;
+public class Page1 extends HttpServlet
+{
+public void doGet(HttpServletRequest request,
+HttpServletResponse response)throws ServletException, IOException
+{
+ response.setContentType("text/html;charset=UTF-8");
+ PrintWriter out = response.getWriter();
+ out.println("<html><head><title>Page1</title></head>");
+ out.println("<body bgcolor=pink >");
+ String uname = request.getParameter("txtName");
+ out.println("<h1>~~~ Welcome "+uname+"</h1>");
+ Cookie ck1 = new Cookie("username", uname);
+ Cookie ck2 = new Cookie("visit","1");
+ response.addCookie(ck1); response.addCookie(ck2);
+ out.println("<h1><a href=Page2 >Click to visit Page 2 </a></h1>");
+ out.println("</body>");
+ out.println("</html>");
+}
+}
+Page2.java
+package mypack;
+import java.io.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
+public class Page2 extends HttpServlet
+{
+public void doGet(HttpServletRequest request,
+HttpServletResponse response) throws ServletException, IOException
+{
+ response.setContentType("text/html;charset=UTF-8");
+ PrintWriter out = response.getWriter();
+ out.println("<html><head><title>Page2</title></head>");
+ out.println("<body bgcolor=yellow >");
+ Cookie [] ck = request.getCookies();
+ for(int i=0;i<ck.length;i++){
+ if(ck[i].getName().equals("visit")){
+ int count = Integer.parseInt(ck[i].getValue())+1;
+ out.println("<h1>Visit No : "+count+"</h1>");
+ ck[i] = new Cookie("visit",count+"");
+ response.addCookie(ck[i]);
+ }
+else
+{
+out.println(ck[i].getName()+ " = "+ck[i].getValue()); }
+out.println("<h1><a href=Page3 >Click to visit Page 3 </a></h1>");
+out.println("<h1><a href=Page4 >Click to visit Page 4 </a></h1>");
+out.println("<h1><a href=Page5 >Click to visit Page 5 </a></h1>");
+out.println("</body>");
+out.println("</html>");
+}
+}
+
+ AIM: Create a servlet demonstrating the use of session creation and destruction.
+Also check whether the user has visited this page first time or has visited earlier
+also using sessions.
+CODE:
+index.html
+<html>
+<head>
+<title>Session Demo</title>
+</head>
+<body>
+<form action="Page1" method="get" >
+Enter User ID <input type="text" name="txtName"><br>
+<input type="reset" ><input type="submit" >
+</form>
+</body>
+</html>
+Page1.java
+package mypack1;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+public class Page1 extends HttpServlet
+{
+ public void doGet(HttpServletRequest request, HttpServletResponse response)
+ throws ServletException, IOException
+ {
+ response.setContentType("text/html;charset=UTF-8");
+ PrintWriter out = response.getWriter();
+ out.println("<html><head><title>Servlet Page1</title></head>");
+ HttpSession hs = request.getSession(true);
+ if(hs.isNew())
+ {
+ out.println("<body bgcolor=yellow>");
+ String name = request.getParameter("txtName");
+ hs.setAttribute("uname", name);
+ hs.setAttribute("visit", "1");
+ out.println("<h1>Welcome First Time</h1>");
+ }
+ else
+ {
+ out.println("<h1>Welcome Again</h1>");
+ int visit = Integer.parseInt((String)hs.getAttribute("visit"))+1;
+ out.println("<h1>You Visited "+visit+"Times</h1>");
+ hs.setAttribute("visit", ""+visit);
+ }
+ out.println("<h1>Your Session ID "+hs.getId()+"</h1>");
+ out.println("<h1>You Logged in at "+
+ new java.util.Date(hs.getCreationTime())+"</h1>");
+ out.println("<h1><a href=Page2>Click for Page 2 </a></h1>");
+ out.println("<h1><a href=Page3>Click for Page 3 </a></h1>");
+ out.println("<h1><a href=Page4>Click for Page 4 </a></h1>");
+ out.println("<h1><a href=LogoutServlet>
+ Click to Terminate Session </a></h1>");
+ out.println("</body>");
+ out.println("</html>");
+ }
+}
+Page2.java
+package mypack1;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+public class Page2 extends HttpServlet
+{
+ public void doGet(HttpServletRequest request, HttpServletResponse response)
+ throws ServletException, IOException
+ {
+ response.setContentType("text/html;charset=UTF-8");
+ PrintWriter out = response.getWriter();
+ out.println("<html><head><title>Servlet Page2</title></head>");
+ HttpSession hs = request.getSession(false);
+ out.println("<h1>Welcome Again on Page No. 2</h1>");
+ int visit = Integer.parseInt((String)hs.getAttribute("visit"))+1;
+ out.println("<h1>You Visited "+visit+"Times</h1>");
+ hs.setAttribute("visit", ""+visit);
+ out.println("<h1>Your Session ID "+hs.getId()+"</h1>");
+ out.println("<h1>You Logged in at "+
+ new java.util.Date(hs.getCreationTime())+"</h1>");
+ out.println("<h1><a href=Page1>Click for Page 1 </a></h1>");
+ out.println("<h1><a href=Page3>Click for Page 3 </a></h1>");
+ out.println("<h1><a href=Page4>Click for Page 4 </a></h1>");
+ out.println("<h1><a href=LogoutServlet>
+ Click for Terminate Session </a></h1>");
+ out.println("</body>");
+ out.println("</html>");
+ }
+}
