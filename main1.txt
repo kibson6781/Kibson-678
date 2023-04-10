@@ -1,740 +1,379 @@
-1) Write a C# program to print on screen the output of adding, subtracting, multiplying and
-dividing of two numbers which will be entered by the user.
-
-using System;
-
-
-
-class practce
-{
-    static void Main()
-    {
-        Console.WriteLine("Enter the first number:");
-        double num1 = double.Parse(Console.ReadLine());
-
-        Console.WriteLine("Enter the second number:");
-        double num2 = double.Parse(Console.ReadLine());
-
-        Console.WriteLine("{0} + {1} = {2}", num1, num2, num1 + num2);
-        Console.WriteLine("{0} - {1} = {2}", num1, num2, num1 - num2);
-        Console.WriteLine("{0} * {1} = {2}", num1, num2, num1 * num2);
-
-        if (num2 == 0)
-        {
-            Console.WriteLine("Cannot divide by zero");
-        }
-        else
-        {
-            Console.WriteLine("{0} / {1} = {2}", num1, num2, num1 / num2);
-        }
-    }
-}
-
-
-
-
-2)Design ASP.NET Pages for State Management using Cookies and Session State
-
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm2.aspx.cs" Inherits="Practical9_049.WebForm2" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">     <!--SCS2223049 Kibson-->
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-            <br />
-            <asp:Label ID="username" runat="server" Text="UserName:-  "></asp:Label>
-            <asp:TextBox ID="tuser" runat="server"></asp:TextBox>
-            <br />
-            <br />
-            <asp:Label ID="password" runat="server" Text="Password:-  "></asp:Label>
-            <asp:TextBox ID="tpass" runat="server" TextMode="Password"></asp:TextBox>
-            <br />
-            <br />
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Login" />
-            <br />
-            <br />
-            <asp:Label ID="DisplayError" runat="server" Text="[DisplayError]"></asp:Label>
-            <br />
-            <br />
-            <asp:Label ID="sessionname" runat="server" Text="[sessionname]"></asp:Label>
-        </div>
-    </form>
-</body>
-</html>
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
-namespace Practical9_049              //SCS2223049 Kibson
-{
-    public partial class WebForm2 : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            if (tpass.Text == "kibson")
-            {
-                Session["username"] = tuser.Text;
-
-            }
-            else
-            {
-                DisplayError.Text = "Wrong Password";
-
-            }
-            if (Session["username"] != null)
-            {
-                DisplayError.Text = "This Username is stored in the session";
-                sessionname.Text = Session["username"].ToString();
-            }
-        }
-    }
-}
-
-
-
-
-
-
-
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="Practical9_049.WebForm1" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">    <!--SCS2223049 Kibson-->
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-            <asp:Label ID="Label1" runat="server" Text="Select Your Choice:-"></asp:Label>
-            <br />
-            
-            <br />
-            <asp:CheckBox ID="mango" runat="server" Text="Mango" />
-            <br />
-            <asp:CheckBox ID="apple" runat="server" Text="Apple" />
-            <br />
-            <asp:CheckBox ID="grapes" runat="server" Text="Grapes" />
-            <br />
-            <asp:CheckBox ID="banana" runat="server" Text="Banana" />
-            <br />
-            <br />
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Submit" />
-            <br />
-            <br />
-            <asp:Label ID="fruits" runat="server" Text="Label"></asp:Label>
-            
-        </div>
-    </form>
-</body>
-</html>
-
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
-namespace Practical9_049               //SCS2223049 Kibson
-{
-    public partial class WebForm1 : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            Response.Cookies["fruits"].Expires = DateTime.Now.AddDays(-1);
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            fruits.Text = "";
-            if (mango.Checked)
-                Response.Cookies["fruits"]["mango"] = "Mango";
-            if (apple.Checked)
-                Response.Cookies["fruits"]["apple"] = "Apple";
-            if (grapes.Checked)
-                Response.Cookies["fruits"]["grapes"] = "Grapes";
-            if (banana.Checked)
-                Response.Cookies["fruits"]["banana"] = "Banana";
-
-
-            if (Request.Cookies["fruits"].Values.ToString() != null)
-            {
-                if (Request.Cookies["fruits"]["mango"] != null)
-                    fruits.Text += Request.Cookies["fruits"]["mango"] + " ";
-                if (Request.Cookies["fruits"]["apple"] != null)
-                    fruits.Text += Request.Cookies["fruits"]["apple"] + " ";
-                if (Request.Cookies["fruits"]["grapes"] != null)
-                    fruits.Text += Request.Cookies["fruits"]["grapes"] + " ";
-                if (Request.Cookies["fruits"]["banana"] != null)
-                    fruits.Text += Request.Cookies["fruits"]["banana"] + " ";
-                if (Request.Cookies["fruits"]["tomato"] != null)
-                    fruits.Text += Request.Cookies["fruits"]["tomato"] + " ";
-            }
-            else fruits.Text = "Please Select Your Choice";
-            Response.Cookies["fruits"].Expires = DateTime.Now.AddDays(-1);
-
-
-        }
-    }
-}
-
-
-1) Write a C# program that takes a number as input and print its multiplication table.
-using System;
-
-
-namespace MultiplicationTable
-{
-    class practce
-    {
-        static void Main(string[] args)
-        {
-            Console.Write("Enter a number: ");
-            int num = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 1; i <= 10; i++)
-            {
-                Console.WriteLine("{0} x {1} = {2}", num, i, num * i);
-            }
-
-            Console.ReadLine(); // to prevent the console from closing immediately
-        }
-    }
-}
-
-2) Demonstrate Rich Controls (Ad Rotator / MultiView)
-
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="Practical03_049.WebForm1" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">              <!--SCS2223049 Kibson-->
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-            <br />
-            <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
-                <br />
-                <br />
-                <br />
-                <asp:View ID="listboxC" runat="server">
-                    <asp:ListBox ID="ListBox1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ListBox1_SelectedIndexChanged">
-                        <asp:ListItem>Rose </asp:ListItem>
-                        <asp:ListItem>Lotus </asp:ListItem>
-                        <asp:ListItem>Lavender </asp:ListItem>
-                        <asp:ListItem>Orchid </asp:ListItem>
-                        <asp:ListItem>Cone Flower  </asp:ListItem>
-                    </asp:ListBox>
-                    <br />
-                    <asp:Label ID="Label1" runat="server"></asp:Label>
-                    <asp:Button CommandName="NextView" ID="Button1" runat="server" Text="Go To Next" />
-                    <br />
-                </asp:View>
-                <br />
-                <br />
-                <asp:View ID="calanderC" runat="server">
-                    <br />
-                    <asp:Calendar ID="Calendar1" runat="server" AutoPostBack="True" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
-                    <asp:Label ID="Label2" runat="server"></asp:Label>
-                    <asp:Button CommandName="PrevView" ID="Button2" runat="server" Text="Go To previous" />
-                    <asp:Button CommandName="NextView" ID="Button3" runat="server" Text="Go To Next" />
-                    <br />
-                </asp:View>
-                <asp:View ID="AdRotator" runat="server">
-                    <asp:AdRotator ID="AdRotator1" runat="server" AdvertisementFile="~/ads.xml" Height="300px" Width="400px" />
-                    <br />
-                    <br />
-                    <asp:Button CommandName="PrevView" ID="Button6" runat="server" Text="Go To previous" />
-                    <asp:Button CommandName="NextView" ID="Button7" runat="server" Text="Go To Next"  />
-            
-                </asp:View>
-                <br />
-                <asp:View ID="tableC" runat="server">
-                    <asp:Table ID="Table1" runat="server" AutoPostBack="True" style="margin-right: 14px">
-                        <asp:TableRow runat="server">
-                            <asp:TableCell runat="server">Name</asp:TableCell>
-                            <asp:TableCell runat="server">Roll no</asp:TableCell>
-                            <asp:TableCell runat="server">Address</asp:TableCell>
-                            <asp:TableCell runat="server">Phone no.</asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow runat="server">
-                            <asp:TableCell runat="server">Kibson</asp:TableCell>
-                            <asp:TableCell runat="server">SCS2223049</asp:TableCell>
-                            <asp:TableCell runat="server">Sion</asp:TableCell>
-                            <asp:TableCell runat="server">9738263480</asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow runat="server">
-                            <asp:TableCell runat="server">Sam</asp:TableCell>
-                            <asp:TableCell runat="server">SCS3454001</asp:TableCell>
-                            <asp:TableCell runat="server">Kalyan</asp:TableCell>
-                            <asp:TableCell runat="server">9745417454</asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow runat="server">
-                            <asp:TableCell runat="server">Vishnu</asp:TableCell>
-                            <asp:TableCell runat="server">SIT22223089</asp:TableCell>
-                            <asp:TableCell runat="server">Kurla</asp:TableCell>
-                            <asp:TableCell runat="server">9554781245</asp:TableCell>
-                        </asp:TableRow>
-                        <asp:TableRow runat="server">
-                            <asp:TableCell runat="server">Jebastin</asp:TableCell>
-                            <asp:TableCell runat="server">SA2223102</asp:TableCell>
-                            <asp:TableCell runat="server">Bhandup</asp:TableCell>
-                            <asp:TableCell runat="server">9887414614</asp:TableCell>
-                        </asp:TableRow>
-                    </asp:Table>
-                      <asp:Label ID="Label4" runat="server"></asp:Label>
-                    <br />
-                    <asp:Button ID="Button9" runat="server" CommandName="PrevView" Text="Go To previous" />
-                    <br />
-                </asp:View>
-            </asp:MultiView>
-            <br />
-        </div>
-    </form>
-</body>
-</html>
-
-ads.xml
-<?xml version="1.0" encoding="utf-8" ?>
-<Advertisements>        <!--SCS2223049 Kibson-->
-	<Ad>
-		<ImageUrl>car1.jpg</ImageUrl>
-		<NavigateUrl>C:\Users\kibso\source\repos\images</NavigateUrl>
-		<AlternateText>AUDI
-		</AlternateText>
-		<Impressions>20</Impressions>
-		<Keyword>CARS</Keyword>
-	</Ad>
-	<Ad>
-		<ImageUrl>car2.jpg</ImageUrl>
-		<NavigateUrl>C:\Users\kibso\source\repos\images</NavigateUrl>
-		<AlternateText>
-			BUGATTI
-		</AlternateText>
-		<Impressions>20</Impressions>
-		<Keyword>CARS</Keyword>
-	</Ad>
-	<Ad>
-	<ImageUrl>car03.jpg</ImageUrl>
-	<NavigateUrl>C:\Users\kibso\source\repos\images</NavigateUrl>
-	<AlternateText>
-		FERRARI
-	</AlternateText>
-	<Impressions>20</Impressions>
-	<Keyword>CARS</Keyword>
-</Ad>
-</Advertisements>
-
-
-1) Write a C# program to illustrate hierarchical inheritance. Created three classes CEO,
-Manager and Employee. Using the object variable ‘c’ of CEO class perform the Analyze()
-procedure. Using the object variable ‘m’ of Manager class perform the Monitor() and
-Manage() procedure. Using the object variable ‘e’ of Employee class perform the Analyze(),
-Manage() and Performance() procedure
-
-using System;
-
-namespace InheritanceExample
-{
-    class Employee
-    {
-        public void Analyze()
-        {
-            Console.WriteLine("Performing analysis...");
-        }
-
-        public void Manage()
-        {
-            Console.WriteLine("Managing resources...");
-        }
-
-        public void Performance()
-        {
-            Console.WriteLine("Evaluating performance...");
-        }
-    }
-
-    class Manager : Employee
-    {
-        public void Monitor()
-        {
-            Console.WriteLine("Monitoring operations...");
-        }
-
-        public void Manage()
-        {
-            Console.WriteLine("Managing team...");
-        }
-    }
-
-    class CEO : Employee
-    {
-        public void Analyze()
-        {
-            Console.WriteLine("Performing CEO-level analysis...");
-        }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            CEO c = new CEO();
-            c.Analyze();
-
-            Manager m = new Manager();
-            m.Monitor();
-            m.Manage();
-
-            Employee e = new Employee();
-            e.Analyze();
-            e.Manage();
-            e.Performance();
-
-            Console.ReadLine(); // to prevent the console from closing immediately
-        }
-    }
-}
-
-Q2) Design an APS.NET master web page and use it other (at least 2-3) content pages.
-
-<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="theme.aspx.cs" Inherits="Practical9_049.theme" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:ListBox ID="ListBox1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ListBox1_SelectedIndexChanged">
-        <asp:ListItem>Theme1</asp:ListItem>
-        <asp:ListItem>Theme2</asp:ListItem>
-        <asp:ListItem>Theme3</asp:ListItem>
-        <asp:ListItem>Theme4</asp:ListItem>
-    </asp:ListBox>
-</asp:Content>
-
-body {
-    background-color: red;
-}
-
-body {
-    background-image: url(hello.jpeg);
-}
-
-body {
-    background-color: forestgreen;
-}
-
-
-Q1) Write a program in C# to display the cube of the number up to given integer
-
-using System;
-
-namespace CubeNumbers
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.Write("Enter an integer: ");
-            int num = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 1; i <= num; i++)
-            {
-                int cube = i * i * i;
-                Console.WriteLine("{0}^3 = {1}", i, cube);
-            }
-
-            Console.ReadLine(); // to prevent the console from closing immediately
-        }
-    }
-}
-
-
-Q2) Design ASP.NET Pages with various Navigation Controls (SiteView and TreeView)
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="Practical4._1_049.WebForm1" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-            </asp:MultiView>
-            <asp:Menu ID="Menu1" runat="server">
-                <Items>
-                    <asp:MenuItem Text="Fruits" Value="Fruits">
-                        <asp:MenuItem Text="Apple" Value="Apple"></asp:MenuItem>
-                        <asp:MenuItem Text="Mango" Value="Mango"></asp:MenuItem>
-                        <asp:MenuItem Text="Grapes" Value="Grapes"></asp:MenuItem>
-                    </asp:MenuItem>
-                    <asp:MenuItem Text="Flowers" Value="Flowers">
-                        <asp:MenuItem Text="Lily" Value="Lily"></asp:MenuItem>
-                        <asp:MenuItem Text="Rose" Value="Rose"></asp:MenuItem>
-                        <asp:MenuItem Text="Lotus" Value="Lotus"></asp:MenuItem>
-                    </asp:MenuItem>
-                    <asp:MenuItem Text="Birds" Value="Birds">
-                        <asp:MenuItem Text="Sparrow" Value="Sparrow"></asp:MenuItem>
-                        <asp:MenuItem Text="Crow" Value="Crow"></asp:MenuItem>
-                        <asp:MenuItem Text="Pegion" Value="Pegion"></asp:MenuItem>
-                    </asp:MenuItem>
-                    <asp:MenuItem Text="Animals" Value="Animals">
-                        <asp:MenuItem Text="Lion" Value="Lion"></asp:MenuItem>
-                        <asp:MenuItem Text="Tiger" Value="Tiger"></asp:MenuItem>
-                        <asp:MenuItem Text="Monkey" Value="Monkey"></asp:MenuItem>
-                    </asp:MenuItem>
-                </Items>
-            </asp:Menu>
-            <br />
-            <br />
-            <br />
-            <asp:TreeView ID="TreeView1" runat="server">
-                <Nodes>
-                    <asp:TreeNode Text="Tree View" Value="Tree View">
-                        <asp:TreeNode Text="Fruits" Value="Fruits">
-                            <asp:TreeNode Text="Apple" Value="Apple"></asp:TreeNode>
-                            <asp:TreeNode Text="Mango" Value="Mango"></asp:TreeNode>
-                            <asp:TreeNode Text="Grapes" Value="Grapes"></asp:TreeNode>
-                        </asp:TreeNode>
-                        <asp:TreeNode Text="Flowers" Value="Flowers">
-                            <asp:TreeNode Text="Lily" Value="Lily"></asp:TreeNode>
-                            <asp:TreeNode Text="Rose" Value="Rose"></asp:TreeNode>
-                            <asp:TreeNode Text="Lotus" Value="Lotus"></asp:TreeNode>
-                        </asp:TreeNode>
-                        <asp:TreeNode Text="Birds" Value="Birds">
-                            <asp:TreeNode Text="Sparrow" Value="Sparrow"></asp:TreeNode>
-                            <asp:TreeNode Text="Crow" Value="Crow"></asp:TreeNode>
-                            <asp:TreeNode Text="Pegion" Value="Pegion"></asp:TreeNode>
-                        </asp:TreeNode>
-                        <asp:TreeNode Text="Animals" Value="Animals">
-                            <asp:TreeNode Text="Lion" Value="Lion"></asp:TreeNode>
-                            <asp:TreeNode Text="Tiger" Value="Tiger"></asp:TreeNode>
-                            <asp:TreeNode Text="Monkey" Value="Monkey"></asp:TreeNode>
-                        </asp:TreeNode>
-                    </asp:TreeNode>
-                </Nodes>
-            </asp:TreeView>
-        </div>
-    </form>
-</body>
-</html>
-
-
-Q1) Write a C# Sharp program to calculate the factorial of a given number.
-using System;
-
-namespace Factorial
-{
-    class practce
-    {
-        static void Main(string[] args)
-        {
-            Console.Write("Enter a number: ");
-            int num = int.Parse(Console.ReadLine());
-
-            int factorial = 1;
-
-            for (int i = 1; i <= num; i++)
-            {
-                factorial *= i;
-            }
-
-            Console.WriteLine("Factorial of {0} is {1}", num, factorial);
-            Console.ReadLine(); // to prevent the console from closing immediately
-        }
-    }
-}
-
-Q1) Write a C# Sharp program to check whether a given number is an Armstrong number or not.
-using System;
-
-namespace ArmstrongNumber
-{
-    class practce
-    {
-        static void Main(string[] args)
-        {
-            Console.Write("Enter a number: ");
-            int num = int.Parse(Console.ReadLine());
-
-            int originalNum = num;
-            int sum = 0;
-
-            while (num > 0)
-            {
-                int digit = num % 10;
-                sum += digit * digit * digit;
-                num /= 10;
-            }
-
-            if (sum == originalNum)
-            {
-                Console.WriteLine("{0} is an Armstrong number", originalNum);
-            }
-            else
-            {
-                Console.WriteLine("{0} is not an Armstrong number", originalNum);
-            }
-
-            Console.ReadLine(); // to prevent the console from closing immediately
-        }
-    }
-}
-
-Enamespace Practical_06
-
-{
-
-2 references
-
-public partial class RepeatedValueDataBinding: System.Web.UI.Page
-
-{
-
-O references
-
-protected void Page_Load(object sender, EventArgs e)
-
-{
-
-//Create an ArrayList of values to bind in it ArrayList MyArrayList = new ArrayList();
-
-MyArrayList.Add("Turbo C#"); ;
-
-MyArrayList.Add("C# Programming 101"); ;
-
-MyArrayList.Add("DOS Basic training"); ; MyArrayList.Add("C# Patterns ASP.NET"); ; MyArrayList.Add("ADO.NET in Action"); ;
-
-MyArrayList.Add("Intermediate ASP.NET");
-
-//Bind the controlls to the Data source MyArrayList
-
-DropDownList1.DataSource MyArrayList;
-
-RadioButtonList1.DataSource = MyArrayList;
-
-DataList1.DataSource = MyArrayList;
-
-//Bind all controls on the page Page.DataBind();
-
-
-Design ASP.NET Pages for Performance improvement using Data Caching
-using System;
-using System.Web.Caching;
-
-public partial class MyPage : System.Web.UI.Page
-{
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        string cacheKey = "MyDataCacheKey";
-        object data = HttpContext.Current.Cache[cacheKey];
-
-        if (data == null)
-        {
-            // Data is not in cache, so retrieve it from database
-            data = GetDataFromDatabase();
-
-            // Add data to cache with a sliding expiration of 5 minutes
-            HttpContext.Current.Cache.Insert(cacheKey, data, null, 
-                Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(5));
-        }
-
-        // Use the data to populate the page
-        PopulatePageWithData(data);
-    }
-
-    private object GetDataFromDatabase()
-    {
-        // Retrieve data from database and return it
-    }
-
-    private void PopulatePageWithData(object data)
-    {
-        // Use the data to populate the page
-    }
-}
-
-
-Aim: Performing ADO.NET data access in ASP.NET for Repeated Data Binding and
-SQL Data Binding (ASP .Net)
-
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
-public partial class Default : System.Web.UI.Page
-{
-    private string connectionString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        if (!IsPostBack)
-        {
-            // Perform repeated data binding
-            BindRepeater();
-
-            // Perform SQL data binding
-            BindGridView();
-        }
-    }
-
-    protected void BindRepeater()
-    {
-        string sqlQuery = "SELECT * FROM Products";
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlQuery, connection);
-            DataSet dataSet = new DataSet();
-
-            dataAdapter.Fill(dataSet, "Products");
-
-            Repeater1.DataSource = dataSet.Tables["Products"];
-            Repeater1.DataBind();
-        }
-    }
-
-    protected void BindGridView()
-    {
-        string sqlQuery = "SELECT * FROM Orders WHERE OrderDate >= @StartDate AND OrderDate <= @EndDate";
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            SqlCommand command = new SqlCommand(sqlQuery, connection);
-            command.Parameters.AddWithValue("@StartDate", DateTime.Now.AddDays(-7));
-            command.Parameters.AddWithValue("@EndDate", DateTime.Now);
-
-            connection.Open();
-
-            SqlDataReader reader = command.ExecuteReader();
-            GridView1.DataSource = reader;
-            GridView1.DataBind();
-            reader.Close();
-        }
-    }
-}
-
+#Write a program which demonstrates the following:
+#Addition of two complex numbers.
+#Displaying the conjugate of a complex number.
+#Plotting a set of complex numbers.
+#Creating a new plot by rotating the given number by a degree 90, 180, 270 degrees and also by scaling by a number a=1/2, a=1/3, a=2 etc.
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+print("SELECT OPERATION: ")
+print("1. ADDITION OF TWO COMPLEX NUMBERS")
+print("2. DISPLAY CONJUGATE OF TWO COMPLEX NUMBERS")
+print("3. PLOTING SET OF TWO COMPLEX NUMBERS")
+print("4. ROTATION")
+print("5. SCALING")
+print("6. EXIT")
+while True:
+    ch= int(input("ENTER CHOICE OF OPERATION"))
+    if ch==1:
+        c1=complex(input("ENTER COMPLEX FIRST NUMBER: "))
+        c2=complex(input("ENTER COMPLEX SECOND NUMBER: "))
+        print("ADDITION OF TWO COMPLEX NUMBERS IS: ", c1+c2)
+    elif ch==2:
+        c1=complex(input("ENTER COMPLEX NUMBER"))
+        res=np.conj(c1)
+        print("CONJUGATE OF ",c1,"IS",res)
+    elif ch==3:
+        data=[1+2j,-1+4j,4+3j,-4,2-1j,3+9j,-2+6j,5]
+        x=[i.real for i in data]
+        y=[i.imag for i in data]
+        plt.plot(x,y)
+        plt.ylabel('Imaginary')
+        plt.xlabel('Real')
+        plt.show()
+    elif ch==4:
+        S=[1+2j,-1+4j,4+3j,-4,2-1j,3+9j,-2+6j,5]
+        angle=int(input("ENTER ANGLE OF ROTATION: "))
+        if angle==90:
+            S1={x*1j for x in S}
+        elif angle==180:
+            S1={x*(-1) for x in S}
+        elif angle==270:
+            S1={x*1j*(-1) for x in S}
+        else:#2
+            print("INVALID ANGLE ENTERED")
+        X=[x.real for x in S1]
+        Y=[x.imag for x in S1]
+        plt.plot(X,Y,'ro')
+        plt.show()
+    elif ch==5:
+        S=[1+2j,-1+4j,4+3j,-4,2-1j,3+9j,-2+6j,5]
+        scale=float(input("ENTER SCALE POINT LIKE (.5) for 1/2"))
+        S1={x*scale for x in S}
+        X=[x.real for x in S1]
+        Y=[x.imag for x in S1]
+        plt.plot(X,Y,'ro')
+        plt.show()
+    elif ch==6:
+        break
+_____________________________________________________________________________________________________________
+
+
+
+#Write a program to do the following:
+#Enter a vector u as a n-list.
+#Enter another vector v as a n-list.
+#Find the vector au+bv for different values of a and b.
+#Find the dot product of u and v
+
+def addVec(x,y):
+    return [x[i]+y[i] for i in range (len(x))]
+def subVec(x,y):
+    return [x[i]-y[i] for i in range (len(x))]
+def scalarMul(x,p):
+    return sum([x[i]*p for i in range (len(x))])
+def dotMul(x,y):
+    return sum([x[i]*y[i] for i in range (len(x))])
+v=[]
+u=[]
+n=int(input("Enter the no. of Elements you want to enter in vector: "))
+print("Enter Elements of vector u: ")
+for i in range(n):
+    e=int(input("Enter elements: "))
+    u.append(e)
+print("Vector u = ",u)
+print("Enter Elements of vector v: ")
+for i in range(n):
+    e=int(input("Enter elements: "))
+    v.append(e)
+print("Vector v = ",v)
+while True:
+    print("Select Vector Operation: ")
+    print("1: Addition")
+    print("2: Subtraction")
+    print("3: Scalar Multiplication")
+    print("4: Dot Product")
+    print("5: Exit")
+    ch=int(input("Enter your Choice: "))
+    if ch==1:
+        print("Addition of two matrix are",addVec(u,v))
+    elif ch==2:
+        print("Subtraction of two matrix are",subVec(u,v))
+    elif ch==3:
+        print("To perform Scalar Multiplication")
+        a=int(input("Enter the value of a: "))
+        b=int(input("Enter the value of b: "))
+        ua=scalarMul(u,a)
+        vb=scalarMul(v,b)
+        print("Addition of au+bv = ",ua+vb)
+    elif ch==4:
+        print("Dot Product of two matrix is: ",dotMul(u,v))
+    elif ch==5:
+        print("Program Terminated Successfully")
+        break
+
+_____________________________________________________________________________________________________________
+
+#Aim: Write a program to do the following: 
+#Enter two distinct faces as vectors u and v. 
+#Find a new face as a linear combination of u and v i.e., au+bv for a and b in R.
+#Find the average face of the original faces
+
+def lin_comb(vlist,clist):
+    s=[scalarmul(vlist[i],clist[i]) for i in range(len(vlist))]
+    l=[]
+    for j in range(len(s[0])):
+        su=0
+        for i in range(len(s)):
+            su=su+s[i][j]
+        l.appned(su)
+    return l
+l=int(input("ENTER THE LENGTH OF VECTOR: "))
+u=[]
+v=[]
+c=[]
+print("ENTER ELEMENTS OF VECTOR U: ")
+for i in range(l):
+    n=int(input("ENTER NO:"))
+    u.append(n)
+print("ENTER THE ELEMENTS OF VECTOR V: ")
+for i in range(l):
+    m=int(input("ENTER NO: "))
+    v.append(m)
+print("ENTER VALUES FOR COEFFICIENT: ")
+c1=int(input("ENTER FIRST COEFFICIENT :"))
+c2=int(input("ENTER SECOND COEFFICIENT :"))
+
+newface=[c1*u[i]+c2*v[i] for i in range(len(u))]
+print("NEW FACE OF U and V: ",newface)
+avgface=[((u[i]+v[i])/2) for i in range(len(u))]
+print("AVERAGE FACE OF U AND V :",avgface)
+
+______________________________________________________________________________________________________
+
+
+#Aim: Write a program to do the following:
+#Enter an r by c matrix M (r and c being positive integers). 
+#Display M in matrix format. 
+#Display the rows and columns of the matrix M Find the scalar multiplication of M for a given scalar.
+#Find the transpose of the matrix M.
+
+r= int(input("Enter the number of rows:"))
+c = int(input("Enter the number of columns:"))
+matrix = []
+print("Enter the entries rowwise:")
+for i in range(r):
+    a =[]
+    for j in range(c):
+        a.append(int(input()))
+        matrix.append(a)
+print("Matrix M:")
+for i in range(r):
+    for j in range(c):
+        print(matrix[i][j],end=" ")
+    print()
+print("Rows of matrix: ")
+for i in range(r):
+    print("row",i+1," : ")
+    for j in range(c):
+        rowm=matrix[i][j]
+        print(matrix[i][j],end=" ")
+print("Columns of matrix: ")
+for i in range(c):
+    print("Column",i+1," : ")
+    for j in range(r):
+        colm=matrix[j][i]
+        print(matrix[j][i],end=" ")
+    print()
+b=[[0 for x in range(r)] for y in range(c)]
+for i in range(c):
+    for j in range(r):
+        b[i][j]=matrix[j][i]
+a=int(input("Enter the number to multiply with matrix M:"))
+for i in range(r):
+    for j in range(c):
+        matrix[i][j]=matrix[i][j]*a
+print("Scalar Matrix multiplication:")
+for i in range(r):
+    for j in range(c):
+        print(matrix[i][j],end=" ")
+print("Transpose of Matrix M: ")
+for i in range(c):
+    for j in range(r):
+        print(b[i][j],end=" ")
+    print()
+
+_________________________________________________________________________________________________________
+
+
+#Aim: Write a program to do the following: 
+#Find the vector –matrix multiplication of a r by c matrix M with an c-vector u. 
+#Find the matrix-matrix product of M with a c by p matrix N.
+
+import numpy as np
+r =int(input("Enter length of vector and number of rows in matrix:"))
+c =int(input("Enter number of columns in matrix:"))
+v=[]
+M=[]
+print("Enter Vectors")
+for i in range(r):
+    n=int(input("Enter number:"))
+    v.append(n)
+print("Enter Matrix")
+for i in range(r):
+    print("Enter Elements of Rows: ",i+1)
+    M.append([])
+    for j in range(c):
+        n=int(input("Enter Number: "))
+        M[i].append(n)
+print("\nResult of Vector-Matrix multiplication is",np.dot(v,M))
+M=[]
+N=[]
+r1 =int(input("Enter number of rows in matrix1:"))
+c1 =int(input("Enter number of columns in matrix1:"))
+print("Enter Matrix1")
+for i in range(r1):
+    print("Enter Elements of Rows: ",i+1)
+    M.append([])
+
+for j in range(c1):
+    n=int(input("Enter Number: "))
+    M[i].append(n)
+r2 =int(input("Enter number of rows in matrix2:"))
+c2 =int(input("Enter number of columns in matrix2:"))
+print("Enter Matrix2")
+for i in range(r2):
+    print("Enter Elements of Rows: ",i+1)
+    N.append([])
+    for j in range(c2):
+        n=int(input("Enter Number: "))
+        N[i].append(n)
+print(M)
+print(N)
+if(c1 == r2):
+    Mult=np.dot(M,N)
+    print("\nResult of Matrix multiplication is")
+    for i in Mult:
+        print(i)
+else:
+    print("\n Matrix Multiplication not possible as c1 and r2 are not equal")
+
+___________________________________________________________________________________________________________
+
+
+#Aim: Write a program to enter a matrix and check if it is invertible. If the inverse exists, find the inverse.
+
+import numpy as np
+def printMatrix(A):
+    print("\nMatrix")
+    for i in range(len(A)):
+        print(A[i])
+c=int(input("Enter the number of rows and coloumns of square matrix:"))
+r=c
+M=[]
+for i in range(r):
+    print("Enter Elements of Rows: ")
+    M.append([])
+    for j in range(c):
+        n=int(input("Enter Number: "))
+        M[i].append(n)
+printMatrix(M)
+a=np.linalg.det(M)
+print("Determinant of Matrix M is",a)
+if a<=0:
+    Minv=np.linalg.inv(M)
+    print("The Inverse of Matrix m is\n",Minv)
+else:
+    print("Matrix is not invertible")
+
+________________________________________________________________________________________________________
+
+
+#Aim: Write a program to convert a matrix into its row echelon form
+
+def row_echelon(m):
+    if not m:
+        return
+    lead= 0
+    rowCount = len(m)
+    colCount =len(m[0])
+    for r in range(rowCount):
+        if lead>= colCount:
+            return
+        i = r
+        while m[i][lead] == 0:
+            i+=1
+            if i == rowCount:
+                i = r
+                lead +=1
+                if colCount == lead:
+                    return
+                m[i],m[r] = m[r],m[i]
+                v = m[r][lead]
+                m[r] = [mrx/float(lv) for mrx in m[r]]
+                for i in range(rowCount):
+                    if i != r:
+                        lv=m[i][lead]
+                        m[i] = [iv - lv*rv for rv,iv in zip(m[r],m[i])]
+                        lead+=1                      
+print("Enter dimensions of matrix: ")
+r=int(input("Enter the no of rows: "))
+c=int(input("Enter the no of cols: "))
+mtr=[]
+
+for i in range (r):
+    mtr.append([])
+    print("Enter elements of rows ",i)
+    for j in range(c):
+        n=float(input("Enter element: "))
+        mtr[i].append(n)
+    print("Enter the matrix: ")
+    for row in mtr:
+        print(' '.join(("{0:.2f}".format(x) for x in row)))
+        row_echelon(mtr)
+        print("Row Echelon for matrix: ")
+        for row in mtr:
+            print(' '.join(("{0:.2f}".format(x) for x in row)))
+
+_______________________________________________________________________________________________________
+
+
+#Aim: Write a program to do the Following: 
+#Find the GCD.
+#Find Prime Factor of a number.
+
+from math import *
+def gcd(a,b):
+    if a==0:
+        return b
+    return gcd(b%a,a)
+pf=[]
+n=int(input("Enter number:"))
+x=n
+while n%2==0:
+    pf.append(2)
+    n=n/2
+i=3
+while i<=sqrt(n):
+    while n%1==0:
+        pf.append(i)
+        n=n/i
+        i=i+2
+    if n>2:
+        pf.append(n)
+print("prime factor of",x,"are",pf)
+pf1=set(pf)
+nf=1
+for f in pf1:
+    cnt=0
+    for f1 in pf:
+        if f==f1:
+
+            cnt+=1
+            nf*=cnt+1
+print("No of factors of ",x," = ",nf)
+print("No of positive integral solutions = ",nf/2)
+print("Greatest Common Divisor of 45 and 15 = ",gcd(15,45))
 
 
