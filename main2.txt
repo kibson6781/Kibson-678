@@ -1137,3 +1137,107 @@ public class Page2 extends HttpServlet
  out.println("</html>");
  }
 }
+
+jtable
+// Packages to import
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+public class JTableExamples {
+	// frame
+	JFrame f;
+	// Table
+	JTable j;
+
+	// Constructor
+	JTableExamples()
+	{
+		// Frame initialization
+		f = new JFrame();
+
+		// Frame Title
+		f.setTitle("JTable Example");
+
+		// Data to be displayed in the JTable
+		String[][] data = {
+			{ "Kundan Kumar Jha", "4031", "CSE" },
+			{ "Anand Jha", "6014", "IT" }
+		};
+
+		// Column Names
+		String[] columnNames = { "Name", "Roll Number", "Department" };
+
+		// Initializing the JTable
+		j = new JTable(data, columnNames);
+		j.setBounds(30, 40, 200, 300);
+
+		// adding it to JScrollPane
+		JScrollPane sp = new JScrollPane(j);
+		f.add(sp);
+		// Frame Size
+		f.setSize(500, 200);
+		// Frame Visible = true
+		f.setVisible(true);
+	}
+
+	// Driver method
+	public static void main(String[] args)
+	{
+		new JTableExamples();
+	}
+}
+
+jmenu
+// Java program to construct
+// Menu bar to add menu items
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+public class menu extends JFrame {
+	// menubar
+	static JMenuBar mb;
+
+	// JMenu
+	static JMenu x;
+
+	// Menu items
+	static JMenuItem m1, m2, m3;
+
+	// create a frame
+	static JFrame f;
+
+	public static void main()
+	{
+
+		// create a frame
+		f = new JFrame("Menu demo");
+
+		// create a menubar
+		mb = new JMenuBar();
+
+		// create a menu
+		x = new JMenu("Menu");
+
+		// create menuitems
+		m1 = new JMenuItem("MenuItem1");
+		m2 = new JMenuItem("MenuItem2");
+		m3 = new JMenuItem("MenuItem3");
+
+		// add menu items to menu
+		x.add(m1);
+		x.add(m2);
+		x.add(m3);
+
+		// add menu to menu bar
+		mb.add(x);
+
+		// add menubar to frame
+		f.setJMenuBar(mb);
+
+		// set the size of the frame
+		f.setSize(500, 500);
+		f.setVisible(true);
+	}
+}
+
