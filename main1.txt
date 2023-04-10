@@ -375,5 +375,41 @@ for f in pf1:
 print("No of factors of ",x," = ",nf)
 print("No of positive integral solutions = ",nf/2)
 print("Greatest Common Divisor of 45 and 15 = ",gcd(15,45))
+___________________________________________________________________________________________________
 
 
+ipconfig
+
+FastEthernet0 Connection:  (default port)
+
+Connection=specific DNS Suffix..:
+Link-Local IPv6 Address...........:   FE80 :: 260:70FF:FEBE:CD47
+Ipv6 Address................ :  ::
+Ipv4 Address.......... : 192.168.10.1
+Subnet Mask.........: 255.255.255.0
+Default Gateway.........: ::
+                                          0.0.0.0
+
+Bluetooth Connection:
+0.0.0.0 = ipv4, subnet, last
+
+
+
+ping 192.168.10.4
+
+Reply from 192.168.10.4: bytes=32 time<time TTL=128
+Reply from 192.168.10.4: bytes=32 time<time TTL=128
+Reply from 192.168.10.4: bytes=32 time<time TTL=128
+Reply from 192.168.10.4: bytes=32 time<time TTL=128
+
+Ping statistics for 192.168.10.4:
+          Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),     
+Approimate round trip times in milli-seconds:
+           Minimum = 0ms, Maximum= 0ms, Average = 0ms
+           
+           
+Configuration Details:
+
+Andy - IP Address: 192.168.10.1
+
+Axy
