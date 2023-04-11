@@ -1,415 +1,1736 @@
-#Write a program which demonstrates the following:
-#Addition of two complex numbers.
-#Displaying the conjugate of a complex number.
-#Plotting a set of complex numbers.
-#Creating a new plot by rotating the given number by a degree 90, 180, 270 degrees and also by scaling by a number a=1/2, a=1/3, a=2 etc.
+Aim:
+Write an Android application with an TextView and Button. 
+Onclick of the button the content of the TextView should toggle
 
-import matplotlib.pyplot as plt
-import numpy as np
+activity_main.xml:
 
-print("SELECT OPERATION: ")
-print("1. ADDITION OF TWO COMPLEX NUMBERS")
-print("2. DISPLAY CONJUGATE OF TWO COMPLEX NUMBERS")
-print("3. PLOTING SET OF TWO COMPLEX NUMBERS")
-print("4. ROTATION")
-print("5. SCALING")
-print("6. EXIT")
-while True:
-    ch= int(input("ENTER CHOICE OF OPERATION"))
-    if ch==1:
-        c1=complex(input("ENTER COMPLEX FIRST NUMBER: "))
-        c2=complex(input("ENTER COMPLEX SECOND NUMBER: "))
-        print("ADDITION OF TWO COMPLEX NUMBERS IS: ", c1+c2)
-    elif ch==2:
-        c1=complex(input("ENTER COMPLEX NUMBER"))
-        res=np.conj(c1)
-        print("CONJUGATE OF ",c1,"IS",res)
-    elif ch==3:
-        data=[1+2j,-1+4j,4+3j,-4,2-1j,3+9j,-2+6j,5]
-        x=[i.real for i in data]
-        y=[i.imag for i in data]
-        plt.plot(x,y)
-        plt.ylabel('Imaginary')
-        plt.xlabel('Real')
-        plt.show()
-    elif ch==4:
-        S=[1+2j,-1+4j,4+3j,-4,2-1j,3+9j,-2+6j,5]
-        angle=int(input("ENTER ANGLE OF ROTATION: "))
-        if angle==90:
-            S1={x*1j for x in S}
-        elif angle==180:
-            S1={x*(-1) for x in S}
-        elif angle==270:
-            S1={x*1j*(-1) for x in S}
-        else:#2
-            print("INVALID ANGLE ENTERED")
-        X=[x.real for x in S1]
-        Y=[x.imag for x in S1]
-        plt.plot(X,Y,'ro')
-        plt.show()
-    elif ch==5:
-        S=[1+2j,-1+4j,4+3j,-4,2-1j,3+9j,-2+6j,5]
-        scale=float(input("ENTER SCALE POINT LIKE (.5) for 1/2"))
-        S1={x*scale for x in S}
-        X=[x.real for x in S1]
-        Y=[x.imag for x in S1]
-        plt.plot(X,Y,'ro')
-        plt.show()
-    elif ch==6:
-        break
-_____________________________________________________________________________________________________________
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:text="Hello World!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
+    <Button
+        android:id="@+id/button"
+        android:text="Toggle Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView"
+        android:layout_centerHorizontal="true"/>
 
-#Write a program to do the following:
-#Enter a vector u as a n-list.
-#Enter another vector v as a n-list.
-#Find the vector au+bv for different values of a and b.
-#Find the dot product of u and v
+</RelativeLayout>
 
-def addVec(x,y):
-    return [x[i]+y[i] for i in range (len(x))]
-def subVec(x,y):
-    return [x[i]-y[i] for i in range (len(x))]
-def scalarMul(x,p):
-    return sum([x[i]*p for i in range (len(x))])
-def dotMul(x,y):
-    return sum([x[i]*y[i] for i in range (len(x))])
-v=[]
-u=[]
-n=int(input("Enter the no. of Elements you want to enter in vector: "))
-print("Enter Elements of vector u: ")
-for i in range(n):
-    e=int(input("Enter elements: "))
-    u.append(e)
-print("Vector u = ",u)
-print("Enter Elements of vector v: ")
-for i in range(n):
-    e=int(input("Enter elements: "))
-    v.append(e)
-print("Vector v = ",v)
-while True:
-    print("Select Vector Operation: ")
-    print("1: Addition")
-    print("2: Subtraction")
-    print("3: Scalar Multiplication")
-    print("4: Dot Product")
-    print("5: Exit")
-    ch=int(input("Enter your Choice: "))
-    if ch==1:
-        print("Addition of two matrix are",addVec(u,v))
-    elif ch==2:
-        print("Subtraction of two matrix are",subVec(u,v))
-    elif ch==3:
-        print("To perform Scalar Multiplication")
-        a=int(input("Enter the value of a: "))
-        b=int(input("Enter the value of b: "))
-        ua=scalarMul(u,a)
-        vb=scalarMul(v,b)
-        print("Addition of au+bv = ",ua+vb)
-    elif ch==4:
-        print("Dot Product of two matrix is: ",dotMul(u,v))
-    elif ch==5:
-        print("Program Terminated Successfully")
-        break
+MainActivity.java:
 
-_____________________________________________________________________________________________________________
+package com.example.myapplication;
 
-#Aim: Write a program to do the following: 
-#Enter two distinct faces as vectors u and v. 
-#Find a new face as a linear combination of u and v i.e., au+bv for a and b in R.
-#Find the average face of the original faces
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-def lin_comb(vlist,clist):
-    s=[scalarmul(vlist[i],clist[i]) for i in range(len(vlist))]
-    l=[]
-    for j in range(len(s[0])):
-        su=0
-        for i in range(len(s)):
-            su=su+s[i][j]
-        l.appned(su)
-    return l
-l=int(input("ENTER THE LENGTH OF VECTOR: "))
-u=[]
-v=[]
-c=[]
-print("ENTER ELEMENTS OF VECTOR U: ")
-for i in range(l):
-    n=int(input("ENTER NO:"))
-    u.append(n)
-print("ENTER THE ELEMENTS OF VECTOR V: ")
-for i in range(l):
-    m=int(input("ENTER NO: "))
-    v.append(m)
-print("ENTER VALUES FOR COEFFICIENT: ")
-c1=int(input("ENTER FIRST COEFFICIENT :"))
-c2=int(input("ENTER SECOND COEFFICIENT :"))
+import androidx.appcompat.app.AppCompatActivity;
 
-newface=[c1*u[i]+c2*v[i] for i in range(len(u))]
-print("NEW FACE OF U and V: ",newface)
-avgface=[((u[i]+v[i])/2) for i in range(len(u))]
-print("AVERAGE FACE OF U AND V :",avgface)
+public class MainActivity extends AppCompatActivity {
 
-______________________________________________________________________________________________________
+    private TextView textView;
+    private Button button;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textView = findViewById(R.id.textView);
+        button = findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(textView.getText().toString().equals("Hello World!")){
+                    textView.setText("Text Toggled");
+                }else{
+                    textView.setText("Hello World!");
+                }
+            }
+        });
+    }
+}
+
+______________________________________________________________________________________________________________
 
 
-#Aim: Write a program to do the following:
-#Enter an r by c matrix M (r and c being positive integers). 
-#Display M in matrix format. 
-#Display the rows and columns of the matrix M Find the scalar multiplication of M for a given scalar.
-#Find the transpose of the matrix M.
+Aim:
+Write an Android application with an Image View and Button. Onclick
+of the button the visibility of the image should toggle.
 
-r= int(input("Enter the number of rows:"))
-c = int(input("Enter the number of columns:"))
-matrix = []
-print("Enter the entries rowwise:")
-for i in range(r):
-    a =[]
-    for j in range(c):
-        a.append(int(input()))
-        matrix.append(a)
-print("Matrix M:")
-for i in range(r):
-    for j in range(c):
-        print(matrix[i][j],end=" ")
-    print()
-print("Rows of matrix: ")
-for i in range(r):
-    print("row",i+1," : ")
-    for j in range(c):
-        rowm=matrix[i][j]
-        print(matrix[i][j],end=" ")
-print("Columns of matrix: ")
-for i in range(c):
-    print("Column",i+1," : ")
-    for j in range(r):
-        colm=matrix[j][i]
-        print(matrix[j][i],end=" ")
-    print()
-b=[[0 for x in range(r)] for y in range(c)]
-for i in range(c):
-    for j in range(r):
-        b[i][j]=matrix[j][i]
-a=int(input("Enter the number to multiply with matrix M:"))
-for i in range(r):
-    for j in range(c):
-        matrix[i][j]=matrix[i][j]*a
-print("Scalar Matrix multiplication:")
-for i in range(r):
-    for j in range(c):
-        print(matrix[i][j],end=" ")
-print("Transpose of Matrix M: ")
-for i in range(c):
-    for j in range(r):
-        print(b[i][j],end=" ")
-    print()
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="onToggle"
+    tools:context=".MainActivity">
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="320dp"
+        android:layout_height="294dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/flower2" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:onClick="onToggle"
+        android:text="Toggle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img1"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+MainActivity.java:
+
+package com.example.myapplication;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+public class MainActivity extends AppCompatActivity {
+    ImageView imgv;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        imgv=findViewById(R.id.img1);
+    }
+    public void onToggle(View view) {
+        if(imgv.getVisibility()==View.VISIBLE)
+        {
+            imgv.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            imgv.setVisibility(View.VISIBLE);
+        }
+    }
+}
+
+_________________________________________________________________________________________________________
+
+Aim:
+Write an Android application to accept two numbers from users and
+perform an arithmetic operation (Addition, Subtraction,
+Multiplication and Division) as per user's choice using radio button.
+The result should be displayed in toast.
+
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <EditText
+        android:id="@+id/fno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter the first number"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/sno"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.626" />
+    <EditText
+        android:id="@+id/sno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="76dp"
+        android:ems="10"
+        android:hint="Enter the second number"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="220dp"
+        android:layout_height="282dp"
+        android:layout_marginBottom="196dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent">
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onAdd"
+            android:text="Add" />
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onSub"
+            android:text="Subtract" />
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onMul"
+            android:text="Multiply" />
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onDiv"
+            android:text="Divide" />
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+MainActivity.java:
+
+package com.example.myapplication;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity {
+    EditText e1,e2;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        e1=findViewById(R.id.fno);
+        e2=findViewById(R.id.sno);
+    }
+    public void onAdd(View view) {
+        int num1=Integer.parseInt(e1.getText().toString());
+        int num2=Integer.parseInt(e2.getText().toString());
+        int res= num1 + num2;
+        Toast.makeText(this,"Result: " + res, Toast.LENGTH_LONG).show();
+    }
+    public void onSub(View view) {
+        int num1=Integer.parseInt(e1.getText().toString());
+        int num2=Integer.parseInt(e2.getText().toString());
+        int res= num1 - num2;
+        Toast.makeText(this,"Result: " + res, Toast.LENGTH_LONG).show();
+    }
+    public void onMul(View view) {
+        int num1=Integer.parseInt(e1.getText().toString());
+        int num2=Integer.parseInt(e2.getText().toString());
+        int res= num1 * num2;
+        Toast.makeText(this,"Result: " + res, Toast.LENGTH_LONG).show();
+    }
+    public void onDiv(View view) {
+        int num1=Integer.parseInt(e1.getText().toString());
+        int num2=Integer.parseInt(e2.getText().toString());
+        int res= num1 / num2;
+        Toast.makeText(this,"Result: " + res, Toast.LENGTH_LONG).show();
+    }
+}
 
 _________________________________________________________________________________________________________
 
 
-#Aim: Write a program to do the following: 
-#Find the vector –matrix multiplication of a r by c matrix M with an c-vector u. 
-#Find the matrix-matrix product of M with a c by p matrix N.
+Aim:
+Write an Android application with two activities namely MainActivity
+and SecondActivity. The username and password from MainActivity
+to be passed to SecondActivity and its validated and appropriate
+message is displayed.
 
-import numpy as np
-r =int(input("Enter length of vector and number of rows in matrix:"))
-c =int(input("Enter number of columns in matrix:"))
-v=[]
-M=[]
-print("Enter Vectors")
-for i in range(r):
-    n=int(input("Enter number:"))
-    v.append(n)
-print("Enter Matrix")
-for i in range(r):
-    print("Enter Elements of Rows: ",i+1)
-    M.append([])
-    for j in range(c):
-        n=int(input("Enter Number: "))
-        M[i].append(n)
-print("\nResult of Vector-Matrix multiplication is",np.dot(v,M))
-M=[]
-N=[]
-r1 =int(input("Enter number of rows in matrix1:"))
-c1 =int(input("Enter number of columns in matrix1:"))
-print("Enter Matrix1")
-for i in range(r1):
-    print("Enter Elements of Rows: ",i+1)
-    M.append([])
+activity_main.xml:
 
-for j in range(c1):
-    n=int(input("Enter Number: "))
-    M[i].append(n)
-r2 =int(input("Enter number of rows in matrix2:"))
-c2 =int(input("Enter number of columns in matrix2:"))
-print("Enter Matrix2")
-for i in range(r2):
-    print("Enter Elements of Rows: ",i+1)
-    N.append([])
-    for j in range(c2):
-        n=int(input("Enter Number: "))
-        N[i].append(n)
-print(M)
-print(N)
-if(c1 == r2):
-    Mult=np.dot(M,N)
-    print("\nResult of Matrix multiplication is")
-    for i in Mult:
-        print(i)
-else:
-    print("\n Matrix Multiplication not possible as c1 and r2 are not equal")
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <EditText
+        android:id="@+id/uname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginRight="101dp"
+        android:layout_marginBottom="54dp"
+        android:ems="10"
+        android:hint="Enter Username"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/pass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginRight="101dp"
+        android:layout_marginBottom="117dp"
+        android:ems="10"
+        android:hint="Enter Password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="298dp"
+        android:onClick="onLogin"
+        android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-___________________________________________________________________________________________________________
+activity_second.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2">
+    <TextView
+        android:id="@+id/t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="178dp"
+        android:layout_marginLeft="178dp"
+        android:layout_marginTop="323dp"
+        android:layout_marginEnd="175dp"
+        android:layout_marginRight="175dp"
+        android:layout_marginBottom="389dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+MainActivity.java:
+
+package com.example.myapplication;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+public class MainActivity extends AppCompatActivity {
+    EditText e1,e2;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        e1 = findViewById(R.id.uname);
+        e2 = findViewById(R.id.pass);
+    }
+    public void onLogin(View view) {
+        String user = e1.getText().toString();
+        String pwd = e2.getText().toString();
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra("username",user);
+        intent.putExtra("password",pwd);
+        startActivity(intent);
+    }
+}
+
+SecondActivity.java:
+
+package com.example.myapplication;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
+public class MainActivity2 extends AppCompatActivity {
+    TextView tv;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+        tv = findViewById(R.id.t1);
+        Intent rintent = getIntent();
+        String user = rintent.getStringExtra("username");
+        String pwd = rintent.getStringExtra("password");
+        if(user.equals("Administrator") && pwd.equals("admin@123"))
+        {
+            tv.setText("Welcome " + user);
+        }
+        else
+        {
+            tv.setText("Invalid User!");
+        }
+    }
+}
+
+______________________________________________________________________________________________________________
+
+Aim:
+Write an Android program to demonstrate Activity life cycle.
+
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+MainActivity.java:
+
+package com.example.myapplication;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity
+{
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toast.makeText(this, "Activity is created",
+                Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        Toast.makeText(this, "Activity is started",
+                Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        Toast.makeText(this, "Activity is resumed",
+                Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onRestart()
+    {
+        super.onRestart();
+        Toast.makeText(this, "Activity is restarted",
+                Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        Toast.makeText(this, "Activity is paused",
+                Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        Toast.makeText(this, "Activity is stopped",
+                Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        Toast.makeText(this, "Activity is destroyed",
+                Toast.LENGTH_SHORT).show();
+    }
+}
+
+__________________________________________________________________________________________________________
+
+Aim:
+Write an Android application with two activities namely MainActivity
+and SecondActivity. Pass two numbers from MainActivity and in the
+SecondActivity, find sum of the two numbers and pass it back to
+Mainactivity.
+
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <EditText
+        android:id="@+id/e1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="107dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginRight="101dp"
+        android:ems="10"
+        android:hint="Enter First Number"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/e2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginRight="101dp"
+        android:ems="10"
+        android:hint="Enter Second Number"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/e1" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginLeft="158dp"
+        android:layout_marginTop="163dp"
+        android:layout_marginEnd="159dp"
+        android:layout_marginRight="159dp"
+        android:layout_marginBottom="286dp"
+        android:onClick="onAdd"
+        android:text="Add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/e2" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+activity_second.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity">
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+MainActivity.java:
+
+package com.example.practical5;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity
+{
+    EditText ed1,ed2;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ed1 = findViewById(R.id.e1);
+        ed2 = findViewById(R.id.e2);
+    }
+    public void onAdd(View view)
+    {
+        int num1 = Integer.parseInt(ed1.getText().toString());
+        int num2 = Integer.parseInt(ed2.getText().toString());
+        Intent intent = new Intent(this,SecondActivity.class);
+        intent.putExtra("Num1",num1);
+        intent.putExtra("Num2",num2);
+        startActivityForResult(intent,11);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==11)
+        {
+            if(resultCode==RESULT_OK)
+            {
+                int res = data.getIntExtra("Result",0);
+                Toast.makeText(this, "Result: "+res,
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+}
+
+SecondActivity.java:
+
+package com.example.practical5;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+public class SecondActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+        Intent in1 = getIntent();
+        int num1 = in1.getIntExtra("Num1",0);
+        int num2 = in1.getIntExtra("Num2",0);
+        int res = num1+num2;
+        Intent in2 = new Intent();
+        in2.putExtra("Result",res);
+        setResult(RESULT_OK,in2);
+        finish();
+    }
+}
+
+_________________________________________________________________________________________________________
 
 
-#Aim: Write a program to enter a matrix and check if it is invertible. If the inverse exists, find the inverse.
+Aim:
+Write an android application to implement implicit intent to show a
+web url, dialer and capture image with device camera.
 
-import numpy as np
-def printMatrix(A):
-    print("\nMatrix")
-    for i in range(len(A)):
-        print(A[i])
-c=int(input("Enter the number of rows and coloumns of square matrix:"))
-r=c
-M=[]
-for i in range(r):
-    print("Enter Elements of Rows: ")
-    M.append([])
-    for j in range(c):
-        n=int(input("Enter Number: "))
-        M[i].append(n)
-printMatrix(M)
-a=np.linalg.det(M)
-print("Determinant of Matrix M is",a)
-if a<=0:
-    Minv=np.linalg.inv(M)
-    print("The Inverse of Matrix m is\n",Minv)
-else:
-    print("Matrix is not invertible")
+activity_main.xml:
 
-________________________________________________________________________________________________________
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="126dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="142dp"
+        android:layout_marginLeft="142dp"
+        android:layout_marginTop="91dp"
+        android:layout_marginEnd="143dp"
+        android:layout_marginRight="143dp"
+        android:onClick="showWeb"
+        android:text=" Show Web"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="130dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginLeft="145dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="143dp"
+        android:layout_marginRight="143dp"
+        android:onClick="showDial"
+        android:text="Show Dialer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.714"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="127dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginLeft="148dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="149dp"
+        android:layout_marginRight="149dp"
+        android:layout_marginBottom="97dp"
+        android:onClick="showCam"
+        android:text="Show Camera"
+        app:layout_constraintBottom_toTopOf="@+id/img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="149dp"
+        android:layout_marginLeft="149dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="134dp"
+        android:layout_marginRight="134dp"
+        android:layout_marginBottom="77dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3"
+        app:layout_constraintVertical_bias="0.418"
+        tools:srcCompat="@tools:sample/avatars" />
 
-#Aim: Write a program to convert a matrix into its row echelon form
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-def row_echelon(m):
-    if not m:
-        return
-    lead= 0
-    rowCount = len(m)
-    colCount =len(m[0])
-    for r in range(rowCount):
-        if lead>= colCount:
-            return
-        i = r
-        while m[i][lead] == 0:
-            i+=1
-            if i == rowCount:
-                i = r
-                lead +=1
-                if colCount == lead:
-                    return
-                m[i],m[r] = m[r],m[i]
-                v = m[r][lead]
-                m[r] = [mrx/float(lv) for mrx in m[r]]
-                for i in range(rowCount):
-                    if i != r:
-                        lv=m[i][lead]
-                        m[i] = [iv - lv*rv for rv,iv in zip(m[r],m[i])]
-                        lead+=1                      
-print("Enter dimensions of matrix: ")
-r=int(input("Enter the no of rows: "))
-c=int(input("Enter the no of cols: "))
-mtr=[]
+MainActivity.java:
 
-for i in range (r):
-    mtr.append([])
-    print("Enter elements of rows ",i)
-    for j in range(c):
-        n=float(input("Enter element: "))
-        mtr[i].append(n)
-    print("Enter the matrix: ")
-    for row in mtr:
-        print(' '.join(("{0:.2f}".format(x) for x in row)))
-        row_echelon(mtr)
-        print("Row Echelon for matrix: ")
-        for row in mtr:
-            print(' '.join(("{0:.2f}".format(x) for x in row)))
+package com.example.practcal8_49;
 
-_______________________________________________________________________________________________________
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
+import android.widget.ImageView;
+public class MainActivity extends AppCompatActivity
+{
+    ImageView imageView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        imageView = findViewById(R.id.img);
+    }
+    public void showWeb(View view)
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("http://google.com"));
+        startActivity(intent);
+    }
+    public void showDial(View view)
+    {
+        Intent intent = new Intent(Intent.ACTION_DIAL,
+                Uri.parse("tel:9004417275"));
+        startActivity(intent);
+    }
+    public void showCam(View view)
+    {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,11);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bmp = (Bitmap)data.getExtras().get("data");
+        imageView.setImageBitmap(bmp);
+    }
+}
 
-
-#Aim: Write a program to do the Following: 
-#Find the GCD.
-#Find Prime Factor of a number.
-
-from math import *
-def gcd(a,b):
-    if a==0:
-        return b
-    return gcd(b%a,a)
-pf=[]
-n=int(input("Enter number:"))
-x=n
-while n%2==0:
-    pf.append(2)
-    n=n/2
-i=3
-while i<=sqrt(n):
-    while n%1==0:
-        pf.append(i)
-        n=n/i
-        i=i+2
-    if n>2:
-        pf.append(n)
-print("prime factor of",x,"are",pf)
-pf1=set(pf)
-nf=1
-for f in pf1:
-    cnt=0
-    for f1 in pf:
-        if f==f1:
-
-            cnt+=1
-            nf*=cnt+1
-print("No of factors of ",x," = ",nf)
-print("No of positive integral solutions = ",nf/2)
-print("Greatest Common Divisor of 45 and 15 = ",gcd(15,45))
-___________________________________________________________________________________________________
-
-
-ipconfig
-
-FastEthernet0 Connection:  (default port)
-
-Connection=specific DNS Suffix..:
-Link-Local IPv6 Address...........:   FE80 :: 260:70FF:FEBE:CD47
-Ipv6 Address................ :  ::
-Ipv4 Address.......... : 192.168.10.1
-Subnet Mask.........: 255.255.255.0
-Default Gateway.........: ::
-                                          0.0.0.0
-
-Bluetooth Connection:
-0.0.0.0 = ipv4, subnet, last
+__________________________________________________________________________________________________________
 
 
+Aim:
+Write an android application to create a Biodata form to demonstrate
+the use of Autocomplete text view, Spinner, Date Picker and Alert
+Dialog
 
-ping 192.168.10.4
+activity_main.xml:
 
-Reply from 192.168.10.4: bytes=32 time<time TTL=128
-Reply from 192.168.10.4: bytes=32 time<time TTL=128
-Reply from 192.168.10.4: bytes=32 time<time TTL=128
-Reply from 192.168.10.4: bytes=32 time<time TTL=128
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-Ping statistics for 192.168.10.4:
-          Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),     
-Approimate round trip times in milli-seconds:
-           Minimum = 0ms, Maximum= 0ms, Average = 0ms
-           
-           
-Configuration Details:
 
-Andy - IP Address: 192.168.10.1
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="103dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="154dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="154dp"
+        android:text="@string/title"
+        android:textColor="#075C54"
+        android:textColorHint="#EC1414"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/nameid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginRight="101dp"
+        android:ems="10"
+        android:hint="@string/nameprompt"
+        android:inputType="textPersonName"
+        android:textColorHint="#EC1414"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <EditText
+        android:id="@+id/dobid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:ems="10"
+        android:hint="@string/dobprompt"
+        android:inputType="textPersonName"
+        android:onClick="showPicker"
+        android:textColorHint="#CA1414"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameid" />
+    <EditText
+        android:id="@+id/phnid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:ems="10"
+        android:hint="@string/phnprompt"
+        android:inputType="phone"
+        android:textColorHint="#C31A1A"
+        app:layout_constraintEnd_toStartOf="@+id/phntype"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dobid" />
+    <Spinner
+        android:id="@+id/phntype"
+        android:layout_width="156dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/phnid"
+        app:layout_constraintTop_toBottomOf="@+id/dobid" />
+    <AutoCompleteTextView
+        android:id="@+id/cntyid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginRight="116dp"
+        android:hint="@string/cntprompt"
+        android:textColorHint="#D31414"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phnid" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="156dp"
+        android:layout_marginLeft="156dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="165dp"
+        android:layout_marginRight="165dp"
+        android:layout_marginBottom="142dp"
+        android:onClick="showAlert"
+        android:text="@string/btntxt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cntyid" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-Axy
+Strings.xml:
+
+<resources>
+    <string name="app_name">Practical9_049</string>
+    <string name="title">BIODATA</string>
+    <string name="nameprompt">Enter Name</string>
+    <string name="dobprompt">Enter DOB</string>
+    <string name="phnprompt">Enter Phone No</string>
+    <string name="cntprompt">Enter Country</string>
+    <string name="btntxt">Submit</string>
+    <string-array name="phonetype">
+        <item>Home</item>
+        <item>Office</item>
+        <item>Mobile</item>
+    </string-array>
+    <string-array name="Countries">
+        <item>India</item>
+        <item>Indonesia</item>
+        <item>Germany</item>
+        <item>United States</item>
+        <item>England</item>
+        <item>Singapore</item>
+    </string-array>
+</resources>
+
+MainActivity.java:
+
+package com.example.practical9_049;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity implements
+        AdapterView.OnItemSelectedListener
+{
+    EditText Name,Phone,DOB;
+    AutoCompleteTextView cntry;
+    Spinner sp;
+    String msg="";
+    String phntype="";
+    public static final String[] countries= new String[]
+    {"India","Indonesia","United States of America","Italy","Germany"};
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Name = findViewById(R.id.nameid);
+        Phone = findViewById(R.id.phnid);
+        DOB = findViewById(R.id.dobid);
+        cntry = findViewById(R.id.cntyid);
+        ArrayAdapter<CharSequence> ad1 =
+                ArrayAdapter.createFromResource(this,R.array.Countries, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        cntry.setAdapter(ad1);
+        sp = findViewById(R.id.phntype);
+        if(sp!=null)
+        {
+            sp.setOnItemSelectedListener(this);
+        }
+        ArrayAdapter<CharSequence> ad2 =
+                ArrayAdapter.createFromResource(this,R.array.phonetype,
+                        android.R.layout.simple_spinner_item);
+        ad2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp.setAdapter(ad2);
+    }
+    @RequiresApi(api= Build.VERSION_CODES.N)
+    public void showPicker(View view)
+    {
+        DatePickerDialog dp = new DatePickerDialog(this,0);
+        dp.setOnDateSetListener(new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
+            {
+                int m = month+1;
+                DOB.setText(dayOfMonth+"/"+m+"/"+year);
+            }
+        });
+        dp.show();
+    }
+    public void showAlert(View view)
+    {
+        msg="You have entered the following information\n";
+        msg+="Name: "+Name.getText().toString();
+        msg+="\n Date of Birth: "+DOB.getText().toString();
+        msg+="\n PhoneNo: "+Phone.getText().toString();
+        msg+="\n PhoneType: "+phntype;
+        msg+="\n Country: "+cntry.getText().toString();
+        msg+="\n Please Confirm..";
+        AlertDialog.Builder alertbuilder=new AlertDialog.Builder(this)
+
+                .setTitle("Confirmation Message")
+                .setMessage(msg)
+                .setPositiveButton("Yes", new
+
+                        DialogInterface.OnClickListener()
+
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                Toast.makeText(MainActivity.this, "User DataConfirmed", Toast.LENGTH_LONG).show();
+
+                            }
+                        })
+                .setNegativeButton("No", new
+
+                        DialogInterface.OnClickListener()
+
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int
+
+                                    which)
+
+                            {
+                                Toast.makeText(MainActivity.this, "User Data Cancelled", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+
+        AlertDialog ad = alertbuilder.create();
+        ad.show();
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+    {
+        phntype=parent.getItemAtPosition(position).toString();
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> parent)
+    {
+    }
+}
+
+
+_________________________________________________________________________________________________________________
+
+
+Aim:
+Write an android application to demonstrate broadcast and broadcast
+receiver.
+
+MainActivity.java:
+
+package com.example.practical11_049;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.view.View;
+public class MainActivity extends AppCompatActivity
+{
+    private MyReceiver mReceiver = new MyReceiver();
+    private static final String ACTION_CUSTOM_BROADCAST =
+            "ACTON_CUSTOM_BROADCAST";
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_POWER_CONNECTED);
+        filter.addAction(Intent.ACTION_BATTERY_LOW);
+        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        this.registerReceiver(mReceiver,filter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver,new
+                IntentFilter(ACTION_CUSTOM_BROADCAST));
+    }
+    public void sendcustomBroadcast(View view)
+    {
+        Intent customintent = new Intent(ACTION_CUSTOM_BROADCAST);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(customintent);
+    }
+    @Override
+    protected void onDestroy()
+    {
+        this.unregisterReceiver(mReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+        super.onDestroy();
+    }
+}
+
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="207dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="102dp"
+        android:layout_marginLeft="102dp"
+        android:layout_marginTop="241dp"
+        android:layout_marginEnd="102dp"
+        android:layout_marginRight="102dp"
+        android:layout_marginBottom="429dp"
+        android:onClick="sendcustomBroadcast"
+        android:text="@string/btn_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+MyReceiver.java:
+
+package com.example.practical11_049;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+public class MyReceiver extends BroadcastReceiver {
+    private static final String ACTION_CUSTOM_BROADCAST =
+            "ACTION_CUSTOM_BROADCAST";
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        String intentAction = intent.getAction();
+        if (intentAction != null) {
+            String msg = "Unknown Intent";
+            switch (intentAction) {
+                case Intent.ACTION_BATTERY_LOW:
+                    msg = "Battery low!!";
+                    break;
+                case Intent.ACTION_POWER_CONNECTED:
+                    msg = "Power Connected!";
+                    break;
+                case Intent.ACTION_POWER_DISCONNECTED:
+                    msg = "Power Disconnected!";
+                    break;
+                case ACTION_CUSTOM_BROADCAST:
+                    msg = "Custom Broadcast Received";
+                    break;
+            }
+            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        }
+    }
+}
+
+activity_my_receiver.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyReceiver">
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+AndroidManifest.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.practical11_049">
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Practical11_049">
+        <receiver
+            android:name=".MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+        </receiver>
+        <activity android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
+
+Strings.xml:
+
+<resources>
+    <string name="app_name">Practical11_049</string>
+    <string name="btn_text">Send Custom Broadcast</string>
+</resources>
+
+_______________________________________________________________________________________________________________
+
+
+
+Aim:
+Write an android application to demonstrate notification from an app.
+
+MainActivity.java:
+
+package com.example.practical12_049;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.media.RingtoneManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+public class MainActivity extends AppCompatActivity
+{
+    NotificationManager nmgr;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        nmgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O)
+        {
+            NotificationChannel nchannel = new
+                    NotificationChannel("Notification1","My Notification",NotificationManager.IMPORTANCE_DEFAULT);
+
+                    nchannel.enableVibration(true);
+            nchannel.enableLights(true);
+            nchannel.setDescription("Notification from MyActivity");
+            nmgr.createNotificationChannel(nchannel);
+        }
+    }
+    private NotificationCompat.Builder getNotifyBuilder()
+    {
+        Intent intent = new Intent(this, Notifed.class);
+        PendingIntent pintent =
+                PendingIntent.getActivity(this,1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder nBuilder = new
+                NotificationCompat.Builder(this,"Notification1")
+
+                .setContentTitle("You have been notified")
+                .setContentText("This is your notification")
+                .setContentIntent(pintent)
+                .setSmallIcon(R.drawable.ic_launcher_background)
+
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+
+                .setAutoCancel(true);
+
+        return nBuilder;
+    }
+    public void onNotify(View view) {
+        NotificationCompat.Builder mybuilder = getNotifyBuilder();
+        nmgr.notify(1,mybuilder.build());
+    }
+}
+
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginLeft="158dp"
+        android:layout_marginTop="341dp"
+        android:layout_marginEnd="159dp"
+        android:layout_marginRight="159dp"
+        android:layout_marginBottom="342dp"
+        android:onClick="onNotify"
+        android:text="@string/btntxt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+Notified.java:
+
+package com.example.practical12_049;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+public class Notifed extends AppCompatActivity
+{
+    TextView tv1;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_notifed);
+        tv1 = findViewById(R.id.textview);
+    }
+}
+
+activity_notified.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Notifed">
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="225dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginLeft="176dp"
+        android:layout_marginTop="356dp"
+        android:layout_marginEnd="235dp"
+        android:layout_marginRight="235dp"
+        android:layout_marginBottom="356dp"
+        android:text="@string/txtdata"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.368"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+Strings.xml:
+
+<resources>
+<string name="app_name">NotificationApp</string>
+<string name="btntxt">Notify</string>
+<string name="txtdata">This is a notification</string>
+</resources>
+
+__________________________________________________________________________________________________________
+
+Aim:
+Write an android application to demonstrate the use of SQLite
+databases.
+
+MainActivity.java:
+
+package com.example.practical13_49;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity
+{
+    EditText t1;
+    MySqliteHelper mysql;
+    SQLiteDatabase db;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        t1=findViewById(R.id.e1);
+        mysql=new MySqliteHelper(this);
+    }
+    public void onSave(View view)
+    {
+        db=mysql.getWritableDatabase();
+        String name=t1.getText().toString();
+        String q1="INSERT INTO USERS(NAME) VALUES('"+name+"')";
+        db.execSQL(q1);
+        Toast.makeText(this, "Record Inserted", Toast.LENGTH_LONG).show();
+    }
+    public void onView(View view)
+    {
+        db=mysql.getReadableDatabase();
+        String q2="SELECT * FROM USERS";
+        Cursor cursor=db.rawQuery(q2,null);
+        while(cursor.moveToNext())
+        {
+            String n=cursor.getString(1);
+            Toast.makeText(this,n, Toast.LENGTH_LONG).show();
+        }
+    }
+}
+
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginLeft="148dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="148dp"
+        android:layout_marginRight="148dp"
+        android:layout_marginBottom="342dp"
+        android:onClick="onView"
+        android:text="View data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <EditText
+        android:id="@+id/e1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="107dp"
+        android:layout_marginEnd="101dp"
+        android:ems="10"
+        android:hint="Enter name to be saved"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginLeft="158dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="159dp"
+        android:layout_marginRight="159dp"
+        android:onClick="onSave"
+        android:text="Save Data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/e1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+MySqliteHelper.java:
+
+package com.example.practical13_49;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
+public class MySqliteHelper extends SQLiteOpenHelper
+{
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "Records";
+    public MySqliteHelper(Context context)
+    {
+        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+    }
+    @Override
+    public void onCreate(SQLiteDatabase db)
+    {
+        String query1 = "CREATE TABLE USERS(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT)";
+        db.execSQL(query1);
+    }
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+    {
+        String query2="DROP TABLE IF EXISTS USERS";
+        db.execSQL(query2);
+        onCreate(db);
+    }
+}
+
+
+____________________________________________________________________________________________________________
+
+
+Aim:
+Write an android application to demonstrate the use of Options
+Menu, Floating Context Menu and Contextual Action Bar Menu.
+
+MainActivity.java:
+
+package com.example.menuappl;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.ActionMode;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+public class MainActivity extends AppCompatActivity
+{
+    TextView t1,t2;
+    ActionMode mactionmode;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        t1=findViewById(R.id.text1);
+        t2=findViewById(R.id.actiontext);
+        registerForContextMenu(t1); //meant for floating context menu
+        t2.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                if (mactionmode!=null) return false;
+                mactionmode=MainActivity.this.startActionMode(actionModeCallback);
+                return true;
+            }
+        });
+    }
+    public ActionMode.Callback actionModeCallback=new ActionMode.Callback()
+    {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu)
+        {
+            getMenuInflater().inflate(R.menu.menu3,menu);
+            return true;
+        }
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+        {
+            return false;
+        }
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+        {
+            switch(item.getItemId())
+            {
+                case R.id.item7:
+                    Toast.makeText(MainActivity.this, "Edit CAB Selected",
+                            Toast.LENGTH_SHORT).show();
+                    mode.finish();
+                    return true;
+                case R.id.item8:
+                    Toast.makeText(MainActivity.this, "Share CAB Selected",
+                            Toast.LENGTH_SHORT).show();
+                    mode.finish();
+                    return true;
+                default: return false;
+            }
+        }
+        @Override
+        public void onDestroyActionMode(ActionMode mode)
+        {
+            mactionmode=null;
+        }
+    };
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu1,menu);
+        return(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.item1:
+                Toast.makeText(this, "Search Option Menu Selected",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item2:
+                Toast.makeText(this, "Cart Option Menu Selected",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item3:
+                Toast.makeText(this, "Settings Option Menu Selected",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.menu2,menu);
+    }
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.item4:
+                Toast.makeText(this, "Edit Context Menu Selected",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item5:
+                Toast.makeText(this, "Share Context Menu Selected",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item6:
+                Toast.makeText(this, "Delete Context Menu Selected",
+                        Toast.LENGTH_SHORT).show();
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+}
+
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="210dp"
+        android:layout_height="119dp"
+        android:layout_marginStart="138dp"
+        android:layout_marginLeft="138dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="139dp"
+        android:layout_marginRight="139dp"
+        android:text="Press for Floating Context Menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/actiontext"
+        android:layout_width="210dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="135dp"
+        android:layout_marginLeft="135dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="136dp"
+        android:layout_marginRight="136dp"
+        android:layout_marginBottom="289dp"
+        android:text="Press for Action Context Menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text1" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+Menu1.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item1"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_search"
+        android:title="search"
+        android:visible="true"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item2"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_cart"
+        android:title="cart"
+        android:visible="true"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/item3"
+        android:enabled="true"
+        android:title="Settings"
+        android:visible="true"
+        app:showAsAction="never" />
+</menu>
+
+Menu2.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item4"
+        android:enabled="true"
+        android:title="Edit"
+        android:visible="true" />
+    <item
+        android:id="@+id/item5"
+        android:title="Share"
+        android:visible="true" />
+    <item
+        android:id="@+id/item6"
+        android:enabled="true"
+        android:title="Delete"
+        android:visible="true" />
+</menu>
+
+Menu3.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item7"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_edit"
+        android:title="Edit"
+        android:visible="true" />
+    <item
+        android:id="@+id/item8"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_share"
+        android:title="Share"
+        android:visible="true" />
+</menu>
+
+__________________________________________________________________________________________________________
+
