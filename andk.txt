@@ -326,7 +326,7 @@ activity_second.xml:
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity2">
+    tools:context=".SecondActivity">
     <TextView
         android:id="@+id/t1"
         android:layout_width="wrap_content"
@@ -361,17 +361,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         e1 = findViewById(R.id.uname);
-        e2 = findViewById(R.id.pass);
-    }
+        e2 = findViewById(R.id.pass); }
     public void onLogin(View view) {
         String user = e1.getText().toString();
         String pwd = e2.getText().toString();
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,SecondActivity.class);
         intent.putExtra("username",user);
         intent.putExtra("password",pwd);
-        startActivity(intent);
-    }
+        startActivity(intent); }
 }
+
 
 SecondActivity.java:
 
@@ -380,26 +379,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-public class MainActivity2 extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity {
     TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_second);
         tv = findViewById(R.id.t1);
         Intent rintent = getIntent();
         String user = rintent.getStringExtra("username");
         String pwd = rintent.getStringExtra("password");
         if(user.equals("Administrator") && pwd.equals("admin@123"))
         {
-            tv.setText("Welcome " + user);
-        }
+            tv.setText("Welcome " + user); }
         else
         {
-            tv.setText("Invalid User!");
-        }
-    }
-}
+            tv.setText("Invalid User!"); } } }
 
 ______________________________________________________________________________________________________________
 
