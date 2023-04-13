@@ -688,3 +688,25 @@ https://github.com/kibson6781/Kibson-678/blob/main/Android_Journal.pdf
 https://github.com/kibson6781/Kibson-678/blob/main/FOA_Journal%5B1%5D.pdf
 https://github.com/kibson6781/Kibson-678/blob/main/FOA%20PRACTICAL%20(1234%20get%20on).pdf
 
+_____________________________________________________________________________________________________________
+
+pip install openai
+
+import openai
+import os
+
+# Set your OpenAI API key as an environment variable
+openai.api_key = "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"
+
+
+# Define your prompt
+prompt = "Write a python program to implement matrix multiplication "
+
+# Generate a response from ChatGPT
+response = openai.Completion.create(
+    engine="davinci", prompt=prompt, max_tokens=1024, n=1,stop=None,temperature=0.7
+)
+
+# Print the response text
+print(response.choices[0].text)
+
