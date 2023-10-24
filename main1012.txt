@@ -1,1 +1,417 @@
+Aim:
+Install Selenium Client & WebDriver and demonstrate it using a script in Java.
+
+package stqa3;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class STQA3 {
+    public static void main(String[] args) {
+        // Set the path to the ChromeDriver executable
+        System.setProperty("webdriver.chrome.driver", "C:/Users/sies/Desktop/New folder/chromedriver_104.exe");
+
+        // Create a new instance of the ChromeDriver
+        WebDriver driver = new ChromeDriver();
+
+        // Navigate to the Google homepage
+        driver.get("https://www.google.com");
+
+        // Maximize the browser window
+        driver.manage().window().maximize();
+
+        // Close the browser window
+        // driver.close();
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Practical No.4:
+Aim:
+Write and test a program to login a specific webpage.
+
+index.php:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <form action="Welcome.html" method="post" name="signup-form">
+        <div class="form-element">
+            <label>Username</label>
+            <input id="username" type="text" name="username" pattern="[a-zA-Z0-9]+" required />
+        </div>
+        <div class="form-element">
+            <label>Password</label>
+            <input id="password" type="password" name="password" required />
+        </div>
+        <button id="submit" type="submit" name="submit" value="submit">Submit</button>
+    </form>
+</body>
+</html>
+
+Welcome.html:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div>Welcome</div>
+</body>
+</html>
+
+STQA4.java:
+
+package stqa4;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class STQA4 {
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "D:/User/Desktop/New Folder/chromedriver_104.exe");
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+        driver.get("http://localhost:81/login.php");
+        driver.findElement(By.id("username")).sendKeys("admin");
+        driver.findElement(By.id("password")).sendKeys("123");
+        driver.findElement(By.id("submit")).click();
+
+        if (driver.getTitle().contains("Welcome")) {
+            System.out.println("Logged in successfully");
+        } else {
+            System.out.println("Failed to login");
+        }
+
+        // Close the browser
+        // driver.quit();
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Practical No.5:
+Aim:
+Write and test a program to provide total number of objects present / available on the page.
+
+STQA5.java
+
+package stqa5;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.util.List;
+
+public class STQA5 {
+    public static void main(String[] args) {
+        // Set the path to the ChromeDriver executable
+        System.setProperty("webdriver.chrome.driver", "D:/User/Desktop/New Folder/chromedriver_104.exe");
+
+        // Create a new instance of the ChromeDriver
+        WebDriver driver = new ChromeDriver();
+
+        // Maximize the browser window
+        driver.manage().window().maximize();
+
+        // Navigate to the Google homepage
+        driver.get("https://www.google.com");
+
+        // Find all links on the page
+        List<WebElement> links = driver.findElements(By.tagName("a"));
+
+        // Find all buttons on the page
+        List<WebElement> buttons = driver.findElements(By.tagName("button"));
+
+        // Find all input fields on the page
+        List<WebElement> fields = driver.findElements(By.tagName("input"));
+
+        // Output the counts
+        System.out.println("Total no. of links: " + links.size());
+        System.out.println("Total no. of buttons: " + buttons.size());
+        System.out.println("Total no. of fields: " + fields.size());
+
+        // Close the browser
+        driver.quit();
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Practical No.6:
+Aim:
+Write and test a program to update 10 student records into table into Excel file.
+
+Book1.xls:   Create table in microsoft excel  roll no, name, java, python, web programming, taotal.  total 10 name.
+
+STQA6.java
+package stqa6;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
+public class STQA6 {
+    public static void main(String[] args) throws Exception {
+        // Input file path
+        FileInputStream fi = new FileInputStream("C:\\Users\\sies\\Desktop\\Book1.xls");
+        
+        // Read the input workbook
+        Workbook w = Workbook.getWorkbook(fi);
+        
+        // Get the first sheet
+        Sheet s = w.getSheet(0);
+        
+        String a[][] = new String[s.getRows()][s.getColumns()];
+        
+        // Output file path
+        FileOutputStream fo = new FileOutputStream("C:\\Users\\sies\\Desktop\\Book2.xls");
+        
+        // Create a writable workbook
+        WritableWorkbook wwb = Workbook.createWorkbook(fo);
+        
+        // Create a writable sheet
+        WritableSheet ws = wwb.createSheet("result1", 0);
+        
+        for (int i = 0; i < s.getRows(); i++) {
+            for (int j = 0; j < s.getColumns(); j++) {
+                a[i][j] = s.getCell(j, i).getContents();
+                Label l = new Label(j, i, a[i][j]);
+                ws.addCell(l);
+            }
+        }
+        
+        Label l = new Label(6, 0, "Result");
+        ws.addCell(l);
+        
+        for (int i = 1; i < s.getRows(); i++) {
+            for (int j = 1; j < s.getColumns(); j++) {
+                a[i][j] = s.getCell(j, i).getContents();
+                int x = Integer.parseInt(a[i][j]);
+                if (x / 3 >= 35) {
+                    Label l1 = new Label(6, i, "pass");
+                    ws.addCell(l1);
+                } else {
+                    Label l1 = new Label(6, i, "fail");
+                    ws.addCell(l1);
+                    break;
+                }
+            }
+        }
+        
+        // Write the changes and close the workbook
+        wwb.write();
+        wwb.close();
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Practical No.7:
+Aim:
+Write and test a program to select the number of students who have scored more than 60 in any one subject
+
+STQA7.java
+
+package stqa7;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
+public class STQA7 {
+    public static void main(String[] args) throws Exception {
+        // Input file path
+        FileInputStream fi = new FileInputStream("C:\\Users\\sies\\Desktop\\Book1.xls");
+
+        // Read the input workbook
+        Workbook w = Workbook.getWorkbook(fi);
+
+        // Get the first sheet
+        Sheet s = w.getSheet(0);
+        String a[][] = new String[s.getRows()][s.getColumns()];
+        
+        // Output file path
+        FileOutputStream fo = new FileOutputStream("C:\\Users\\sies\\Desktop\\Book3.xls");
+
+        // Create a writable workbook
+        WritableWorkbook wwb = Workbook.createWorkbook(fo);
+        
+        // Create a writable sheet
+        WritableSheet ws = wwb.createSheet("result1", 0);
+
+        for (int i = 0; i < s.getRows(); i++) {
+            String temp[] = new String[s.getColumns()];
+            boolean flag = false;
+            for (int j = 0; j < s.getColumns(); j++) {
+                temp[j] = s.getCell(j, i).getContents();
+                if (i >= 1 && j >= 2 && j <= 4) {
+                    if (Integer.parseInt(temp[j]) >= 60) {
+                        flag = true;
+                    }
+                }
+            }
+            if (flag) {
+                for (int k = 0; k < temp.length; k++) {
+                    Label l2 = new Label(k, i, temp[k]);
+                    ws.addCell(l2);
+                }
+            }
+        }
+        
+        // Write the changes and close the workbook
+        wwb.write();
+        wwb.close();
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Practical No.8:
+Aim:
+Write and test a program to get the number of items in a list / combo box.
+
+STQA8.java:
+
+package stqa8;
+
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class STQA8 {
+    public static void main(String[] args) {
+        // Set the path to the ChromeDriver executable
+        System.setProperty("webdriver.chrome.driver", "D:/User/Desktop/New Folder/chromedriver_104.exe");
+
+        // Create a new instance of the ChromeDriver
+        WebDriver driver = new ChromeDriver();
+
+        // Maximize the browser window
+        driver.manage().window().maximize();
+
+        // Navigate to the web page
+        driver.get("http://localhost:81/list_combobox.html");
+
+        // Find all list items
+        List<WebElement> lists = driver.findElements(By.xpath("//ol/li"));
+
+        System.out.println("Total number of list items: " + lists.size());
+
+        // Close the browser
+        // driver.quit();
+    }
+}
+
+List1.html:
+
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>List</h2>
+    <ol>
+        <li>Sumanth</li>
+        <li>Anantha</li>
+        <li>Afzal</li>
+    </ol>
+</body>
+</html>
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Practical No.9:
+Aim:
+Write and test a program to count the number of check boxes on the page checked and unchecked count.
+
+STQA9.java:
+
+package stqa9;
+
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class STQA9 {
+    public static void main(String[] args) {
+        // Set the path to the ChromeDriver executable
+        System.setProperty("webdriver.chrome.driver", "D:/User/Desktop/New Folder/chromedriver_104.exe");
+
+        // Create a new instance of the ChromeDriver
+        WebDriver driver = new ChromeDriver();
+
+        // Maximize the browser window
+        driver.manage().window().maximize();
+
+        // Navigate to the web page
+        driver.get("http://localhost:81/list_combobox.html");
+
+        // Find all checkboxes
+        List<WebElement> checkboxes = driver.findElements(By.cssSelector("input[type='checkbox']"));
+
+        int checked = 0, unchecked = 0;
+
+        for (WebElement checkbox : checkboxes) {
+            if (checkbox.isSelected()) {
+                checked++;
+            } else {
+                unchecked++;
+            }
+        }
+
+        System.out.println("Total no. of checkboxes checked: " + checked);
+        System.out.println("Total no. of checkboxes not checked: " + unchecked);
+
+        // Close the browser
+        driver.quit();
+    }
+}
+
+List_Combobox.html:
+
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>ComboBox</h2>
+    <label for="colors">Choose a color: </label>
+    <select name="colors" id="color">
+        <option value="Black">Black</option>
+        <option value="White">White</option>
+        <option value="Red">Red</option>
+        <option value="Yellow">Yellow</option>
+    </select>
+    <br /><br />
+    <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+    <label for="vehicle1">Bike</label><br>
+    <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+    <label for="vehicle2">Car</label><br>
+    <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+    <label for="vehicle3">Boat</label><br>
+</body>
+</html>
+
+
+
+
 
