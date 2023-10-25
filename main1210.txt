@@ -414,3 +414,34 @@ plt.show()
 
 https://github.com/kibson6781/Kibson-678/blob/main/AI%20Practical%20Journal(TCS2223077).pdf
 https://github.com/kibson6781/Kibson-678/blob/main/TCS2324045%20AI%20JOURNAL_removed.pdf
+
+
+import pandas
+from sklearn import model_selection
+from sklearn.ensemble import AdaBoostClassifier
+
+# Load the dataset
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
+names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
+dataframe = pandas.read_csv(url, names=names)
+
+# Prepare the dataset
+array = dataframe.values
+X = array[:, 0:8]
+Y = array[:, 8]
+
+# Set the random seed and number of trees
+seed = 7
+num_trees = 30
+
+# Split the training data into smaller samples using k-fold cross-validation
+kfold = model_selection.KFold(n_splits=10)
+
+# Create the AdaBoost model
+model = AdaBoostClassifier(n_estimators=num_trees, random_state=seed)
+
+# Evaluate the model using cross-validation
+results = model_selection.cross_val_score(model, X, Y, cv=kfold)
+
+# Print the mean accuracy
+print("Mean Accuracy: {:.2f}%".format(results.mean() * 100))
