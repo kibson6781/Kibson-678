@@ -445,3 +445,78 @@ results = model_selection.cross_val_score(model, X, Y, cv=kfold)
 
 # Print the mean accuracy
 print("Mean Accuracy: {:.2f}%".format(results.mean() * 100))
+
+
+# Import necessary libraries
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+from sklearn import svm
+from sklearn import datasets
+
+# Load the breast cancer dataset
+cancer_data = datasets.load_breast_cancer()
+
+# Split the dataset into training and testing sets
+x_train, x_test, y_train, y_test = train_test_split(cancer_data.data, cancer_data.target, test_size=0.4, random_state=189)
+
+# Create a Support Vector Classifier (SVC) with a linear kernel
+cls = svm.SVC(kernel="linear")
+
+# Train the model
+cls.fit(x_train, y_train)
+
+# Predict the responses
+y_pred = cls.predict(x_test)
+
+# Calculate accuracy
+accuracy = metrics.accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+
+# Print classification report
+classification_report = metrics.classification_report(y_test, y_pred)
+print(classification_report)
+
+
+import random
+
+# Define the map and the goal node
+graph = {
+    'S': ['A', 'B', 'C'],
+    'A': ['S', 'D'],
+    'B': ['S', 'E'],
+    'C': [],
+    'D': ['A', 'G'],
+    'E': ['B', 'G', 'F'],
+    'F': ['C', 'E'],
+    'G': ['D', 'E']
+}
+
+goal_node = 'G'
+
+# Define the move generator function
+def movegen(node):
+    return graph.get(node, [])
+
+# Define the goal test function
+def goaltest(node):
+    return node == goal_node
+
+# Simple search function
+def ss1():
+    open_list = ['S']
+
+    while open_list:
+        random.shuffle(open_list)
+        n = open_list.pop()
+        
+        if goaltest(n):
+            return "FOUND"
+        else:
+            moves = movegen(n)
+            for i in moves:
+                if i not in open_list:
+                    open_list.append(i)
+    
+    return "NOT FOUND"
+
+print(ss1())
