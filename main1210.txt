@@ -1,522 +1,754 @@
-#Aim: Implementation of Simple Search 1
+AIM :
+Write programs to implement the following Substitution
+Cipher Techniques: 1) Caesar Cipher. 2) Monoalphabetic Cipher 
 
-import random
 
-OPEN = ['S']
-map_list = {
-    'S': ['A', 'B', 'C'],
-    'A': ['S', 'D'],
-    'B': ['S', 'E'],
-    'C': ['S', 'F'],
-    'D': ['A', 'G'],
-    'E': ['B', 'G', 'F'],
-    'F': ['C', 'E'],
-    'G': ['D', 'E']
+ 1) Caesar Cipher
+
+import java.util.*;
+
+class CaesarCipher {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int shift, i, n;
+        String str;
+        String str1 = "";
+        String str2 = "";
+
+        System.out.println("Enter the plaintext");
+        str = sc.nextLine();
+        str = str.toLowerCase();
+        n = str.length();
+        char ch1[] = str.toCharArray();
+        char ch3, ch4;
+
+        System.out.println("Enter the value by which each letter of the string is to be shifted");
+        shift = sc.nextInt();
+
+        System.out.println();
+        System.out.println("Encrypted text is");
+        for (i = 0; i < n; i++) {
+            if (Character.isLetter(ch1[i])) {
+                ch3 = (char)(((int)ch1[i] + shift - 97) % 26 + 97);
+                str1 = str1 + ch3;
+            } else if (ch1[i] == ' ') {
+                str1 = str1 + ch1[i];
+            }
+        }
+        System.out.println(str1);
+
+        System.out.println();
+        System.out.println("Decrypted text is");
+
+        char ch2[] = str1.toCharArray();
+        for (i = 0; i < str1.length(); i++) {
+            if (Character.isLetter(ch2[i])) {
+                if (((int)ch2[i] - shift) < 97) {
+                    ch4 = (char)(((int)ch2[i] - shift - 97 + 26) % 26 + 97);
+                } else {
+                    ch4 = (char)(((int)ch2[i] - shift - 97) % 26 + 97);
+                }
+                str2 = str2 + ch4;
+            } else if (ch2[i] == ' ') {
+                str2 = str2 + ch2[i];
+            }
+        }
+        System.out.println(str2);
+    }
 }
 
-def movegen(node):
-    return map_list[node]
+2) Monoalphabetic Cipher 
 
-def goaltest(node):
-    return node == 'G'
+Cipher.java
 
-def ss1():
-    while len(OPEN) > 0:
-        random.shuffle(OPEN)
-        N = OPEN.pop()
-        if goaltest(N):
-            return "Found"
-        else:
-            n = movegen(N)
-            for i in n:
-                if i not in OPEN:
-                    OPEN.append(i)
-            print("OPEN_LIST", OPEN)
-    return "NOT Found"
 
-print(ss1())
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------
-#Aim: Implementation of Simple Search 2
 
-import random
+class Cipher {
 
-OPEN = ['S']
-CLOSED = []
-map_list = {
-    'S': ['A', 'B', 'C'],
-    'A': ['S', 'D'],
-    'B': ['S', 'E'],
-    'C': ['S', 'F'],
-    'D': ['A', 'G'],
-    'E': ['B', 'G', 'F'],
-    'F': ['C', 'E'],
-    'G': ['D', 'E']
+    static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+    public static char shift(char ch, int amount) {
+        return alphabet.charAt((alphabet.indexOf(ch) + amount) % alphabet.length());
+    }
+
+    public static String caesarCipher(String text, int amount) {
+        String result = "";
+        for (char ch : text.toCharArray()) {
+            if (alphabet.indexOf(ch) >= 0) {
+                result += shift(ch, amount);
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        assert shift('a', 1) == 'b';
+        assert shift('z', 2) == 'b';
+        assert caesarCipher("abc", 2).equals("cde");
+    }
 }
 
-def movegen(node):
-    return map_list[node]
 
-def goaltest(node):
-    return node == 'G'
+Gui.java
 
-def ss2():
-    while len(OPEN) > 0:
-        random.shuffle(OPEN)
-        N = OPEN.pop()
-        CLOSED.append(N)
-        if goaltest(N):
-            return "Found"
-        else:
-            n = movegen(N)
-            for i in n:
-                if i not in OPEN and i not in CLOSED:
-                    OPEN.append(i)
-            print("OPEN_LIST", OPEN)
-            print("CLOSED_LIST", CLOSED)
-    return "NOT Found"
 
-print(ss2())
+import javax.swing.*;        
+import java.awt.*;
+import java.awt.event.*;
 
------------------------------------------------------------------------------------------------------------------------------------------------------
-# Aim: Implementation of Simple Search 3
+public class Gui {
 
-import random
+    private static void createAndShowGUI() {
+        //Create and set up the window.
+        JFrame frame = new JFrame("HelloWorldSwing");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-OPEN = [['S', None]]
-CLOSED = []
-map_list = {
-    'S': ['A', 'B', 'C'],
-    'A': ['S', 'D'],
-    'B': ['S', 'E'],
-    'C': ['S', 'F'],
-    'D': ['A', 'G'],
-    'E': ['B', 'G', 'F'],
-    'F': ['C', 'E'],
-    'G': ['D', 'E']
+        JPanel body = new JPanel();
+
+        final JTextField label = new JTextField("aaaaaaaaaaaaaaaaaaaaaaa");
+        body.add(label);
+
+        final JTextField key = new JTextField("1");
+        body.add(key);
+
+        final JTextField result = new JTextField("bbbbbbbbbbbbbbbbbbbbbb");
+
+
+        JButton activationButton = new JButton("Encrypt");
+        activationButton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent ae)
+            {
+                String plainText = label.getText();
+                String keyval = key.getText();
+                result.setText(Cipher.caesarCipher(plainText, Integer.parseInt(keyval)));
+            }
+        });
+
+        body.add(activationButton);
+
+        body.add(result);
+
+        frame.add(body);
+
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
+    }
 }
 
-def movegen(node):
-    return map_list[node]
+--------------------------------------------------------------------------------------------------------------
 
-def goaltest(node):
-    return node == 'G'
+AIM :
+Write programs to implement the following Substitution
+Cipher Techniques: 3) Vernam Cipher. 4) Playfair Cipher 
 
-def returnpath(path):
-    if path is not None:
-        return str(path[0] + returnpath(path[1]))
-    else:
-        return ""
+3) Vernam Cipher
 
-def ss3():
-    while len(OPEN) > 0:
-        random.shuffle(OPEN)
-        print("Open list", OPEN)
-        M = OPEN.pop()
-        N = M[0]
-        CLOSED.append(N)
-        print("Picked: ", CLOSED)
-        if goaltest(N):
-            print("Goal Found")
-            print("Path: ", returnpath(M)[::-1])
-            return
-        else:
-            neigh = movegen(N)
-            for node in neigh:
-                if node not in CLOSED and node not in [x[0] for x in OPEN]:
-                    new_list = [node, M]
-                    OPEN.append(new_list)
-    print("NOT Found")
+import java.util.*;
 
-ss3()
+public class vernam {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
+        System.out.println("Enter Plain Text:");
+        String pt = sc.next();
+        int strlen = pt.length();
 
-Aim:
-To write a python program to implement Breadth First Search algorithm.
+        System.out.println("Keyword:");
+        String keyword = key(strlen);
+        System.out.println(keyword);
 
-graph = {
-    'S': ['A', 'B', 'C'],
-    'A': ['S', 'D'],
-    'B': ['S', 'E'],
-    'C': ['S', 'F'],
-    'D': ['A', 'G'],
-    'E': ['B', 'G', 'F'],
-    'F': ['C', 'E'],
-    'G': ['D', 'E']
+        System.out.println("Encrypted Text");
+        String et = encrypt(pt, keyword);
+        System.out.println(et);
+    }
+
+    public static String encrypt(String pt, String key) {
+        int a, b, c;
+        StringBuilder et = new StringBuilder(pt.length());
+        for (int i = 0; i < pt.length(); i++) {
+            a = av(pt.charAt(i));
+            b = av(key.charAt(i));
+            c = (a + b) % 26;
+            et = et.append((char) nv(c));
+        }
+
+        return et.toString();
+    }
+
+    public static String key(int n) {
+        int a = 97;
+        int z = 122;
+        int strlen = n;
+        Random random = new Random();
+        StringBuilder buffer = new StringBuilder(strlen);
+        for (int i = 0; i < strlen; i++) {
+            int rli = a + (int) (random.nextFloat() * (z - a + 1));
+            buffer.append((char) rli);
+        }
+        String keyword = buffer.toString();
+        return keyword;
+    }
+
+    public static int av(char x) {
+        int y = (int) 'a';
+        return ((int) x - y);
+    }
+
+    public static char nv(int x) {
+        int z = x + (int) 'a';
+        return ((char) z);
+    }
 }
 
-visited = []
-queue = []
 
-def bfs(visited, graph, node):
-    visited.append(node)
-    queue.append(node)
-    while queue:
-        m = queue.pop(0)
-        print(m, end=" ")
-        for neigh in graph[m]:
-            if neigh not in visited:
-                visited.append(neigh)
-                queue.append(neigh)
+4) Playfair Cipher 
 
-bfs(visited, graph, 'S')
----------------------------------------------------------------------------------------------------------------------------------------------------------------
+import java.awt.Point;
+import java.util.Scanner;
 
-Aim:To write a python program to implement Depth First Search algorithm.
+public class PlayfairCipher {
+    private int length = 0;
+    private String[][] table;
 
-graph = {
-    'S': ['A', 'B', 'C'],
-    'A': ['S', 'D'],
-    'B': ['S', 'E'],
-    'C': ['S', 'F'],
-    'D': ['A', 'G'],
-    'E': ['B', 'G', 'F'],
-    'F': ['C', 'E'],
-    'G': ['D', 'E']
+    public static void main(String args[]) {
+        PlayfairCipher pf = new PlayfairCipher();
+    }
+
+    private PlayfairCipher() {
+        System.out.print("Enter the key for playfair cipher: ");
+        Scanner sc = new Scanner(System.in);
+        String key = parseString(sc);
+        while (key.equals(""))
+            key = parseString(sc);
+        table = this.cipherTable(key);
+
+        System.out.print("Enter the plaintext to be encipher: ");
+        String input = parseString(sc);
+        while (input.equals(""))
+            input = parseString(sc);
+        String output = cipher(input);
+        String decodedOutput = decode(output);
+        this.keyTable(table);
+        this.printResults(output, decodedOutput);
+    }
+
+    private String parseString(Scanner sc) {
+        String parse = sc.nextLine();
+        parse = parse.toUpperCase();
+        parse = parse.replaceAll("[^A-Z]", "");
+        parse = parse.replace("J", "I");
+        return parse;
+    }
+
+    private String[][] cipherTable(String key) {
+        String[][] playfairTable = new String[5][5];
+        String keyString = key + "ABCDEFGHIKLMNOPQRSTUVWXYZ";
+
+        for (int i = 0; i < 5; i++)
+            for (int j = 0; j < 5; j++)
+                playfairTable[i][j] = "";
+
+        for (int k = 0; k < keyString.length(); k++) {
+            boolean repeat = false;
+            boolean used = false;
+
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (playfairTable[i][j].equals("" + keyString.charAt(k))) {
+                        repeat = true;
+                    } else if (playfairTable[i][j].equals("") && !repeat && !used) {
+                        playfairTable[i][j] = "" + keyString.charAt(k);
+                        used = true;
+                    }
+                }
+            }
+        }
+        return playfairTable;
+    }
+
+    private String cipher(String in) {
+        length = (int) in.length() / 2 + in.length() % 2;
+
+        for (int i = 0; i < (length - 1); i++) {
+            if (in.charAt(2 * i) == in.charAt(2 * i + 1)) {
+                in = new StringBuffer(in).insert(2 * i + 1, 'X').toString();
+                length = (int) in.length() / 2 + in.length() % 2;
+            }
+        }
+
+        String[] digraph = new String[length];
+        for (int j = 0; j < length; j++) {
+            if (j == (length - 1) && in.length() / 2 == (length - 1))
+                in = in + "X";
+            digraph[j] = in.charAt(2 * j) + "" + in.charAt(2 * j + 1);
+        }
+
+        String out = "";
+        String[] encDigraphs = new String[length];
+        encDigraphs = encodeDigraph(digraph);
+        for (int k = 0; k < length; k++)
+            out = out + encDigraphs[k];
+        return out;
+    }
+
+    private String[] encodeDigraph(String di[]) {
+        String[] encipher = new String[length];
+
+        for (int i = 0; i < length; i++) {
+            char a = di[i].charAt(0);
+            char b = di[i].charAt(1);
+            int r1 = (int) getPoint(a).getX();
+            int r2 = (int) getPoint(b).getX();
+            int c1 = (int) getPoint(a).getY();
+            int c2 = (int) getPoint(b).getY();
+
+            if (r1 == r2) {
+                c1 = (c1 + 1) % 5;
+                c2 = (c2 + 1) % 5;
+            } else if (c1 == c2) {
+                r1 = (r1 + 1) % 5;
+                r2 = (r2 + 1) % 5;
+            } else {
+                int temp = c1;
+                c1 = c2;
+                c2 = temp;
+            }
+            encipher[i] = table[r1][c1] + "" + table[r2][c2];
+        }
+        return encipher;
+    }
+
+    private String decode(String out) {
+        String decoded = "";
+        for (int i = 0; i < out.length() / 2; i++) {
+            char a = out.charAt(2 * i);
+            char b = out.charAt(2 * i + 1);
+            int r1 = (int) getPoint(a).getX();
+            int r2 = (int) getPoint(b).getX();
+            int c1 = (int) getPoint(a).getY();
+            int c2 = (int) getPoint(b).getY();
+
+            if (r1 == r2) {
+                c1 = (c1 + 4) % 5;
+                c2 = (c2 + 4) % 5;
+            } else if (c1 == c2) {
+                r1 = (r1 + 4) % 5;
+                r2 = (r2 + 4) % 5;
+            } else {
+                int temp = c1;
+                c1 = c2;
+                c2 = temp;
+            }
+            decoded = decoded + table[r1][c1] + table[r2][c2];
+        }
+        return decoded;
+    }
+
+    private Point getPoint(char c) {
+        Point pt = new Point(0, 0);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (c == table[i][j].charAt(0)) {
+                    pt = new Point(i, j);
+                }
+            }
+        }
+        return pt;
+    }
+
+    private void keyTable(String[][] printTable) {
+        System.out.println("Playfair Cipher Key Matrix: ");
+        System.out.println();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                System.out.print(printTable[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    private void printResults(String encipher, String dec) {
+        System.out.print("Encrypted Message: ");
+        System.out.println(encipher);
+        System.out.println();
+        System.out.print("Decrypted Message: ");
+        System.out.println(dec);
+    }
 }
 
-visited = []
+---------------------------------------------------------------------------------------------------------
 
-def dfs(visited, graph, node):
-    if node not in visited:
-        print(node, end=" ")
-        visited.append(node)
-        for n in graph[node]:
-            dfs(visited, graph, n)
+Write programs to implement the following Transposition Cipher Techniques:
+1) Rail Fence Cipher
+2)Simple Columnar Technique 
 
-dfs(visited, graph, 'S')
+1) Rail Fence Cipher
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+import java.util.*;
 
-Aim:
-To write a python program to implement A* Algorithm.
+class RailFenceBasic {
+    String Encryption(String plainText, int depth) {
+        int r = depth, len = plainText.length();
+        int c = len / depth;
+        char mat[][] = new char[r][c];
+        int k = 0;
+        String cipherText = "";
 
-nodelist = {
-    'mumbai': [('delhi', 1200), ('nasik', 350), ('goa', 800), ('pune', 130)],
-    'delhi': [('nasik', 375), ('mumbai', 1200)],
-    'nasik': [('indore', 600), ('delhi', 375), ('mumbai', 350), ('nagpur', 600)],
-    'indore': [('nasik', 600)],
-    'nagpur': [('nasik', 600), ('pune', 450)],
-    'pune': [('mumbai', 130), ('nagpur', 450), ('blore', 550)],
-    'blore': [('hyd', 110), ('goa', 750)],
-    'goa': [('blore', 750), ('hyd', 850), ('mumbai', 800)],
-    'hyd': [('blore', 110), ('goa', 850)]
+        for (int i = 0; i < c; i++) {
+            for (int j = 0; j < r; j++) {
+                if (k != len)
+                    mat[j][i] = plainText.charAt(k++);
+                else
+                    mat[j][i] = 'X';
+            }
+        }
+
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                cipherText += mat[i][j];
+            }
+        }
+        return cipherText;
+    }
+
+    String Decryption(String cipherText, int depth) {
+        int r = depth, len = cipherText.length();
+        int c = len / depth;
+        char mat[][] = new char[r][c];
+        int k = 0;
+        String plainText = "";
+
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                mat[i][j] = cipherText.charAt(k++);
+            }
+        }
+
+        for (int i = 0; i < c; i++) {
+            for (int j = 0; j < r; j++) {
+                plainText += mat[j][i];
+            }
+        }
+        return plainText;
+    }
 }
 
-hd = {
-    'mumbai': 790,
-    'delhi': 1515,
-    'nasik': 1140,
-    'indore': 1540,
-    'nagpur': 1110,
-    'pune': 660,
-    'blore': 110,
-    'goa': 850,
-    'hyd': 0
+class RailFence {
+    public static void main(String args[]) throws Exception {
+        RailFenceBasic rf = new RailFenceBasic();
+        Scanner scn = new Scanner(System.in);
+        int depth;
+
+        String plainText, cipherText, decryptedText;
+
+        System.out.println("Enter plain text:");
+        plainText = scn.nextLine();
+
+        System.out.println("Enter depth for Encryption:");
+        depth = scn.nextInt();
+
+        cipherText = rf.Encryption(plainText, depth);
+        System.out.println("Encrypted text is:\n" + cipherText);
+
+        decryptedText = rf.Decryption(cipherText, depth);
+        System.out.println("Decrypted text is:\n" + decryptedText);
+    }
 }
 
-openList = [('mumbai', 700)]
-closedList = []
 
-def goalTest(node):
-    return node == 'hyd'
+2)Simple Columnar Technique
 
-def moveGen(node):
-    return nodelist[node[0]]
+import java.io.*;
 
-def sort(mylist):
-    for i in range(len(mylist)):
-        for j in range(0, len(mylist) - i - 1):
-            if mylist[j][1] > mylist[j + 1][1]:
-                temp = mylist[j]
-                mylist[j] = mylist[j + 1]
-                mylist[j + 1] = temp
+class SCT {
+    public static void main(String args[]) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter your plain text");
+        String accept = br.readLine();
 
-def AStar():
-    while len(openList) > 0:
-        sort(openList)
-        print("Open List Contains", openList)
-        node = openList.pop(0)
-        closedList.append((node[0], hd[node[0]]))
-        print("Picked node", node)
-        if goalTest(node[0]):
-            return "Goal Found"
-        else:
-            neighbours = moveGen(node)
-            print("Neighbours of", node[0], "are:", neighbours)
-            for n in neighbours:
-                if n not in openList and n[0] not in [x[0] for x in closedList]:
-                    tup = (n[0], n[1] + hd[n[0]])
-                    openList.append(tup)
-    return "Goal Not Found"
+        System.out.println("Enter the number of rows ");
+        int r = Integer.parseInt(br.readLine());
+        System.out.println("Enter the number of cols");
+        int c = Integer.parseInt(br.readLine());
+        int count = 0;
+        char cont[][] = new char[r][c];
 
-result = AStar()
-print(result)
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                if (count >= accept.length()) {
+                    cont[i][j] = ' ';
+                    count++;
+                } else {
+                    cont[i][j] = accept.charAt(count);
+                    count++;
+                }
+            }
+        }
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+        System.out.println("\nEnter the order of cols you want to view them in");
+        int choice[] = new int[c];
 
-Aim:
-To write a python program to implement Best First Search Algorithm.
+        for (int k = 0; k < c; k++) {
+            System.out.print("Choice " + k + " -> ");
+            choice[k] = Integer.parseInt(br.readLine());
+        }
 
-map_list = {
-    'Mumbai': [('Pune', 750), ('Delhi', 1500), ('Goa', 1300)],
-    'Goa': [('Mumbai', 1200)],
-    'Delhi': [('Mumbai', 1200), ('Guwahati', 100), ('Pune', 750)],
-    'Chennai': [('Pune', 750)],
-    'Kolkata': [('Guwahati', 100), ('Pune', 750)],
-    'Pune': [('Mumbai', 1200), ('Kolkata', 0), ('Chennai', 1600), ('Delhi', 1500)],
-    'Guwahati': [('Delhi', 1500), ('Kolkata', 0)]
+        System.out.println("\nCipher text in matrix is ->");
+        String cipher = "";
+
+        for (int j = 0; j < c; j++) {
+            int k = choice[j];
+            for (int i = 0; i < r; i++) {
+                cipher += cont[i][k];
+            }
+        }
+
+        cipher = cipher.trim();
+        System.out.println(cipher);
+    }
 }
 
-OPEN = [[('Mumbai', 1200), None]]
-CLOSED = []
+-----------------------------------------------------------------------------------------------------------
 
-def movegen(node):
-    return map_list[node]
+AIM :
+Write programs to implement RSA algorithm to perform encryption/ decryption of a given string.
 
-def goaltest(node):
-    return node == 'Kolkata'
+import java.math.BigInteger;
+import java.util.Random;
+import java.io.*;
 
-final = []
+public class RSA {
+    private BigInteger p;
+    private BigInteger q;
+    private BigInteger N;
+    private BigInteger phi;
+    private BigInteger e;
+    private BigInteger d;
 
-def reconstructpath(path):
-    if path is None:
-        return ""
-    else:
-        final.append(path[0][0])
-        reconstructpath(path[1])
-    return final
+    private int bitlength = 1024;
+    private int blocksize = 256; // blocksize in bytes
+    private Random r;
 
-def sort(a):
-    for i in range(len(a)):
-        for j in range(0, len(a) - i - 1):
-            if a[j][0][1] > a[j + 1][0][1]:
-                a[j], a[j + 1] = a[j + 1], a[j]
-    return a
+    public RSA() {
+        r = new Random();
+        System.out.println("r");
+        System.out.println(r);
 
-def best():
-    while len(OPEN) > 0:
-        print("Open List: ", OPEN)
-        x = sort(OPEN)
-        seen = x.pop(0)
-        N = seen[0][0]
-        CLOSED.append(N)
-        print("Closed list contains ", CLOSED)
-        print("Node Picked: ", N)
-        if goaltest(N):
-            print(reconstructpath(seen)[::-1])
-            return "Found"
-        else:
-            neigh = movegen(N)
-            for i in neigh:
-                if i[0] not in CLOSED and i not in OPEN:
-                    new = [i, seen]
-                    OPEN.append(new)
-    return "Not Found"
+        p = BigInteger.probablePrime(bitlength, r);
+        System.out.println("p");
+        System.out.println(p);
+        q = BigInteger.probablePrime(bitlength, r);
+        System.out.println("q");
+        System.out.println(q);
 
-result = best()
-print(result)
+        N = p.multiply(q);
+        System.out.println("N");
+        System.out.println(N);
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        phi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
+        System.out.println("phi");
+        System.out.println(phi);
 
-Aim:
-To write a python program to implement Decision Tree Learning.
+        e = BigInteger.probablePrime(bitlength / 2, r);
+        System.out.println("e");
+        System.out.println(e);
 
-import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
+        while (phi.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(phi) < 0) {
+            e = e.add(BigInteger.ONE);
+        }
 
-# Load the dataset
-balance_data = pd.read_csv('C:/Users/sies/Desktop/balance-scale.data', sep=',', header=None)
-print("Dataset Length:", len(balance_data))
-print("Dataset Shape:", balance_data.shape)
-print(balance_data.head())
+        d = e.modInverse(phi);
+        System.out.println("d");
+        System.out.println(d);
+    }
 
-# Split the dataset into features (X) and target (Y)
-X = balance_data.values[:, 1:5]
-Y = balance_data.values[:, 0]
+    public RSA(BigInteger e, BigInteger d, BigInteger N) {
+        this.e = e;
+        this.d = d;
+        this.N = N;
+    }
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.4, random_state=100)
+    public static void main(String[] args) throws IOException {
+        RSA rsa = new RSA();
+        DataInputStream in = new DataInputStream(System.in);
+        String teststring;
 
-# Create Decision Tree classifiers with different criteria
-clf_entropy = DecisionTreeClassifier(criterion="entropy", random_state=100, max_depth=3, min_samples_leaf=5)
-clf_entropy.fit(X_train, y_train)
+        System.out.println("Enter the plain text:");
+        teststring = in.readLine();
+        System.out.println("Encrypting String: " + teststring);
+        System.out.println("String in Bytes: " + bytesToString(teststring.getBytes()));
 
-clf_gini = DecisionTreeClassifier(criterion="gini", random_state=100, max_depth=3, min_samples_leaf=5)
-clf_gini.fit(X_train, y_train)
+        // encrypt
+        byte[] encrypted = rsa.encrypt(teststring.getBytes());
+        System.out.println("Encrypted String in Bytes: " + bytesToString(encrypted));
 
-# **Correct the following line**
-# Predict the target values using the trained classifiers
-y_pred_en = clf_entropy.predict(X_test)
-y_pred_gini = clf_gini.predict(X_test)
+        // decrypt
+        byte[] decrypted = rsa.decrypt(encrypted);
+        System.out.println("Decrypted String in Bytes: " + bytesToString(decrypted));
+        System.out.println("Decrypted String: " + new String(decrypted));
+    }
 
-# Print the results
-print("Actual Target Values (y_test):", y_test)
-print("Predicted Target Values (Entropy Criterion):", y_pred_en)
-print("Predicted Target Values (Gini Criterion):", y_pred_gini)
+    private static String bytesToString(byte[] encrypted) {
+        String test = "";
+        for (byte b : encrypted) {
+            test += Byte.toString(b);
+        }
+        return test;
+    }
 
-# Calculate and print the accuracy of the predictions
-accuracy_entropy = accuracy_score(y_pred_en, y_test) * 100
-accuracy_gini = accuracy_score(y_pred_gini, y_test) * 100
-print("Accuracy (Entropy Criterion):", accuracy_entropy)
-print("Accuracy (Gini Criterion):", accuracy_gini)
+    // Encrypt message
+    public byte[] encrypt(byte[] message) {
+        return (new BigInteger(message)).modPow(e, N).toByteArray();
+    }
 
-----------------------------------------------------------------------------------------------------------------------------------------------------
-Practical:9
-Aim: To implement Support Vector Machine Algorithm in Python
-
-# Importing required libraries
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn import datasets
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
-
-# Create a synthetic dataset
-X, y = datasets.make_classification(n_samples=100, n_features=2, n_classes=2, n_clusters_per_class=1, n_informative=2, random_state=42)
-
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Create an SVM classifier with a linear kernel
-clf = SVC(kernel='linear')
-
-# Train the SVM classifier
-clf.fit(X_train, y_train)
-
-# Make predictions on the test set
-y_pred = clf.predict(X_test)
-
-# Calculate accuracy
-accuracy = accuracy_score(y_test, y_pred)
-print(f'Accuracy: {accuracy}')
-
-# Plot the decision boundary
-plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Paired)
-ax = plt.gca()
-xlim = ax.get_xlim()
-ylim = ax.get_ylim()
-xx, yy = np.meshgrid(np.linspace(xlim[0], xlim[1], 50), np.linspace(ylim[0], ylim[1], 50))
-Z = clf.decision_function(np.c_[xx.ravel(), yy.ravel()])
-Z = Z.reshape(xx.shape)
-plt.contour(xx, yy, Z, colors='k', levels=[-1, 0, 1], alpha=0.5, linestyles=['--', '-', '--'])
-plt.scatter(clf.support_vectors_[:, 0], clf.support_vectors_[:, 1], s=100, linewidth=1, facecolors='none', edgecolors='k')
-plt.title('Support Vector Machine Decision Boundary')
-plt.xlabel('Feature 1')
-plt.ylabel('Feature 2')
-plt.show()
-
-
-https://github.com/kibson6781/Kibson-678/blob/main/AI%20Practical%20Journal(TCS2223077).pdf
-https://github.com/kibson6781/Kibson-678/blob/main/TCS2324045%20AI%20JOURNAL_removed.pdf
-
-
-import pandas
-from sklearn import model_selection
-from sklearn.ensemble import AdaBoostClassifier
-
-# Load the dataset
-url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
-names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
-dataframe = pandas.read_csv(url, names=names)
-
-# Prepare the dataset
-array = dataframe.values
-X = array[:, 0:8]
-Y = array[:, 8]
-
-# Set the random seed and number of trees
-seed = 7
-num_trees = 30
-
-# Split the training data into smaller samples using k-fold cross-validation
-kfold = model_selection.KFold(n_splits=10)
-
-# Create the AdaBoost model
-model = AdaBoostClassifier(n_estimators=num_trees, random_state=seed)
-
-# Evaluate the model using cross-validation
-results = model_selection.cross_val_score(model, X, Y, cv=kfold)
-
-# Print the mean accuracy
-print("Mean Accuracy: {:.2f}%".format(results.mean() * 100))
-
-
-# Import necessary libraries
-from sklearn.model_selection import train_test_split
-from sklearn import metrics
-from sklearn import svm
-from sklearn import datasets
-
-# Load the breast cancer dataset
-cancer_data = datasets.load_breast_cancer()
-
-# Split the dataset into training and testing sets
-x_train, x_test, y_train, y_test = train_test_split(cancer_data.data, cancer_data.target, test_size=0.4, random_state=189)
-
-# Create a Support Vector Classifier (SVC) with a linear kernel
-cls = svm.SVC(kernel="linear")
-
-# Train the model
-cls.fit(x_train, y_train)
-
-# Predict the responses
-y_pred = cls.predict(x_test)
-
-# Calculate accuracy
-accuracy = metrics.accuracy_score(y_test, y_pred)
-print("Accuracy:", accuracy)
-
-# Print classification report
-classification_report = metrics.classification_report(y_test, y_pred)
-print(classification_report)
-
-
-import random
-
-# Define the map and the goal node
-graph = {
-    'S': ['A', 'B', 'C'],
-    'A': ['S', 'D'],
-    'B': ['S', 'E'],
-    'C': [],
-    'D': ['A', 'G'],
-    'E': ['B', 'G', 'F'],
-    'F': ['C', 'E'],
-    'G': ['D', 'E']
+    // Decrypt message
+    public byte[] decrypt(byte[] message) {
+        return (new BigInteger(message)).modPow(d, N).toByteArray();
+    }
 }
 
-goal_node = 'G'
+-----------------------------------------------------------------------------------------------------------------
 
-# Define the move generator function
-def movegen(node):
-    return graph.get(node, [])
+Write programs to implement Diffie-Hellman Key
+Agreement algorithm to generate symmetric keys.
+1) DiffieHellman
+2) Diffie_Hellman
 
-# Define the goal test function
-def goaltest(node):
-    return node == goal_node
+1) DiffieHellman
 
-# Simple search function
-def ss1():
-    open_list = ['S']
+import java.util.*;
 
-    while open_list:
-        random.shuffle(open_list)
-        n = open_list.pop()
+class DiffieHellman {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the value of Xa & Xb");
+        int Xa = sc.nextInt();
+        int Xb = sc.nextInt();
+        System.out.println("Enter a Prime no. p");
+        int p = sc.nextInt();
+        System.out.println("Enter Primitive Root a, with the condition that a < p");
+        int a = sc.nextInt();
         
-        if goaltest(n):
-            return "FOUND"
-        else:
-            moves = movegen(n)
-            for i in moves:
-                if i not in open_list:
-                    open_list.append(i)
-    
-    return "NOT FOUND"
+        int Ya = (int) ((Math.pow(a, Xa)) % p);
+        int Yb = (int) ((Math.pow(a, Xb)) % p);
+        int Ka = (int) ((Math.pow(Yb, Xa)) % p);
+        int Kb = (int) ((Math.pow(Ya, Xb)) % p);
+        
+        if (Ka == Kb) {
+            System.out.println("Transmission successful");
+        } else {
+            System.out.println("Transmission failed");
+        }
+    }
+}
 
-print(ss1())
+2) Diffie_Hellman
+
+import java.util.*;
+
+class Diffie_Hellman {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter modulo(p)");
+        int p = sc.nextInt();
+        System.out.println("Enter primitive root of " + p);
+        int g = sc.nextInt();
+        System.out.println("Choose 1st secret no (Alice)");
+        int a = sc.nextInt();
+        System.out.println("Choose 2nd secret no (Bob)");
+        int b = sc.nextInt();
+
+        int A = (int) Math.pow(g, a) % p;
+        int B = (int) Math.pow(g, b) % p;
+
+        int S_A = (int) Math.pow(B, a) % p;
+        int S_B = (int) Math.pow(A, b) % p;
+
+        if (S_A == S_B) {
+            System.out.println("Alice and Bob can communicate with each other!!!");
+            System.out.println("They share a secret number = " + S_A);
+        } else {
+            System.out.println("Alice and Bob cannot communicate with each other!!!");
+        }
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------
+
+Aim:
+Write programs to implement MD5 algorithm compute the message digest. 
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class JavaMD5Hash {
+    public static void main(String[] args) {
+        System.out.println("For null: " + generateHash(""));
+        System.out.println("For simple text: " + generateHash("sies college."));
+        System.out.println("For simple numbers: " + generateHash("12345"));
+    }
+
+    public static String generateHash(String input) {
+        String md5 = null;
+
+        if (null == input)
+            return null;
+
+        try {
+            // Create MessageDigest object for MD5
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+
+            // Update input string in message digest
+            digest.update(input.getBytes(), 0, input.length());
+
+            // Converts message digest value to base 16 (hex)
+            md5 = new BigInteger(1, digest.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return md5;
+    }
+}
+
+-------------------------------------------------------------------------------------------------------------
+
+AIM :
+Write a program to calculate HMAC-SHA1 Signature
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class PasswordSha256 {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+        String password = "123457";
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hashInBytes = md.digest(password.getBytes());
+
+        // Convert bytes to hex
+        StringBuilder sb = new StringBuilder();
+        for (byte b : hashInBytes) {
+            sb.append(String.format("%02x", b));
+        }
+        
+        System.out.println(sb.toString());
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
