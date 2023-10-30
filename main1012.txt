@@ -69,7 +69,7 @@ root = Tk()
 C = Canvas(root, bg="gray", height=700, width=700)
 C.create_text(100, 40, text="Triangle Before scaling", fill="black", font=('Consolas'))
 
-x0 = int(input("Enter x0: ")
+x0 = int(input("Enter x0: ")   #100,100,50,200,150,200
 y0 = int(input("Enter y0: ")
 x1 = int(input("Enter x1: ")
 y1 = int(input("Enter y1: ")
@@ -110,7 +110,7 @@ from tkinter import *
 root = Tk()
 C = Canvas(root, bg="gray", height=1000, width=1000)
 
-x0 = int(input("Enter the x0 coordinate: "))
+x0 = int(input("Enter the x0 coordinate: "))         #100,100,50,200,150,200
 y0 = int(input("Enter the y0 coordinate: "))
 x1 = int(input("Enter the x1 coordinate: "))
 y1 = int(input("Enter the y1 coordinate: "))
@@ -152,7 +152,7 @@ n = int(input("Enter angle: "))
 a = math.cos(math.radians(n))
 b = math.sin(math.radians(n))
 
-x0 = int(input("Enter x0: "))
+x0 = int(input("Enter x0: "))             #45,100,100,50,200,150,200
 y0 = int(input("Enter y0: "))
 x1 = int(input("Enter x1: "))
 y1 = int(input("Enter y1: "))
@@ -191,7 +191,7 @@ C = Canvas(root, bg="gray", height=1000, width=1000)
 
 # Taking input of coordinates from the user
 x0 = int(input("Enter x0: "))
-y0 = int(input("Enter y0: "))
+y0 = int(input("Enter y0: "))     #100,100,100,200,300,200,300,100,angle=50
 x1 = int(input("Enter x1: "))
 y1 = int(input("Enter y1: "))
 x2 = int(input("Enter x2: "))
@@ -221,13 +221,13 @@ from tkinter import *
 root = Tk()
 C = Canvas(root, bg="yellow", height=1000, width=1200)
 
-C.create_text(100, 40, text="Reflection", fill="black")
+C.create_text(100, 10, text="Reflection", fill="black")   # you can edit as 40
 
 # Define the original coordinates of the polygon
 x1, y1 = 50, 10
 x2, y2 = 25, 30
 x3, y3 = 50, 50
-x4, y4 = 50, 40
+x4, y4 = 50, 40      #67
 x5, y5 = 150, 40
 x6, y6 = 150, 20
 x7, y7 = 50, 20
@@ -790,3 +790,4 @@ public class Rotator : MonoBehaviour
 }
 
 
+https://raw.githubusercontent.com/kibson6781/Kibson-678/main/andk.txt
