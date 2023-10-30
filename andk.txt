@@ -1,1731 +1,671 @@
-Aim:
-Write an Android application with an TextView and Button. 
-Onclick of the button the content of the TextView should toggle
-
-activity_main.xml:
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/textView"
-        android:text="Hello World!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
-
-    <Button
-        android:id="@+id/button"
-        android:text="Toggle Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView"
-        android:layout_centerHorizontal="true"/>
-
-</RelativeLayout>
-
-MainActivity.java:
-
-package com.example.myapplication;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity {
-
-    private TextView textView;
-    private Button button;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        textView = findViewById(R.id.textView);
-        button = findViewById(R.id.button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(textView.getText().toString().equals("Hello World!")){
-                    textView.setText("Text Toggled");
-                }else{
-                    textView.setText("Hello World!");
-                }
-            }
-        });
-    }
-}
-
-______________________________________________________________________________________________________________
+****************************************TRANSALATION***************************************
 
 
-Aim:
-Write an Android application with an Image View and Button. Onclick
-of the button the visibility of the image should toggle.
+'''Write a python program to perform Transalation operation on triangle by taking initial coordinates from user.'''
 
-activity_main.xml:
+from tkinter import *
 
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:onClick="onToggle"
-    tools:context=".MainActivity">
-    <ImageView
-        android:id="@+id/img1"
-        android:layout_width="320dp"
-        android:layout_height="294dp"
-        android:layout_marginTop="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/flower2" />
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
-        android:onClick="onToggle"
-        android:text="Toggle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img1"
-        app:layout_constraintVertical_bias="0.0" />
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-MainActivity.java:
-
-package com.example.myapplication;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-public class MainActivity extends AppCompatActivity {
-    ImageView imgv;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        imgv=findViewById(R.id.img1);
-    }
-    public void onToggle(View view) {
-        if(imgv.getVisibility()==View.VISIBLE)
-        {
-            imgv.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            imgv.setVisibility(View.VISIBLE);
-        }
-    }
-}
-
-_________________________________________________________________________________________________________
-
-Aim:
-Write an Android application to accept two numbers from users and
-perform an arithmetic operation (Addition, Subtraction,
-Multiplication and Division) as per user's choice using radio button.
-The result should be displayed in toast.
-
-activity_main.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <EditText
-        android:id="@+id/fno"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter the first number"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/sno"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.626" />
-    <EditText
-        android:id="@+id/sno"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
-        android:ems="10"
-        android:hint="Enter the second number"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="220dp"
-        android:layout_height="282dp"
-        android:layout_marginBottom="196dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent">
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onAdd"
-            android:text="Add" />
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onSub"
-            android:text="Subtract" />
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onMul"
-            android:text="Multiply" />
-        <RadioButton
-            android:id="@+id/radioButton4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onDiv"
-            android:text="Divide" />
-    </RadioGroup>
-</androidx.constraintlayout.widget.ConstraintLayout>
+root = Tk()
+canvas = Canvas(root, bg="yellow", height=700, width=700)
+x0 = 100
+y0 = 100
+x1 = 200
+y1 = 200
+canvas.create_text(190, 50, text="Rectangle before translation", fill="black", font=('Helvetica 15 bold'))
+rect = canvas.create_rectangle(x0, y0, x1, y1, fill="green")
+tx = 300
+ty = 300
+canvas.create_text(300, 300, text="Rectangle after translation", fill="black", font=('Helvetica 15 bold'))
+rect = canvas.create_rectangle(x0 + tx, y0 + ty, x1 + tx, y1 + ty, fill="pink")
+canvas.pack()
+mainloop()
 
 
-MainActivity.java:
+***************************************8SCALING********************************************
 
-package com.example.myapplication;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
-public class MainActivity extends AppCompatActivity {
-    EditText e1,e2;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        e1=findViewById(R.id.fno);
-        e2=findViewById(R.id.sno);
-    }
-    public void onAdd(View view) {
-        int num1=Integer.parseInt(e1.getText().toString());
-        int num2=Integer.parseInt(e2.getText().toString());
-        int res= num1 + num2;
-        Toast.makeText(this,"Result: " + res, Toast.LENGTH_LONG).show();
-    }
-    public void onSub(View view) {
-        int num1=Integer.parseInt(e1.getText().toString());
-        int num2=Integer.parseInt(e2.getText().toString());
-        int res= num1 - num2;
-        Toast.makeText(this,"Result: " + res, Toast.LENGTH_LONG).show();
-    }
-    public void onMul(View view) {
-        int num1=Integer.parseInt(e1.getText().toString());
-        int num2=Integer.parseInt(e2.getText().toString());
-        int res= num1 * num2;
-        Toast.makeText(this,"Result: " + res, Toast.LENGTH_LONG).show();
-    }
-    public void onDiv(View view) {
-        int num1=Integer.parseInt(e1.getText().toString());
-        int num2=Integer.parseInt(e2.getText().toString());
-        int res= num1 / num2;
-        Toast.makeText(this,"Result: " + res, Toast.LENGTH_LONG).show();
-    }
-}
+'''Write a python program to perform Scaling operation on polygon by taking initial coordinates from user.'''
 
-_________________________________________________________________________________________________________
+#pract2
+from tkinter import *
+root=Tk()
+x0=int(input("Enter x0:- "))  				#100
+y0=int(input("Enter y0:- "))  				#100
+x1=int(input("Enter x1:- "))				#50
+y1=int(input("Enter y1:- "))				#200
+x2=int(input("Enter x2:- "))				#150
+y2=int(input("Enter y2:- "))				#200
+C=Canvas(root,bg="black",height=1000,width=1000)
+C.create_text(150,40,text="Triangle Before scaling",fill="white")
+triangle1=C.create_polygon(x0,y0,x1,y1,x2,y2,fill="orange")
+C.create_text(150,500,text="Triangle After scaling",fill="white")
+sx=2
+sy=2
+triangle2=C.create_polygon(x0*sx,y0*sy,x1*sx,y1*sy,x2*sx,y2*sy,fill="green")
+C.pack()
+mainloop()
 
 
-Aim:
-Write an Android application with two activities namely MainActivity
-and SecondActivity. The username and password from MainActivity
-to be passed to SecondActivity and its validated and appropriate
-message is displayed.
+*****************************************REFLECTION**********************************
 
-activity_main.xml:
+'''Write a python program to perform reflection operation on polygon by taking initial coordinates from user.'''
 
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <EditText
-        android:id="@+id/uname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="101dp"
-        android:layout_marginLeft="101dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="101dp"
-        android:layout_marginRight="101dp"
-        android:layout_marginBottom="54dp"
-        android:ems="10"
-        android:hint="Enter Username"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/pass"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <EditText
-        android:id="@+id/pass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="101dp"
-        android:layout_marginLeft="101dp"
-        android:layout_marginEnd="101dp"
-        android:layout_marginRight="101dp"
-        android:layout_marginBottom="117dp"
-        android:ems="10"
-        android:hint="Enter Password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="298dp"
-        android:onClick="onLogin"
-        android:text="Login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+from tkinter import*
+import math
+root = Tk()
+C = Canvas(root,bg="black",height=1000,width=1000)
+x0 = int(input("Enter x0: "))				#100
+y0 = int(input("Enter y0: "))				#100
+x1 = int(input("Enter x1: "))				#50
+y1 = int(input("Enter y1: "))				#200
+x2 = int(input("Enter x2: "))				#150			
+y2 = int(input("Enter y2: "))				#200
+triangle=C.create_polygon(x0,y0,x1,y1,x2,y2,fill="blue")
+a=200
+y10=-y0+(2*a)
+y11=-y1+(2*a)
+y12=-y2+(2*a)
+triangle=C.create_polygon(x0,y10,x1,y11,x2,y12,fill="green")
+C.pack()
+mainloop()
 
-activity_second.xml:
+****************************************ROTATION***********************************
 
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SecondActivity">
-    <TextView
-        android:id="@+id/t1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="178dp"
-        android:layout_marginLeft="178dp"
-        android:layout_marginTop="323dp"
-        android:layout_marginEnd="175dp"
-        android:layout_marginRight="175dp"
-        android:layout_marginBottom="389dp"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+"""Write a python program to rotate right angle triangle by 45 degree by taking initial coordinates from user."""
 
-MainActivity.java:
+import math
+from tkinter import *
+root=Tk()
+n=int(input("Enter angle"))				#45
+a=math.cos(math.radians(n))
+b=math.sin(math.radians(n))
+x0=int(input("Enter x0:- "))				#100
+y0=int(input("Enter y0:- "))				#100
+x1=int(input("Enter x1:- "))				#50
+y1=int(input("Enter y1:- "))				#200
+x2=int(input("Enter x2:- "))				#150
+y2=int(input("Enter y2:- "))				#200
+C=Canvas(root,bg="black",height=1000,width=1000)
+C.create_text(190,40,text="Triangle Before rotation in green",fill="green",font=('Consolas'))
+triangle1=C.create_polygon(x0,y0,x1,y1,x2,y2,fill="green")
+x11=abs(x0*a-y0*b)
+y11=abs(x0*b+y0*a)
+x12=abs(x1*a-y1*b)
+y12=abs(x1*b+y1*a)
+x13=abs(x2*a-y2*b)
+y13=abs(x2*b+y2*a)
+C.create_text(300,60,text="Triangle After rotation in blue",fill="blue",font=('Consolas'))
+triangle2=C.create_polygon(x11,y11,x12,y12,x13,y13,fill="blue")
+C.pack()
+mainloop()
 
-package com.example.myapplication;
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-public class MainActivity extends AppCompatActivity {
-    EditText e1,e2;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        e1 = findViewById(R.id.uname);
-        e2 = findViewById(R.id.pass); }
-    public void onLogin(View view) {
-        String user = e1.getText().toString();
-        String pwd = e2.getText().toString();
-        Intent intent = new Intent(this,SecondActivity.class);
-        intent.putExtra("username",user);
-        intent.putExtra("password",pwd);
-        startActivity(intent); }
-}
+********************************************SHEARING************************************
+
+"""Write a python program to perform shearing on rectangle in positive direction of x-axis by taking initial coordinates from user."""
+
+import math
+from tkinter import *
+root=Tk()
+b=int(input("Enter angle of shearing:- "))		#50
+x0=int(input("Enter x0:- "))				#100
+y0=int(input("Enter y0:- "))				#100
+x1=int(input("Enter x1:- "))				#100
+y1=int(input("Enter y1:- "))				#200
+x2=int(input("Enter x2:- "))				#300
+y2=int(input("Enter y2:- "))				#200
+x3=int(input("Enter x3:- "))				#300
+y3=int(input("Enter y3:- "))				#100
+a=math.tan(math.radians(b))
+C=Canvas(root,bg="black",height=1000,width=1000)
+triangle1=C.create_polygon(x0,y0,x1,y1,x2,y2,x3,y3,fill="green")
+xsh1=x0+y0*a
+xsh2=x3+y3*a
+triangle2=C.create_polygon(xsh1,y0,x1,y1,x2,y2,xsh2,y3,fill="blue")
+C.pack()
+mainloop()
 
 
-SecondActivity.java:
+**********************************REFLECTION TRANSALATION AND SCALING********************
 
-package com.example.myapplication;
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.TextView;
-public class SecondActivity extends AppCompatActivity {
-    TextView tv;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
-        tv = findViewById(R.id.t1);
-        Intent rintent = getIntent();
-        String user = rintent.getStringExtra("username");
-        String pwd = rintent.getStringExtra("password");
-        if(user.equals("Administrator") && pwd.equals("admin@123"))
-        {
-            tv.setText("Welcome " + user); }
-        else
-        {
-            tv.setText("Invalid User!"); } } }
+"""Write a python program to create below shape and perform reflection about parallel to y-axis, followed by translation and scaling operation on it."""
 
-______________________________________________________________________________________________________________
+from tkinter import *
+root = Tk()
+canvas = Canvas(root,bg="black", width=1000, height=1000)
+x0 = int(input("Enter x0: "))                                  
+y0 = int(input("Enter y0: "))
+x1 = int(input("Enter x1: ")) 
+y1 = int(input("Enter y1: "))
+x2 = int(input("Enter x2: "))
+y2 = int(input("Enter y2: "))                         (150,120,65,200,150,280,150,245,250,245,250,155,150,155)
+x3 = int(input("Enter x3: "))
+y3 = int(input("Enter y3: "))
+x4 = int(input("Enter x4: "))
+y4 = int(input("Enter y4: "))
+x5 = int(input("Enter x5: "))
+y5 = int(input("Enter y5: "))
+x6 = int(input("Enter x6: "))
+y6 = int(input("Enter y6: "))
+canvas.create_polygon(x0,y0,x1,y1,x2,y2,x3,y3,x4,y4,x5,y5,x6,y6, fill="cyan", outline="black")
+tx = 200
+ty = 200
+canvas.create_text(170,300,text="Arrow After translation in Green",fill="green",font=('Helvetica 15 bold'))
+canvas.create_polygon(x0+tx,y0+ty,x1+tx,y1+ty,x2+tx,y2+ty,x3+tx,y3+ty,x4+tx,y4+ty,x5+tx,y5+ty,x6+tx,y6+ty, fill="green", outline="black")
+sx = 3
+sy = 3
+canvas.create_text(170,370,text="Arrow After Scaling in Purple",fill="purple",font=('Helvetica 15 bold'))
+canvas.create_polygon(x0*sx,y0*sy,x1*sx,y1*sy,x2*sx,y2*sy,x3*sx,y3*sy,x4*sx,y4*sy,x5*sx,y5*sy,x6*sx,y6*sy, fill="purple", outline="black")
+a=500
+x10=-x0+(2*a)
+x11=-x1+(2*a)
+x12=-x2+(2*a)
+x13=-x3+(2*a)
+x14=-x4+(2*a)
+x15=-x5+(2*a)
+x16=-x6+(2*a)
+canvas.create_text(170,450,text="Arrow After Reflection in Cyan",fill="cyan",font=('Helvetica 15 bold'))
+canvas.create_polygon(x10,y0,x11,y1,x12,y2,x13,y3,x14,y4,x15,y5,x16,y6, 
+fill="cyan", outline="black")
+canvas.pack()
+root.mainloop()
 
-Aim:
-Write an Android program to demonstrate Activity life cycle.
 
-activity_main.xml:
+*******************************************SPACE INVADER****************************************
 
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+import pygame
+import random
+import math
+from pygame import mixer
 
-MainActivity.java:
+# Initialize pygame module
+pygame.init()
 
-package com.example.myapplication;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Toast;
-public class MainActivity extends AppCompatActivity
+# Create Screen
+screen = pygame.display.set_mode((800, 600))
+
+# Add icon to the gaming window
+icon = pygame.image.load("ufo.png")
+pygame.display.set_icon(icon)
+
+# Add title to the gaming window
+pygame.display.set_caption("Space Invader")
+
+# Load background image
+bg = pygame.image.load("background.png")
+
+# Initialize background sound
+mixer.music.load("background.wav")
+mixer.music.play(-1)
+
+# Load player image
+playerImg = pygame.image.load("player.png")
+playerX = 370
+playerY = 480
+playerX_change = 0
+
+# Initialize enemy variables
+enemyImg = []
+enemyX = []
+enemyY = []
+enemyX_change = []
+enemyY_change = []
+no_of_enemies = 6
+
+for i in range(no_of_enemies):
+    enemyImg.append(pygame.image.load("enemy.png"))
+    enemyX.append(random.randint(0, 735))
+    enemyY.append(random.randint(50, 150))
+    enemyX_change.append(3)
+    enemyY_change.append(40)
+
+# Load bullet image
+bulletImg = pygame.image.load("bullet2.png")
+bulletX = 0
+bulletY = 480
+bulletX_change = 0
+bulletY_change = 10
+bullet_state = "ready"
+score_value = 0
+
+# Load fonts
+font1 = pygame.font.Font("freesansbold.ttf", 33)
+textX = 10
+textY = 10
+font2 = pygame.font.Font("freesansbold.ttf", 50)
+
+def game_over_text():
+    over_text = font2.render("GAME OVER", True, (150, 200, 200))
+    screen.blit(over_text, (200, 250))
+
+def show_score(x, y):
+    score = font1.render("Score: " + str(score_value), True, (100, 20, 200))
+    screen.blit(score, (x, y))
+
+def player(x, y):
+    screen.blit(playerImg, (x, y))
+
+def enemy(x, y, i):
+    screen.blit(enemyImg[i], (x, y))
+
+def fire_bullet(x, y):
+    global bullet_state
+    bullet_state = "fire"
+    screen.blit(bulletImg, (x + 16, y + 16))
+
+def isCollision(enemyX, enemyY, bulletX, bulletY):
+    distance = math.sqrt((math.pow(enemyX - bulletX, 2)) + (math.pow(enemyY - bulletY, 2)))
+    if distance < 27:
+        return True
+    else:
+        return False
+
+# Main game loop
+running = True
+while running:
+    screen.fill((0, 255, 255))
+    screen.blit(bg, (0, 0))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a:
+                playerX_change = -5
+            if event.key == pygame.K_d:
+                playerX_change = 5
+            if event.key == pygame.K_SPACE:
+                if bullet_state == "ready":
+                    bullet_sound = mixer.Sound("laser.wav")
+                    bullet_sound.play()
+                    bulletX = playerX
+                    fire_bullet(bulletX, bulletY)
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_a or event.key == pygame.K_d:
+                playerX_change = 0
+
+    playerX += playerX_change
+    if playerX <= 0:
+        playerX = 0
+    elif playerX >= 736:
+        playerX = 736
+
+    # Update enemy positions
+    for i in range(no_of_enemies):
+        enemyX[i] += enemyX_change[i]
+        if enemyX[i] <= 0:
+            enemyX_change[i] = 3
+            enemyY[i] += enemyY_change[i]
+        elif enemyX[i] >= 736:
+            enemyX_change[i] = -3
+            enemyY[i] += enemyY_change[i]
+
+        # Check collision with bullet
+        collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
+        if collision:
+            explosion_sound = mixer.Sound("explosion.wav")
+            explosion_sound.play()
+            bulletY = 480
+            bullet_state = "ready"
+            score_value += 1
+            enemyX[i] = random.randint(0, 735)
+            enemyY[i] = random.randint(50, 150)
+
+        enemy(enemyX[i], enemyY[i], i)
+
+    # Update bullet position
+    if bulletY <= 0:
+        bulletY = 480
+        bullet_state = "ready"
+    if bullet_state == "fire":
+        fire_bullet(bulletX, bulletY)
+        bulletY -= bulletY_change
+
+    # Call player and enemy functions
+    player(playerX, playerY)
+    show_score(textX, textY)
+
+    pygame.display.update()
+
+pygame.quit()
+
+
+**************&************************SNAKE GAME***************************
+
+import pygame, sys, random
+from pygame.math import Vector2
+
+# Define a class for the snake
+class SNAKE:
+    def __init__(self):
+        # Initialize the snake with a body of three segments and a direction
+        self.body = [Vector2(5, 10), Vector2(4, 10), Vector2(3, 10)]
+        self.direction = Vector2(1, 0)  # Initial direction is right
+        self.new_block = False  # Flag to check if a new block should be added to the snake
+
+    def draw_snake(self):
+        # Draw the snake on the screen
+        for block in self.body:
+            x_pos = int(block.x * cell_size)
+            y_pos = int(block.y * cell_size)
+            block_rect = pygame.Rect(x_pos, y_pos, cell_size, cell_size)
+            pygame.draw.rect(screen, (255, 165, 0), block_rect)  # Orange color for snake
+
+    def move_snake(self):
+        # Move the snake based on its current direction
+        if self.new_block == True:
+            body_copy = self.body[:]
+            body_copy.insert(0, body_copy[0] + self.direction)
+            self.body = body_copy[:]
+            self.new_block = False
+        else:
+            body_copy = self.body[:-1]
+            body_copy.insert(0, body_copy[0] + self.direction)
+            self.body = body_copy[:]
+
+    def add_block(self):
+        # Add a new block to the snake (when it eats the fruit)
+        self.new_block = True
+
+    def reset(self):
+        # Reset the snake to its initial state
+        self.body = [Vector2(5, 10), Vector2(4, 10), Vector2(3, 10)]
+
+# Define a class for the fruit
+class FRUIT:
+    def __init__(self):
+        self.randomize()
+
+    def draw_fruit(self):
+        # Draw the fruit on the screen
+        fruit_rect = pygame.Rect(int(self.pos.x * cell_size), int(self.pos.y * cell_size), cell_size, cell_size)
+        screen.blit(apple, fruit_rect)
+
+    def randomize(self):
+        # Randomly position the fruit on the grid
+        self.x = random.randint(0, cell_number - 1)
+        self.y = random.randint(0, cell_number - 1)
+        self.pos = Vector2(self.x, self.y)
+
+# Define a class for the main game
+class MAIN:
+    def __init__(self):
+        self.snake = SNAKE()
+        self.fruit = FRUIT()
+
+    def update(self):
+        # Update the game state
+        self.snake.move_snake()
+        self.check_collision()
+        self.check_fail()
+
+    def draw_elements(self):
+        # Draw game elements on the screen
+        self.fruit.draw_fruit()
+        self.snake.draw_snake()
+        self.draw_score()
+
+    def check_collision(self):
+        # Check if the snake has collided with the fruit
+        if self.fruit.pos == self.snake.body[0]:
+            self.fruit.randomize()
+            self.snake.add_block()
+
+        for block in self.snake.body[1:]:
+            if block == self.fruit.pos:
+                self.fruit.randomize()
+
+    def check_fail(self):
+        # Check if the game has ended (snake hits the wall or itself)
+        if not 0 <= self.snake.body[0].x < cell_number or not 0 <= self.snake.body[0].y < cell_number:
+            self.game_over()
+
+        for block in self.snake.body[1:]:
+            if block == self.snake.body[0]:
+                self.game_over()
+
+    # Add code for game_over() function if needed
+
+    def draw_score(self):
+        # Draw the player's score on the screen
+        score_text = str(len(self.snake.body) - 3)
+        score_surface = game_font.render(score_text, True, (56, 74, 12))
+        score_x = int(cell_size * cell_number - 60)
+        score_y = int(cell_size * cell_number - 40)
+        score_rect = score_surface.get_rect(center=(score_x, score_y))
+        apple_rect = apple.get_rect(midright=(score_rect.left, score_rect.centery))
+
+        screen.blit(score_surface, score_rect)
+        screen.blit(apple, apple_rect)
+
+# Initialize Pygame
+pygame.init()
+cell_size = 40
+cell_number = 20
+screen = pygame.display.set_mode((cell_number * cell_size, cell_number * cell_size))
+clock = pygame.time.Clock()
+apple = pygame.image.load('apple_2.png').convert_alpha()
+game_font = pygame.font.Font(None, 48)
+
+# Define a custom event for screen updates
+SCREEN_UPDATE = pygame.USEREVENT
+pygame.time.set_timer(SCREEN_UPDATE, 150)
+
+# Create the main game instance
+main_game = MAIN()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == SCREEN_UPDATE:
+            main_game.update()
+        if event.type == pygame.KEYDOWN:
+            # Handle keyboard input to change snake direction
+            if event.key == pygame.K_w:
+                if main_game.snake.direction.y != 1:
+                    main_game.snake.direction = Vector2(0, -1)
+            if event.key == pygame.K_s:
+                if main_game.snake.direction.y != -1:
+                    main_game.snake.direction = Vector2(0, 1)
+            if event.key == pygame.K_d:
+                if main_game.snake.direction.x != -1:
+                    main_game.snake.direction = Vector2(1, 0)
+            if event.key == pygame.K_a:
+                if main_game.snake.direction.x != 1:
+                    main_game.snake.direction = Vector2(-1, 0)
+
+    screen.fill((0, 0, 0))  # Black background color
+    main_game.draw_elements()
+
+    pygame.display.update()
+    clock.tick(60)  # Frame rate
+
+
+
+
+***************************************2D UFO***************************
+
+-----------PlayerController------------------
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PlayerController : MonoBehaviour
 {
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    private Rigidbody2D rbd;
+    public float speed;
+    public Text winText;
+    public Text countText;
+    public int count=0;
+    // Start is called before the first frame update
+    void Start()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toast.makeText(this, "Activity is created",
-                Toast.LENGTH_SHORT).show();
+        rbd = GetComponent<Rigidbody2D>(); 
+        //getting component by initializing
     }
-    @Override
-    protected void onStart()
+
+    // Update is called once per frame
+    void FixedUpdate() 
+        //void update changed to fixedupdate
     {
-        super.onStart();
-        Toast.makeText(this, "Activity is started",
-                Toast.LENGTH_SHORT).show();
+        float moveHorizontal = Input.GetAxis("Horizontal"); 
+        float moveVertical = Input.GetAxis("Vertical");
+        Vector2 movement = new Vector2(moveHorizontal, moveVertical);
+        rbd.AddForce(movement*speed);
     }
-    @Override
-    protected void onResume()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        super.onResume();
-        Toast.makeText(this, "Activity is resumed",
-                Toast.LENGTH_SHORT).show();
+        if (other.tag=="PickUp")
+        {
+            other.gameObject.SetActive(false);
+            count++;
+            SetCountText();
+        }
     }
-    @Override
-    protected void onRestart()
+    void SetCountText()
     {
-        super.onRestart();
-        Toast.makeText(this, "Activity is restarted",
-                Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        Toast.makeText(this, "Activity is paused",
-                Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        Toast.makeText(this, "Activity is stopped",
-                Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        Toast.makeText(this, "Activity is destroyed",
-                Toast.LENGTH_SHORT).show();
+        countText.text = "Count" + count.ToString();
+        if(count==7)
+        {
+            winText.text = "jeet gaye aap";
+        }
     }
 }
 
-__________________________________________________________________________________________________________
+----------CameraController------------
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-Aim:
-Write an Android application with two activities namely MainActivity
-and SecondActivity. Pass two numbers from MainActivity and in the
-SecondActivity, find sum of the two numbers and pass it back to
-Mainactivity.
-
-activity_main.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <EditText
-        android:id="@+id/e1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="107dp"
-        android:layout_marginEnd="101dp"
-        android:layout_marginRight="101dp"
-        android:ems="10"
-        android:hint="Enter First Number"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <EditText
-        android:id="@+id/e2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="101dp"
-        android:layout_marginRight="101dp"
-        android:ems="10"
-        android:hint="Enter Second Number"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/e1" />
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginLeft="158dp"
-        android:layout_marginTop="163dp"
-        android:layout_marginEnd="159dp"
-        android:layout_marginRight="159dp"
-        android:layout_marginBottom="286dp"
-        android:onClick="onAdd"
-        android:text="Add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/e2" />
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-activity_second.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SecondActivity">
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-MainActivity.java:
-
-package com.example.practical5;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
-public class MainActivity extends AppCompatActivity
+public class CameraController : MonoBehaviour
 {
-    EditText ed1,ed2;
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public GameObject player;
+    private Vector3 offset;
+    // Start is called before the first frame update
+    void Start()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ed1 = findViewById(R.id.e1);
-        ed2 = findViewById(R.id.e2);
+        offset = transform.position - player.transform.position; 
     }
-    public void onAdd(View view)
+
+    // Update is called once per frame
+    void LateUpdate()
     {
-        int num1 = Integer.parseInt(ed1.getText().toString());
-        int num2 = Integer.parseInt(ed2.getText().toString());
-        Intent intent = new Intent(this,SecondActivity.class);
-        intent.putExtra("Num1",num1);
-        intent.putExtra("Num2",num2);
-        startActivityForResult(intent,11);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==11)
-        {
-            if(resultCode==RESULT_OK)
-            {
-                int res = data.getIntExtra("Result",0);
-                Toast.makeText(this, "Result: "+res,
-                        Toast.LENGTH_LONG).show();
-            }
-        }
+        transform.position = player.transform.position + offset;
     }
 }
+-------Rotator---------
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-SecondActivity.java:
-
-package com.example.practical5;
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.os.Bundle;
-public class SecondActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
-        Intent in1 = getIntent();
-        int num1 = in1.getIntExtra("Num1",0);
-        int num2 = in1.getIntExtra("Num2",0);
-        int res = num1+num2;
-        Intent in2 = new Intent();
-        in2.putExtra("Result",res);
-        setResult(RESULT_OK,in2);
-        finish();
-    }
-}
-
-_________________________________________________________________________________________________________
-
-
-Aim:
-Write an android application to implement implicit intent to show a
-web url, dialer and capture image with device camera.
-
-activity_main.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="126dp"
-        android:layout_height="67dp"
-        android:layout_marginStart="142dp"
-        android:layout_marginLeft="142dp"
-        android:layout_marginTop="91dp"
-        android:layout_marginEnd="143dp"
-        android:layout_marginRight="143dp"
-        android:onClick="showWeb"
-        android:text=" Show Web"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="130dp"
-        android:layout_height="71dp"
-        android:layout_marginStart="145dp"
-        android:layout_marginLeft="145dp"
-        android:layout_marginTop="57dp"
-        android:layout_marginEnd="143dp"
-        android:layout_marginRight="143dp"
-        android:onClick="showDial"
-        android:text="Show Dialer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.714"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="127dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginLeft="148dp"
-        android:layout_marginTop="57dp"
-        android:layout_marginEnd="149dp"
-        android:layout_marginRight="149dp"
-        android:layout_marginBottom="97dp"
-        android:onClick="showCam"
-        android:text="Show Camera"
-        app:layout_constraintBottom_toTopOf="@+id/img"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="149dp"
-        android:layout_marginLeft="149dp"
-        android:layout_marginTop="61dp"
-        android:layout_marginEnd="134dp"
-        android:layout_marginRight="134dp"
-        android:layout_marginBottom="77dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
-        app:layout_constraintVertical_bias="0.418"
-        tools:srcCompat="@tools:sample/avatars" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-MainActivity.java:
-
-package com.example.practcal8_49;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.View;
-import android.widget.ImageView;
-public class MainActivity extends AppCompatActivity
+public class Rotator : MonoBehaviour
 {
-    ImageView imageView;
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    // Start is called before the first frame update
+    void Start()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        imageView = findViewById(R.id.img);
+        
     }
-    public void showWeb(View view)
+
+    // Update is called once per frame
+    void Update()
     {
-        Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("http://google.com"));
-        startActivity(intent);
-    }
-    public void showDial(View view)
-    {
-        Intent intent = new Intent(Intent.ACTION_DIAL,
-                Uri.parse("tel:9004417275"));
-        startActivity(intent);
-    }
-    public void showCam(View view)
-    {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent,11);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bmp = (Bitmap)data.getExtras().get("data");
-        imageView.setImageBitmap(bmp);
+        transform.Rotate(new Vector3(0, 0, 45) * Time.deltaTime);
     }
 }
 
-__________________________________________________________________________________________________________
 
 
-Aim:
-Write an android application to create a Biodata form to demonstrate
-the use of Autocomplete text view, Spinner, Date Picker and Alert
-Dialog
-
-activity_main.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+*********************************************3drollball***************************
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="103dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="154dp"
-        android:layout_marginTop="46dp"
-        android:layout_marginEnd="154dp"
-        android:text="@string/title"
-        android:textColor="#075C54"
-        android:textColorHint="#EC1414"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <EditText
-        android:id="@+id/nameid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="101dp"
-        android:layout_marginRight="101dp"
-        android:ems="10"
-        android:hint="@string/nameprompt"
-        android:inputType="textPersonName"
-        android:textColorHint="#EC1414"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-    <EditText
-        android:id="@+id/dobid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="101dp"
-        android:layout_marginLeft="101dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginRight="100dp"
-        android:ems="10"
-        android:hint="@string/dobprompt"
-        android:inputType="textPersonName"
-        android:onClick="showPicker"
-        android:textColorHint="#CA1414"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameid" />
-    <EditText
-        android:id="@+id/phnid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="61dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginRight="14dp"
-        android:ems="10"
-        android:hint="@string/phnprompt"
-        android:inputType="phone"
-        android:textColorHint="#C31A1A"
-        app:layout_constraintEnd_toStartOf="@+id/phntype"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dobid" />
-    <Spinner
-        android:id="@+id/phntype"
-        android:layout_width="156dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/phnid"
-        app:layout_constraintTop_toBottomOf="@+id/dobid" />
-    <AutoCompleteTextView
-        android:id="@+id/cntyid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="101dp"
-        android:layout_marginLeft="101dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="116dp"
-        android:layout_marginRight="116dp"
-        android:hint="@string/cntprompt"
-        android:textColorHint="#D31414"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phnid" />
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginLeft="156dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="165dp"
-        android:layout_marginRight="165dp"
-        android:layout_marginBottom="142dp"
-        android:onClick="showAlert"
-        android:text="@string/btntxt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cntyid" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+-----Controller--------
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
-Strings.xml:
-
-<resources>
-    <string name="app_name">Practical9_049</string>
-    <string name="title">BIODATA</string>
-    <string name="nameprompt">Enter Name</string>
-    <string name="dobprompt">Enter DOB</string>
-    <string name="phnprompt">Enter Phone No</string>
-    <string name="cntprompt">Enter Country</string>
-    <string name="btntxt">Submit</string>
-    <string-array name="phonetype">
-        <item>Home</item>
-        <item>Office</item>
-        <item>Mobile</item>
-    </string-array>
-    <string-array name="Countries">
-        <item>India</item>
-        <item>Indonesia</item>
-        <item>Germany</item>
-        <item>United States</item>
-        <item>England</item>
-        <item>Singapore</item>
-    </string-array>
-</resources>
-
-MainActivity.java:
-
-package com.example.practical9_049;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.content.DialogInterface;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-public class MainActivity extends AppCompatActivity implements
-        AdapterView.OnItemSelectedListener
+public class Controller : MonoBehaviour
 {
-    EditText Name,Phone,DOB;
-    AutoCompleteTextView cntry;
-    Spinner sp;
-    String msg="";
-    String phntype="";
-    public static final String[] countries= new String[]
-    {"India","Indonesia","United States of America","Italy","Germany"};
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    //declare variable
+    public Text winText;
+    public Text CountText;
+    public int count;
+    private Rigidbody rb;
+    public float speed;
+    // Start is called before the first frame update
+    void Start()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Name = findViewById(R.id.nameid);
-        Phone = findViewById(R.id.phnid);
-        DOB = findViewById(R.id.dobid);
-        cntry = findViewById(R.id.cntyid);
-        ArrayAdapter<CharSequence> ad1 =
-                ArrayAdapter.createFromResource(this,R.array.Countries, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        cntry.setAdapter(ad1);
-        sp = findViewById(R.id.phntype);
-        if(sp!=null)
+        count = 0;
+        winText.text = "";
+        rb = GetComponent<Rigidbody>();
+        SetCountText();
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        rb.AddForce(movement * speed);
+
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("PickUp"))
         {
-            sp.setOnItemSelectedListener(this);
+            other.gameObject.SetActive(false);
+            count = count + 1;
+            SetCountText();
         }
-        ArrayAdapter<CharSequence> ad2 =
-                ArrayAdapter.createFromResource(this,R.array.phonetype,
-                        android.R.layout.simple_spinner_item);
-        ad2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp.setAdapter(ad2);
     }
-    @RequiresApi(api= Build.VERSION_CODES.N)
-    public void showPicker(View view)
+    void SetCountText()
     {
-        DatePickerDialog dp = new DatePickerDialog(this,0);
-        dp.setOnDateSetListener(new DatePickerDialog.OnDateSetListener()
+        CountText.text = "Score:" + count.ToString();
+        if(count>=8)
         {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
-            {
-                int m = month+1;
-                DOB.setText(dayOfMonth+"/"+m+"/"+year);
-            }
-        });
-        dp.show();
-    }
-    public void showAlert(View view)
-    {
-        msg="You have entered the following information\n";
-        msg+="Name: "+Name.getText().toString();
-        msg+="\n Date of Birth: "+DOB.getText().toString();
-        msg+="\n PhoneNo: "+Phone.getText().toString();
-        msg+="\n PhoneType: "+phntype;
-        msg+="\n Country: "+cntry.getText().toString();
-        msg+="\n Please Confirm..";
-        AlertDialog.Builder alertbuilder=new AlertDialog.Builder(this)
-
-                .setTitle("Confirmation Message")
-                .setMessage(msg)
-                .setPositiveButton("Yes", new
-
-                        DialogInterface.OnClickListener()
-
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which)
-                            {
-                                Toast.makeText(MainActivity.this, "User DataConfirmed", Toast.LENGTH_LONG).show();
-
-                            }
-                        })
-                .setNegativeButton("No", new
-
-                        DialogInterface.OnClickListener()
-
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int
-
-                                    which)
-
-                            {
-                                Toast.makeText(MainActivity.this, "User Data Cancelled", Toast.LENGTH_LONG).show();
-
-                            }
-                        });
-
-        AlertDialog ad = alertbuilder.create();
-        ad.show();
-    }
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-    {
-        phntype=parent.getItemAtPosition(position).toString();
-    }
-    @Override
-    public void onNothingSelected(AdapterView<?> parent)
-    {
+            winText.text = "you win!!";
+        }
     }
 }
+-----------Rotator-----------------
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-
-_________________________________________________________________________________________________________________
-
-
-Aim:
-Write an android application to demonstrate broadcast and broadcast
-receiver.
-
-MainActivity.java:
-
-package com.example.practical11_049;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
-import android.view.View;
-public class MainActivity extends AppCompatActivity
+public class Rotator : MonoBehaviour
 {
-    private MyReceiver mReceiver = new MyReceiver();
-    private static final String ACTION_CUSTOM_BROADCAST =
-            "ACTON_CUSTOM_BROADCAST";
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    // Start is called before the first frame update
+    void Start()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_POWER_CONNECTED);
-        filter.addAction(Intent.ACTION_BATTERY_LOW);
-        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
-        this.registerReceiver(mReceiver,filter);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver,new
-                IntentFilter(ACTION_CUSTOM_BROADCAST));
+        
     }
-    public void sendcustomBroadcast(View view)
+
+    // Update is called once per frame
+    void Update()
     {
-        Intent customintent = new Intent(ACTION_CUSTOM_BROADCAST);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(customintent);
-    }
-    @Override
-    protected void onDestroy()
-    {
-        this.unregisterReceiver(mReceiver);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
-        super.onDestroy();
+        transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);
     }
 }
+---------------CameraControiler---------------
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-activity_main.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="207dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="102dp"
-        android:layout_marginLeft="102dp"
-        android:layout_marginTop="241dp"
-        android:layout_marginEnd="102dp"
-        android:layout_marginRight="102dp"
-        android:layout_marginBottom="429dp"
-        android:onClick="sendcustomBroadcast"
-        android:text="@string/btn_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-MyReceiver.java:
-
-package com.example.practical11_049;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
-public class MyReceiver extends BroadcastReceiver {
-    private static final String ACTION_CUSTOM_BROADCAST =
-            "ACTION_CUSTOM_BROADCAST";
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        String intentAction = intent.getAction();
-        if (intentAction != null) {
-            String msg = "Unknown Intent";
-            switch (intentAction) {
-                case Intent.ACTION_BATTERY_LOW:
-                    msg = "Battery low!!";
-                    break;
-                case Intent.ACTION_POWER_CONNECTED:
-                    msg = "Power Connected!";
-                    break;
-                case Intent.ACTION_POWER_DISCONNECTED:
-                    msg = "Power Disconnected!";
-                    break;
-                case ACTION_CUSTOM_BROADCAST:
-                    msg = "Custom Broadcast Received";
-                    break;
-            }
-            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-        }
-    }
-}
-
-activity_my_receiver.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MyReceiver">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-AndroidManifest.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.practical11_049">
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Practical11_049">
-        <receiver
-            android:name=".MyReceiver"
-            android:enabled="true"
-            android:exported="true">
-        </receiver>
-        <activity android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-</manifest>
-
-Strings.xml:
-
-<resources>
-    <string name="app_name">Practical11_049</string>
-    <string name="btn_text">Send Custom Broadcast</string>
-</resources>
-
-_______________________________________________________________________________________________________________
-
-
-
-Aim:
-Write an android application to demonstrate notification from an app.
-
-MainActivity.java:
-
-package com.example.practical12_049;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.media.RingtoneManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-public class MainActivity extends AppCompatActivity
+public class CameraController : MonoBehaviour
 {
-    NotificationManager nmgr;
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    private Vector3 offset;
+    public GameObject player;
+    // Start is called before the first frame update
+    void Start()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        nmgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O)
-        {
-            NotificationChannel nchannel = new
-                    NotificationChannel("Notification1","My Notification",NotificationManager.IMPORTANCE_DEFAULT);
-
-                    nchannel.enableVibration(true);
-            nchannel.enableLights(true);
-            nchannel.setDescription("Notification from MyActivity");
-            nmgr.createNotificationChannel(nchannel);
-        }
+        offset = transform.position - player.transform.position;
     }
-    private NotificationCompat.Builder getNotifyBuilder()
+
+    // Update is called once per frame
+    void LateUpdate()
     {
-        Intent intent = new Intent(this, Notifed.class);
-        PendingIntent pintent =
-                PendingIntent.getActivity(this,1,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder nBuilder = new
-                NotificationCompat.Builder(this,"Notification1")
-
-                .setContentTitle("You have been notified")
-                .setContentText("This is your notification")
-                .setContentIntent(pintent)
-                .setSmallIcon(R.drawable.ic_launcher_background)
-
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-
-                .setAutoCancel(true);
-
-        return nBuilder;
-    }
-    public void onNotify(View view) {
-        NotificationCompat.Builder mybuilder = getNotifyBuilder();
-        nmgr.notify(1,mybuilder.build());
+        transform.position = player.transform.position + offset;
     }
 }
-
-activity_main.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginLeft="158dp"
-        android:layout_marginTop="341dp"
-        android:layout_marginEnd="159dp"
-        android:layout_marginRight="159dp"
-        android:layout_marginBottom="342dp"
-        android:onClick="onNotify"
-        android:text="@string/btntxt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-Notified.java:
-
-package com.example.practical12_049;
-
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.TextView;
-public class Notifed extends AppCompatActivity
-{
-    TextView tv1;
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notifed);
-        tv1 = findViewById(R.id.textview);
-    }
-}
-
-activity_notified.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Notifed">
-
-    <TextView
-        android:id="@+id/textview"
-        android:layout_width="225dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="176dp"
-        android:layout_marginLeft="176dp"
-        android:layout_marginTop="356dp"
-        android:layout_marginEnd="235dp"
-        android:layout_marginRight="235dp"
-        android:layout_marginBottom="356dp"
-        android:text="@string/txtdata"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.368"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-Strings.xml:
-
-<resources>
-<string name="app_name">NotificationApp</string>
-<string name="btntxt">Notify</string>
-<string name="txtdata">This is a notification</string>
-</resources>
-
-__________________________________________________________________________________________________________
-
-Aim:
-Write an android application to demonstrate the use of SQLite
-databases.
-
-MainActivity.java:
-
-package com.example.practical13_49;
-
-import androidx.appcompat.app.AppCompatActivity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
-public class MainActivity extends AppCompatActivity
-{
-    EditText t1;
-    MySqliteHelper mysql;
-    SQLiteDatabase db;
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        t1=findViewById(R.id.e1);
-        mysql=new MySqliteHelper(this);
-    }
-    public void onSave(View view)
-    {
-        db=mysql.getWritableDatabase();
-        String name=t1.getText().toString();
-        String q1="INSERT INTO USERS(NAME) VALUES('"+name+"')";
-        db.execSQL(q1);
-        Toast.makeText(this, "Record Inserted", Toast.LENGTH_LONG).show();
-    }
-    public void onView(View view)
-    {
-        db=mysql.getReadableDatabase();
-        String q2="SELECT * FROM USERS";
-        Cursor cursor=db.rawQuery(q2,null);
-        while(cursor.moveToNext())
-        {
-            String n=cursor.getString(1);
-            Toast.makeText(this,n, Toast.LENGTH_LONG).show();
-        }
-    }
-}
-
-activity_main.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginLeft="148dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginRight="148dp"
-        android:layout_marginBottom="342dp"
-        android:onClick="onView"
-        android:text="View data"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <EditText
-        android:id="@+id/e1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="107dp"
-        android:layout_marginEnd="101dp"
-        android:ems="10"
-        android:hint="Enter name to be saved"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginLeft="158dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="159dp"
-        android:layout_marginRight="159dp"
-        android:onClick="onSave"
-        android:text="Save Data"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/e1" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-MySqliteHelper.java:
-
-package com.example.practical13_49;
-
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Bundle;
-public class MySqliteHelper extends SQLiteOpenHelper
-{
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "Records";
-    public MySqliteHelper(Context context)
-    {
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
-    }
-    @Override
-    public void onCreate(SQLiteDatabase db)
-    {
-        String query1 = "CREATE TABLE USERS(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT)";
-        db.execSQL(query1);
-    }
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-    {
-        String query2="DROP TABLE IF EXISTS USERS";
-        db.execSQL(query2);
-        onCreate(db);
-    }
-}
-
-
-____________________________________________________________________________________________________________
-
-
-Aim:
-Write an android application to demonstrate the use of Options
-Menu, Floating Context Menu and Contextual Action Bar Menu.
-
-MainActivity.java:
-
-package com.example.menuappl;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.ActionMode;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-public class MainActivity extends AppCompatActivity
-{
-    TextView t1,t2;
-    ActionMode mactionmode;
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        t1=findViewById(R.id.text1);
-        t2=findViewById(R.id.actiontext);
-        registerForContextMenu(t1); //meant for floating context menu
-        t2.setOnLongClickListener(new View.OnLongClickListener()
-        {
-            @Override
-            public boolean onLongClick(View v)
-            {
-                if (mactionmode!=null) return false;
-                mactionmode=MainActivity.this.startActionMode(actionModeCallback);
-                return true;
-            }
-        });
-    }
-    public ActionMode.Callback actionModeCallback=new ActionMode.Callback()
-    {
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu)
-        {
-            getMenuInflater().inflate(R.menu.menu3,menu);
-            return true;
-        }
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu)
-        {
-            return false;
-        }
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item)
-        {
-            switch(item.getItemId())
-            {
-                case R.id.item7:
-                    Toast.makeText(MainActivity.this, "Edit CAB Selected",
-                            Toast.LENGTH_SHORT).show();
-                    mode.finish();
-                    return true;
-                case R.id.item8:
-                    Toast.makeText(MainActivity.this, "Share CAB Selected",
-                            Toast.LENGTH_SHORT).show();
-                    mode.finish();
-                    return true;
-                default: return false;
-            }
-        }
-        @Override
-        public void onDestroyActionMode(ActionMode mode)
-        {
-            mactionmode=null;
-        }
-    };
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu1,menu);
-        return(true);
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {
-        switch(item.getItemId())
-        {
-            case R.id.item1:
-                Toast.makeText(this, "Search Option Menu Selected",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item2:
-                Toast.makeText(this, "Cart Option Menu Selected",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item3:
-                Toast.makeText(this, "Settings Option Menu Selected",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            default: return super.onOptionsItemSelected(item);
-        }
-    }
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo)
-    {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.menu2,menu);
-    }
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item)
-    {
-        switch(item.getItemId())
-        {
-            case R.id.item4:
-                Toast.makeText(this, "Edit Context Menu Selected",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item5:
-                Toast.makeText(this, "Share Context Menu Selected",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.item6:
-                Toast.makeText(this, "Delete Context Menu Selected",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            default: return super.onOptionsItemSelected(item);
-        }
-    }
-}
-
-activity_main.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <TextView
-        android:id="@+id/text1"
-        android:layout_width="210dp"
-        android:layout_height="119dp"
-        android:layout_marginStart="138dp"
-        android:layout_marginLeft="138dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="139dp"
-        android:layout_marginRight="139dp"
-        android:text="Press for Floating Context Menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/actiontext"
-        android:layout_width="210dp"
-        android:layout_height="98dp"
-        android:layout_marginStart="135dp"
-        android:layout_marginLeft="135dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="136dp"
-        android:layout_marginRight="136dp"
-        android:layout_marginBottom="289dp"
-        android:text="Press for Action Context Menu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text1" />
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-Menu1.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/item1"
-        android:enabled="true"
-        android:icon="@drawable/ic_action_search"
-        android:title="search"
-        android:visible="true"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/item2"
-        android:enabled="true"
-        android:icon="@drawable/ic_action_cart"
-        android:title="cart"
-        android:visible="true"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/item3"
-        android:enabled="true"
-        android:title="Settings"
-        android:visible="true"
-        app:showAsAction="never" />
-</menu>
-
-Menu2.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/item4"
-        android:enabled="true"
-        android:title="Edit"
-        android:visible="true" />
-    <item
-        android:id="@+id/item5"
-        android:title="Share"
-        android:visible="true" />
-    <item
-        android:id="@+id/item6"
-        android:enabled="true"
-        android:title="Delete"
-        android:visible="true" />
-</menu>
-
-Menu3.xml:
-
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/item7"
-        android:enabled="true"
-        android:icon="@drawable/ic_action_edit"
-        android:title="Edit"
-        android:visible="true" />
-    <item
-        android:id="@+id/item8"
-        android:enabled="true"
-        android:icon="@drawable/ic_action_share"
-        android:title="Share"
-        android:visible="true" />
-</menu>
-
-__________________________________________________________________________________________________________
-
