@@ -1,0 +1,1609 @@
+******************************Practical No 1: ******************************
+Aim: Create a TimeServer webservice in Java and Consume it in java 
+and other technologies like php and .NET 
+
+CODE: 
+TimeServer: 
+(TS.java) 
+
+ 
+package mypack;
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+
+@WebService(serviceName = "TS")
+public class TS {
+
+    @WebMethod(operationName = "getTimeAsString")
+    public String getTimeAsString() {
+        return new java.util.Date().toString();
+    }
+
+    @WebMethod(operationName = "getTimeAsElapsed")
+    public long getTimeAsElapsed() {
+        return new java.util.Date().getTime();
+    }
+}
+ 
+ 
+ 
+TimeServerClient: 
+(index.jsp) 
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <h1>System Date</h1>
+        <%-- start web service invocation --%><hr/>
+        <%
+            try {
+                mypack.TS_Service service = new mypack.TS_Service();
+                mypack.TS port = service.getTSPort();
+                // TODO process result here
+                long result = port.getTimeAsElapsed();
+                out.println("Time as string = " + result);
+            } catch (Exception ex) {
+                // TODO handle custom exceptions here
+            }
+        %>
+        <%-- end web service invocation --%><hr/>
+        <%-- start web service invocation --%><hr/>
+        <%
+            try {
+                mypack.TS_Service service = new mypack.TS_Service();
+                mypack.TS port = service.getTSPort();
+                // TODO process result here
+                java.lang.String result = port.getTimeAsString();
+                out.println("Time as elapsed = " + result);
+            } catch (Exception ex) {
+                // TODO handle custom exceptions here
+            }
+        %>
+        <%-- end web service invocation --%><hr/>
+    </body>
+</html>
+
+
+.NET Client
+
+using System;
+namespace TimeServiceClient
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ServiceReference1.TimeServiceClient client = new ServiceReference1.TimeServiceClient();
+
+            // Get and display the "TimeAsString" value from the service.
+            Console.WriteLine("Time as String = " + client.getTimeAsString());
+
+            // Get and display the "TimeElapsed" value from the service.
+            Console.WriteLine("Time Elapsed = " + client.getTimeAsElapsed());
+
+            Console.Read();
+        }
+    }
+}
+
+
+<?php
+$client = new
+SoapClient("http://localhost:8080/TimeServer/TimeService?WSDL");
+$t1 = $client -> getTimeAsElapsed();
+echo "Elapsed time is ",$t1 -> return;
+$t2 = $client -> getTimeAsString();
+echo "<br>Time as String is ",$t2 -> return;
+?>
+
+
+******************************Practical 02: ******************************
+Create a Java WS for performing basic calculations like addition, 
+subtraction ,multiplication and Division and create a java client that 
+consumes the same. 
+
+CalculatorService: 
+(Calculator.java) 
+
+package mypack;
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+
+@WebService(serviceName = "Calculator")
+public class Calculator {
+    @WebMethod(operationName = "Addition")
+    public float Addition(@WebParam(name = "num1") float num1, @WebParam(name = "num2") float num2) {
+        // TODO write your implementation code here:
+        return num1 + num2;
+    }
+
+    @WebMethod(operationName = "Subtraction")
+    public float Subtraction(@WebParam(name = "num1") float num1, @WebParam(name = "num2") float num2) {
+        // TODO write your implementation code here:
+        return num1 - num2;
+    }
+
+    @WebMethod(operationName = "Multiplication")
+    public float Multiplication(@WebParam(name = "num1") float num1, @WebParam(name = "num2") float num2) {
+        // TODO write your implementation code here:
+        return num1 * num2;
+    }
+
+    @WebMethod(operationName = "Division")
+    public float Division(@WebParam(name = "num1") float num1, @WebParam(name = "num2") float num2) {
+        // TODO write your implementation code here:
+        return num1 / num2;
+    }
+}
+
+
+ 
+ 
+ 
+CalculatorClient: 
+(index.html) 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div>Calculator</div>
+    <form action="client.Jap">
+        Enter First Number: <input type="text" name="n1" value="" /><br>
+        Enter Second Number: <input type="text" name="n2" value="" /><br>
+        <input type="radio" name="operations" value="add" />Addition<br>
+        <input type="radio" name="operations" value="sub" />Subtraction<br>
+        <input type="radio" name="operations" value="mul" />Multiplication<br>
+        <input type="radio" name="operations" value="div" />Division<br>
+        <input type="submit" value="submit" />
+    </form>
+</body>
+</html>
+
+
+(client.jsp) 
+
+<%@page import="java.lang.System"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <h1></h1>
+        <%-- start web service invocation --%><hr/>
+        <%
+            float num1 = Float.parseFloat(request.getParameter("n1"));
+            float num2 = Float.parseFloat(request.getParameter("n2"));
+            String choice = request.getParameter("operations");
+            if (choice.equals("add")) {
+                try {
+                    mypack.Calculator_Service service = new mypack.Calculator_Service();
+                    mypack.Calculator port = service.getCalculatorPort();
+                    float result = port.addition(num1, num2);
+                    out.println("Result = " + result);
+                } catch (Exception ex) {
+                    // TODO handle custom exceptions here
+                }
+            } else if (choice.equals("sub")) {
+                try {
+                    mypack.Calculator_Service service = new mypack.Calculator_Service();
+                    mypack.Calculator port = service.getCalculatorPort();
+                    float result = port.subtraction(num1, num2);
+                    out.println("Result = " + result);
+                } catch (Exception ex) {
+                    // TODO handle custom exceptions here
+                }
+            } else if (choice.equals("mul")) {
+                try {
+                    mypack.Calculator_Service service = new mypack.Calculator_Service();
+                    mypack.Calculator port = service.getCalculatorPort();
+                    float result = port.multiplication(num1, num2);
+                    out.println("Result = " + result);
+                } catch (Exception ex) {
+                    // TODO handle custom exceptions here
+                }
+            } else if (choice.equals("div")) {
+                try {
+                    mypack.Calculator_Service service = new mypack.Calculator_Service();
+                    mypack.Calculator port = service.getCalculatorPort();
+                    // TODO initialize WS operation arguments here
+                    float result = port.division(num1, num2);
+                    out.println("Result = " + result);
+                } catch (Exception ex) {
+                    // TODO handle custom exceptions here
+                }
+            }
+        %>
+        <%-- end web service invocation --%><hr/>
+    </body>
+</html>
+
+
+
+******************************Practical No 3: ******************************
+Aim: Create a web service that gives – (i) NSE Index, (ii) BSE Index, 
+(iii)Gold Rate. The values are stored in database. Also create a web 
+client for a share trading firm that displays these values on its home 
+page. 
+CODE: 
+
+StockDataApp: 
+(StockDataService.java) 
+
+
+package mypack;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+
+@WebService(serviceName = "StockDataService")
+public class StockDataService {
+
+    @WebMethod(operationName = "getNSE")
+    public int getNSE() {
+        int nse = 0;
+        try {
+            // Driver Specification
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+
+            // Connecting to the database
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/StockDatadb", "user1", "user@123");
+
+            // Creating a statement for firing the query
+            Statement stmt = con.createStatement();
+
+            // Executing the query and generating a resultset
+            ResultSet rs = stmt.executeQuery("SELECT * FROM STOCKDATA");
+
+            // Bring the resultset pointer to the first record
+            rs.next();
+            nse = rs.getInt("NSE");
+
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return nse;
+    }
+
+    @WebMethod(operationName = "getBSE")
+    public int getBSE() {
+        int bse = 0;
+        try {
+            // Driver Specification
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+
+            // Connecting to the database
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/StockDatadb", "user1", "user@123");
+
+            // Creating a statement for firing the query
+            Statement stmt = con.createStatement();
+
+            // Executing the query and generating a resultset
+            ResultSet rs = stmt.executeQuery("SELECT * FROM STOCKDATA");
+
+            // Bring the resultset pointer to the first record
+            rs.next();
+            bse = rs.getInt("BSE");
+
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bse;
+    }
+
+    @WebMethod(operationName = "getGOLDRATE")
+    public int getGOLDRATE() {
+        int gr = 0;
+        try {
+            // Driver Specification
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+
+            // Connecting to the database
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/StockDatadb", "user1", "user@123");
+
+            // Creating a statement for firing the query
+            Statement stmt = con.createStatement();
+
+            // Executing the query and generating a resultset
+            ResultSet rs = stmt.executeQuery("SELECT * FROM STOCKDATA");
+
+            // Bring the resultset pointer to the first record
+            rs.next();
+            gr = rs.getInt("GOLDRATE");
+
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return gr;
+    }
+}
+
+
+ 
+ 
+StockDataClient: 
+(index.html) 
+ 
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div></div>
+<form action="client.jsp">
+    NSE <input type="radio" name="Stock" value="NSE" /><br>
+    BSE <input type="radio" name="Stock" value="BSE" /><br>
+    GOLDRATE <input type="radio" name="Stock" value="GOLDRATE" />
+    <input type="submit" value="submit" />
+</form>
+</body>
+</html>
+
+ 
+(client.jsp) 
+
+<%@page contentType="text/html" pageEncoding="UTF-8%> 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>JSP Page</title>
+</head>
+<body>
+    <h1>Practical 3</h1>
+    <%-- start web service invocation --%><hr/>
+    <%
+        String Choice = request.getParameter("Stock");
+        if (Choice.equals("NSE")) {
+            try {
+                mypack.StockDataService_Service service = new mypack.StockDataService_Service();
+                mypack.StockDataService port = service.getStockDataServicePort();
+                // TODO process result here
+                int result = port.getNSE();
+                out.println("NSE = " + result);
+            } catch (Exception ex) {
+                // TODO handle custom exceptions here
+            }
+        }
+    %>
+    <%-- end web service invocation --%><hr/>
+    <%-- start web service invocation --%><hr/>
+    <%
+        if (Choice.equals("BSE")) {
+            try {
+                mypack.StockDataService_Service service = new mypack.StockDataService_Service();
+                mypack.StockDataService port = service.getStockDataServicePort();
+                // TODO process result here
+                int result = port.getBSE();
+                out.println("BSE = " + result);
+            } catch (Exception ex) {
+                // TODO handle custom exceptions here
+            }
+        }
+    %>
+    <%-- end web service invocation --%><hr/>
+    <%-- start web service invocation --%><hr/>
+    <%
+        if (Choice.equals("GOLDRATE")) {
+            try {
+                mypack.StockDataService_Service service = new mypack.StockDataService_Service();
+                mypack.StockDataService port = service.getStockDataServicePort();
+                // TODO process result here
+                int result = port.getGOLDRATE();
+                out.println("GOLDRATE = " + result);
+            } catch (Exception ex) {
+                // TODO handle custom exceptions here
+            }
+        }
+    %>
+    <%-- end web service invocation --%><hr/>
+</body>
+</html>
+
+Create database of gold rate and remaining 2
+
+
+******************************Practical No 4:****************************** 
+Aim: Create a web service for UGC that contains a method which 
+accepts college name as parameter and returns the NAAC rating. The 
+college names and their ratings are stored in database. Design a web 
+client to test the above web service.
+
+NAACDataApp: 
+(NAACService.java) 
+
+package mypack; 
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.PreparedStatement; 
+import java.sql.ResultSet; 
+import java.sql.Statement; 
+import javax.jws.WebService; 
+import javax.jws.WebMethod; 
+import javax.jws.WebParam; 
+@WebService(serviceName = "NAACService") 
+public class NAACService { 
+ 
+    /** 
+     * Web service operation 
+     */ 
+    @WebMethod(operationName = "getrating") 
+    public String getrating(@WebParam(name = "colname") String colname) { 
+       String cname=""; 
+       try{ 
+           Class.forName("org.apache.derby.jdbc.ClientDriver");  
+            //Connecting to database 
+            Connection con = 
+DriverManager.getConnection("jdbc:derby://localhost:1527/UGCGrade", "sakshi", 
+"sakshi123"); 
+            //creating statment for firing query 
+            Statement stmt = con.createStatement(); 
+            //executing the query and generating resultset 
+            //1---ResultSet rs =stmt.executeQuery("SELECT * FROM NAACDATA where 
+collegename= '"+ colname+"'"); 
+            // 
+            PreparedStatement pstmt=con.prepareStatement("SELECT * FROM NAACDATA where 
+collegename= ?"); 
+            pstmt.setString(1,colname); 
+            //bring resultset pointer to first record 
+            //rs.next(); 
+            ResultSet rs=pstmt.executeQuery();rs.next(); 
+            cname = rs.getString("Ratings"); 
+            con.close(); 
+            } 
+        catch(Exception e){ 
+            e.printStackTrace(); 
+             
+} 
+	return cname; // i am edited
+} 
+} 
+
+
+
+(index.html) 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<form action="client.jsp">
+    College <input type="text" name="COLLEGENAME" value="" /> <input type="submit" value="Check Rating" />
+</form>
+</body>
+</html>
+
+
+(client.jsp)
+ 
+<%@page contentType="text/html" pageEncoding="UTF-8%> 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>JSP Page</title>
+</head>
+<body>
+<%-- start web service invocation --%><hr/>
+<%
+    String text1 = request.getParameter("COLLEGENAME");
+    try {
+        mypack.NAACService_Service service = new mypack.NAACService_Service();
+        mypack.NAACService port = service.getNAACServicePort();
+        // TODO initialize WS operation arguments here
+        java.lang.String colname = text1;
+        // TODO process result here
+        java.lang.String result = port.getRatings(colname);
+        out.println("Ratings = " + result);
+    } catch (Exception ex) {
+        // TODO handle custom exceptions here
+    }
+%>
+<%-- end web service invocation --%><hr/>
+</body>
+</html>
+
+
+******************************Practical No 5: ******************************
+Aim: Design a web service for a channel containing 2 functions – 1st 
+function called getBreakingNews which accepts date as string 
+parameter and returns special news of that day, 2nd function called 
+getPrediction accepts sunsign name as string parameter and returns 
+predictions as string. Design a client to test the above web service. 
+
+
+ChannelApp: 
+(ChannelService.java) 
+
+package mypack;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+
+@WebService(serviceName = "ChannelService")
+public class ChannelService {
+
+    @WebMethod(operationName = "getBreakingNews")
+    public String getBreakingNews(@WebParam(name = "date") String date) {
+        String bn = "";
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/NewsDatadb", "sakshi", "sakshi@123");
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM BREAKINGNEWS WHERE DATE=?");
+            pstmt.setString(1, date);
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            bn = rs.getString("NEWS");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bn;
+    }
+
+    @WebMethod(operationName = "getPrediction")
+    public String getPrediction(@WebParam(name = "ssign") String ssign) {
+        String pn = "";
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/NewsDatadb", "sakshi", "sakshi@123");
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM PREDICTION WHERE SSIGN=?");
+            pstmt.setString(1, ssign);
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            pn = rs.getString("PREDICTIONS");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pn;
+    }
+}
+
+
+ChannelClient: 
+(index.html) 
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<form action="client.jsp">
+    Enter date for breaking news: <input type="text" name="BREAKINGNEWS" value="" /><br>
+    Enter SunSign: <input type="text" name="PREDICTION" value="" /><br>
+    <input type="submit" value="Result" />
+</form>
+</body>
+</html>
+
+ 
+(client.jsp) 
+
+<%@page contentType="text/html" pageEncoding="UTF-8%> 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>JSP Page</title>
+</head>
+<body>
+    <%-- start web service invocation --%><hr/>
+    <%
+        String text1 = request.getParameter("BREAKINGNEWS");
+        try {
+            mypack.ChannelService_Service service = new mypack.ChannelService_Service();
+            mypack.ChannelService port = service.getChannelServicePort();
+            // TODO initialize WS operation arguments here
+            java.lang.String date = text1;
+            // TODO process result here
+            java.lang.String result = port.getBreakingNews(date);
+            out.println("Breaking News = " + result);
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+    %>
+    <%-- end web service invocation --%><hr/>
+    <%-- start web service invocation --%><hr/>
+    <%
+        String text2 = request.getParameter("PREDICTION");
+        try {
+            mypack.ChannelService_Service service = new mypack.ChannelService_Service();
+            mypack.ChannelService port = service.getChannelServicePort();
+            // TODO initialize WS operation arguments here
+            java.lang.String ssign = text2;
+            // TODO process result here
+            java.lang.String result = port.getPrediction(ssign);
+            out.println("Prediction = " + result);
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
+    %>
+    <%-- end web service invocation --%><hr/>
+</body>
+</html>
+
+
+******************************Practical No 6: ******************************
+Aim: Design a Restful webservice from a database table Employee 
+with columns empid,empname and Designation. Test the webservice 
+for the various http requests. 
+
+EMPRest: 
+(EmployeeFacadeREST.java) 
+package mypack.service; 
+import java.util.List; 
+import javax.ejb.Stateless; 
+import javax.persistence.EntityManager; 
+import javax.persistence.PersistenceContext; 
+import javax.ws.rs.Consumes; 
+import javax.ws.rs.DELETE; 
+import javax.ws.rs.GET; 
+import javax.ws.rs.POST; 
+import javax.ws.rs.PUT; 
+import javax.ws.rs.Path; 
+import javax.ws.rs.PathParam; 
+import javax.ws.rs.Produces; 
+import javax.ws.rs.core.MediaType; 
+import mypack.Employee; 
+/** 
+ * 
+ * @author polsa 
+ */ 
+@Stateless 
+@Path("mypack.employee") 
+public class EmployeeFacadeREST extends AbstractFacade<Employee> { 
+    @PersistenceContext(unitName = "EMPRestPU") 
+    private EntityManager em; 
+    public EmployeeFacadeREST() { 
+        super(Employee.class); 
+    } 
+    @POST 
+    @Override 
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON}) 
+    public void create(Employee entity) { 
+        super.create(entity); 
+    } 
+    @PUT 
+    @Path("{id}") 
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON}) 
+    public void edit(@PathParam("id") Integer id, Employee entity) { 
+        super.edit(entity); 
+    } 
+    @DELETE 
+    @Path("{id}") 
+    public void remove(@PathParam("id") Integer id) { 
+        super.remove(super.find(id)); 
+    } 
+    @GET 
+    @Path("{id}") 
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON}) 
+    public Employee find(@PathParam("id") Integer id) { 
+        return super.find(id); 
+    } 
+    @GET 
+    @Override 
+    @Produces({MediaType.APPLICATION_JSON}) 
+    public List<Employee> findAll() { 
+        return super.findAll(); 
+    } 
+    @GET 
+    @Path("{from}/{to}") 
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON}) 
+    public List<Employee> findRange(@PathParam("from") Integer from, @PathParam("to") 
+Integer to) { 
+        return super.findRange(new int[]{from, to}); 
+    } 
+    @GET 
+    @Path("count") 
+    @Produces(MediaType.TEXT_PLAIN) 
+    public String countREST() { 
+        return String.valueOf(super.count()); 
+} 
+@Override 
+protected EntityManager getEntityManager() { 
+return em; 
+}  
+} 
+
+
+EMPClient: 
+(NewJerseyClient.java) 
+
+package mypack; 
+import javax.ws.rs.ClientErrorException; 
+import javax.ws.rs.client.Client; 
+import javax.ws.rs.client.WebTarget; 
+/** 
+ * Jersey REST client generated for REST resource:EmployeeFacadeREST 
+ * [mypack.employee]<br> 
+ * USAGE: 
+ * <pre> 
+ *        NewJerseyClient client = new NewJerseyClient(); 
+ *        Object response = client.XXX(...); 
+ *        // do whatever with response 
+ *        client.close(); 
+ * </pre> 
+ * 
+ * @author polsa 
+ */ 
+public class NewJerseyClient { 
+    private WebTarget webTarget; 
+    private Client client; 
+    private static final String BASE_URI = "http://localhost:14949/EMPRest/webresources"; 
+ 
+    public NewJerseyClient() { 
+        client = javax.ws.rs.client.ClientBuilder.newClient(); 
+        webTarget = client.target(BASE_URI).path("mypack.employee"); 
+    } 
+ 
+    public String countREST() throws ClientErrorException { 
+        WebTarget resource = webTarget; 
+        resource = resource.path("count"); 
+        return resource.request(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class); 
+    } 
+ 
+    public void edit_XML(Object requestEntity, String id) throws ClientErrorException { 
+        webTarget.path(java.text.MessageFormat.format("{0}", new 
+Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_XML).put(javax.ws.rs.client.
+ Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML)); 
+    } 
+ 
+    public void edit_JSON(Object requestEntity, String id) throws ClientErrorException { 
+        webTarget.path(java.text.MessageFormat.format("{0}", new 
+Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client
+ .Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON)); 
+    } 
+ 
+    public <T> T find_XML(Class<T> responseType, String id) throws ClientErrorException { 
+        WebTarget resource = webTarget; 
+        resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id})); 
+        return 
+resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType); 
+    } 
+ 
+    public <T> T find_JSON(Class<T> responseType, String id) throws ClientErrorException { 
+        WebTarget resource = webTarget; 
+        resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id})); 
+        return 
+resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType); 
+    } 
+ 
+    public <T> T findRange_XML(Class<T> responseType, String from, String to) throws 
+ClientErrorException { 
+        WebTarget resource = webTarget; 
+        resource = resource.path(java.text.MessageFormat.format("{0}/{1}", new Object[]{from, 
+to})); 
+        return 
+resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType); 
+    } 
+    public <T> T findRange_JSON(Class<T> responseType, String from, String to) throws 
+ClientErrorException { 
+        WebTarget resource = webTarget; 
+        resource = resource.path(java.text.MessageFormat.format("{0}/{1}", new Object[]{from, 
+to})); 
+        return 
+resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType); 
+    } 
+    public void create_XML(Object requestEntity) throws ClientErrorException { 
+        
+webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_XML).post(javax.ws.rs.client.E
+ ntity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML)); 
+    } 
+    public void create_JSON(Object requestEntity) throws ClientErrorException { 
+webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.E
+ ntity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON)); 
+    } 
+    public <T> T findAll(Class<T> responseType) throws ClientErrorException { 
+        WebTarget resource = webTarget; 
+        return 
+resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType); 
+    } 
+    public void remove(String id) throws ClientErrorException { 
+        webTarget.path(java.text.MessageFormat.format("{0}", new 
+Object[]{id})).request().delete(); 
+    } 
+    public void close() { 
+        client.close(); 
+    } 
+} 
+
+
+(index.html) 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <form>
+        <input type="submit" formaction="emp.jsp" value="Get Employees">
+    </form>
+</body>
+</html>
+
+
+(emp.jsp) 
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+            }
+            td, th {
+                border: 1px solid #000000;
+                text-align: center;
+                padding: 8px;
+            }
+        </style>
+        <script>
+            var request = new XMLHttpRequest();
+            
+            request.open('GET', 'http://localhost:14949/EMPRest/webresources/mypack.employee', true);
+            request.onload = function() {
+                var data = JSON.parse(this.response);
+                for (var i = 0; i < data.length; i++) {
+                    var table = document.getElementById("EmpTable");
+                    var row = table.insertRow();
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell1.innerHTML = data[i].empid;
+                    cell2.innerHTML = data[i].empname;
+                    cell3.innerHTML = data[i].designation;
+                    // give name same as name in file which is in the source package of restful variable name of your column
+                }
+            };
+            request.send();
+        </script>
+    </head>
+    <body>
+        <table id="EmpTable">
+            <tr>
+                <th>EMP ID</th>
+                <th>EMP NAME</th>
+                <th>EMP DESIGNATION</th>
+            </tr>
+        </table>
+    </body>
+</html>
+
+
+******************************Practical No 7: ******************************
+
+Aim: Design a Restful webservice from a database table Student with 
+columns rollno, name and totalmarks. Create a restful client that 
+displays the data by accessing restful service. 
+
+STUDRest1: 
+(StudentFacadeREST.java) 
+
+package mypack.service;
+
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import mypack.Student;
+
+/**
+ *
+ * @author polsa
+ */
+@Stateless
+@Path("mypack.student")
+public class StudentFacadeREST extends AbstractFacade<Student> {
+
+    @PersistenceContext(unitName = "STUDRest1PU")
+    private EntityManager em;
+
+    public StudentFacadeREST() {
+        super(Student.class);
+    }
+
+    @POST
+    @Override
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void create(Student entity) {
+        super.create(entity);
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void edit(@PathParam("id") Integer id, Student entity) {
+        super.edit(entity);
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void remove(@PathParam("id") Integer id) {
+        super.remove(super.find(id));
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Student find(@PathParam("id") Integer id) {
+        return super.find(id);
+    }
+
+    @GET
+    @Override
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Student> findAll() {
+        return super.findAll();
+    }
+
+    @GET
+    @Path("{from}/{to}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Student> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+        return super.findRange(new int[]{from, to});
+    }
+
+    @GET
+    @Path("count")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String countREST() {
+        return String.valueOf(super.count());
+    }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+}
+
+
+STUDClient: 
+(NewJerseyClient.java) 
+
+package mypack;
+
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
+
+/**
+ * Jersey REST client generated for REST resource: StudentFacadeREST [mypack.student]<br>
+ * USAGE:
+ * <pre>
+ *        NewJerseyClient client = new NewJerseyClient();
+ *        Object response = client.XXX(...);
+ *        // do whatever with response
+ *        client.close();
+ * </pre>
+ *
+ * @author polsa
+ */
+public class NewJerseyClient {
+
+    private WebTarget webTarget;
+    private Client client;
+    private static final String BASE_URI = "http://localhost:14949/STUDRest1/webresources";
+
+    public NewJerseyClient() {
+        client = javax.ws.rs.client.ClientBuilder.newClient();
+        webTarget = client.target(BASE_URI).path("mypack.student");
+    }
+
+    public String countREST() throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("count");
+        return resource.request(javax.ws.rs.core.MediaType.TEXT_PLAIN).get(String.class);
+    }
+
+    public void edit_XML(Object requestEntity, String id) throws ClientErrorException {
+        webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id}))
+            .request(javax.ws.rs.core.MediaType.APPLICATION_XML)
+            .put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML));
+    }
+
+    public void edit_JSON(Object requestEntity, String id) throws ClientErrorException {
+        webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id}))
+            .request(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+            .put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+    }
+
+    public <T> T find_XML(Class<T> responseType, String id) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
+    }
+
+    public <T> T find_JSON(Class<T> responseType, String id) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T findRange_XML(Class<T> responseType, String from, String to) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("{0}/{1}", new Object[]{from, to}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
+    }
+
+    public <T> T findRange_JSON(Class<T> responseType, String from, String to) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("{0}/{1}", new Object[]{from, to}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public void create_XML(Object requestEntity) throws ClientErrorException {
+        webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_XML)
+            .post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML));
+    }
+
+    public void create_JSON(Object requestEntity) throws ClientErrorException {
+        webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+            .post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+    }
+
+    public <T> T findAll(Class<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public void remove(String id) throws ClientErrorException {
+        webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id}))
+            .request()
+            .delete();
+    }
+
+    public void close() {
+        client.close();
+    }
+}
+
+
+(index.html) 
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <form>
+        <input type="submit" formaction="student.jsp" value="Get Students">
+    </form>
+</body>
+</html>
+
+ 
+(stud.jsp) 
+
+<%@page contentType="text/html" pageEncoding="UTF-8%>
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+        }
+        td, th {
+            border: 1px solid #000000;
+            text-align: center;
+            padding: 8px;
+        }
+    </style>
+    <script>
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://localhost:14949/STUDRest1/webresources/mypack.student', true);
+        request.onload = function() {
+            var data = JSON.parse(this.response);
+            var table = document.getElementById("STUDENT");
+            for (var i = 0; i < data.length; i++) {
+                var row = table.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                cell1.innerHTML = data[i].rollno;
+                cell2.innerHTML = data[i].name;
+                cell3.innerHTML = data[i].totalmarks;
+                // Ensure variable names match the JSON structure returned by the RESTful service
+            }
+        };
+        request.send();
+    </script>
+</head>
+<body>
+    <table id="STUDENT">
+        <tr>
+            <th>ROLL NO</th>
+            <th>NAME</th>
+            <th>TOTAL MARKS</th>
+        </tr>
+    </table>
+</body>
+</html>
+
+--------------------------------------------------------------------------------------------
+
+PRACTICAL NO. 8
+
+Create a WCF service to perform calculations like Addition,
+Subtraction, Multiplication and Division. Create a client for
+WCF which invokes the various operations.
+
+IService1.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+
+namespace flractcal8
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change
+    // the interface name "IService1" in both code and config file together.
+    [ServiceContract]
+    public interface IService1
+    {
+        [OperationContract]
+        double Sum(double a, double b);
+
+        [OperationContract]
+        double Mul(double a, double b);
+
+        [OperationContract]
+        double Sub(double a, double b);
+
+        [OperationContract]
+        double Div(double a, double b);
+    }
+}
+
+
+Service1.svc.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+
+namespace flractcal8
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change
+    // the class name "Service1" in code, svc, and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please
+    // select Service1.svc or Service1.svc.cs in the Solution Explorer and start
+    // debugging.
+    public class Service1 : IService1
+    {
+        public double Mul(double a, double b)
+        {
+            double result = a * b;
+            return result;
+        }
+
+        public double Sum(double a, double b)
+        {
+            double result = a + b;
+            return result;
+        }
+
+        public double Sub(double a, double b)
+        {
+            double result = a - b;
+            return result;
+        }
+
+        public double Div(double a, double b)
+        {
+            double result = a / b;
+            return result;
+        }
+    }
+}
+
+
+WebForm1.aspx
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="WebApplication1.WebForm1" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            Number 1:
+            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+            <br /><br />
+            Number 2:
+            <asp:TextBox ID="TextBox2" runat="server" Width="127px"></asp:TextBox>
+            <br />
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Add" />
+            <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Multiplication" />
+            <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Division" />
+            <asp:Button ID="Button4" runat="server" OnClick="Button4_Click" Text="Subtract" />
+            <br />
+            <asp:Label ID="Label1" runat="server"></asp:Label>
+        </div>
+    </form>
+</body>
+</html>
+
+
+
+WebForm1.aspx.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace WebApplication1
+{
+    public partial class WebForm1 : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            double a = double.Parse(TextBox1.Text);
+            double b = double.Parse(TextBox2.Text);
+            Label1.Text = "Sum: " + client.Sum(a, b).ToString();
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            double a = double.Parse(TextBox1.Text);
+            double b = double.Parse(TextBox2.Text);
+            Label1.Text = "Product: " + client.Mul(a, b).ToString();
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            double a = double.Parse(TextBox1.Text);
+            double b = double.Parse(TextBox2.Text);
+            Label1.Text = "Quotient: " + client.Div(a, b).ToString();
+        }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            double a = double.Parse(TextBox1.Text);
+            double b = double.Parse(TextBox2.Text);
+            Label1.Text = "Difference: " + client.Sub(a, b).ToString();
+        }
+    }
+}
+
+-------------------------------------------------------------------------------------------------------------------
+
+PRACTICAL NO. 9
+
+Create a WCF service with different endpoints for Soap based
+and Rest based implementation
+
+IService1.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+
+namespace WCFService
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change
+    // the interface name "IService1" in both code and config file together.
+    [ServiceContract]
+    public interface IService1
+    {
+        [OperationContract]
+        [System.ServiceModel.Web.WebInvoke(Method = "GET", UriTemplate = "/SayHello/{value}", RequestFormat = System.ServiceModel.Web.WebMessageFormat.Json, ResponseFormat = System.ServiceModel.Web.WebMessageFormat.Json)]
+        string SayHello(string value);
+    }
+}
+
+
+Service1.svc.cs
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+
+namespace WCFService
+{
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change
+    // the class name "Service1" in code, svc, and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please
+    // select Service1.svc or Service1.svc.cs in the Solution Explorer and start
+    // debugging.
+    public class Service1 : IService1
+    {
+        public string SayHello(string value)
+        {
+            return string.Format($"Hello {value}! Welcome to WCF");
+        }
+    }
+}
+
+
+Web.config
+
+<?xml version="1.0"?>
+<configuration>
+  <appSettings>
+    <add key="aspnet:UseTaskFriendlySynchronizationContext" value="true" />
+  </appSettings>
+  <system.web>
+    <compilation debug="true" targetFramework="4.8" />
+    <httpRuntime targetFramework="4.8" />
+  </system.web>
+  <system.serviceModel>
+    <services>
+      <service name="WCFService.Service1">
+        <endpoint address="jsonservice" binding="webHttpBinding" contract="WCFService.IService1" behaviorConfiguration="web" />
+        <endpoint address="soapservice" binding="basicHttpBinding" contract="WCFService.IService1" />
+      </service>
+    </services>
+    <behaviors>
+      <serviceBehaviors>
+        <behavior>
+          <!-- To avoid disclosing metadata information, set the values below to false before deployment -->
+          <serviceMetadata httpGetEnabled="true" httpsGetEnabled="true" />
+          <!-- To receive exception details in faults for debugging purposes, set the value below to true. Set to false before deployment to avoid disclosing exception information -->
+          <serviceDebug includeExceptionDetailInFaults="false" />
+        </behavior>
+      </serviceBehaviors>
+      <endpointBehaviors>
+        <behavior name="web">
+          <webHttp />
+        </behavior>
+      </endpointBehaviors>
+    </behaviors>
+    <protocolMapping>
+      <add binding="basicHttpsBinding" scheme="https" />
+    </protocolMapping>
+    <serviceHostingEnvironment aspNetCompatibilityEnabled="true" multipleSiteBindingsEnabled="true" />
+  </system.serviceModel>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true" />
+    <directoryBrowse enabled="true" />
+  </system.webServer>
+</configuration>
+
+--------------------------------------------------------------------------------------------------------
+
+PRACTICAL NO. 10
+
+Design a Restful webservice and create a restful client that
+displays the data by fetching it using HTTP GET method
+
+Server
+
+package as.service;
+
+import as.Airlines;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Stateless
+@Path("as.airlines")
+public class AirlinesFacadeREST extends AbstractFacade<Airlines> {
+    @PersistenceContext(unitName = "AirlineServerPU")
+    private EntityManager em;
+
+    public AirlinesFacadeREST() {
+        super(Airlines.class);
+    }
+
+    @POST
+    @Override
+    @Consumes({ MediaType.APPLICATION_JSON })
+    public void create(Airlines entity) {
+        super.create(entity);
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes({ MediaType.APPLICATION_JSON })
+    public void edit(@PathParam("id") Integer id, Airlines entity) {
+        super.edit(entity);
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void remove(@PathParam("id") Integer id) {
+        super.remove(super.find(id));
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Airlines find(@PathParam("id") Integer id) {
+        return super.find(id);
+    }
+
+    @GET
+    @Override
+    @Produces({ MediaType.APPLICATION_JSON })
+    public List<Airlines> findAll() {
+        return super.findAll();
+    }
+
+    @GET
+    @Path("{from}/{to}")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public List<Airlines> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+        return super.findRange(new int[] { from, to });
+    }
+
+    @GET
+    @Path("count")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String countREST() {
+        return String.valueOf(super.count());
+    }
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+}
+
+Client
+
+HTML (first part):
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <form>
+        <h1>Get Data</h1>
+        <br>
+        <input type="submit" formaction="getData.jsp" value="Get Data">
+    </form>
+</body>
+</html>
+
+JSP (second part):
+
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TODO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+        }
+        td, th {
+            border: 1px solid #000000;
+            text-align: center;
+            padding: 8px;
+        }
+    </style>
+    <script>
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://localhost:8080/AirlineServer/webresources/as.airlines', true);
+        request.onload = function () {
+            var data = JSON.parse(this.response);
+            console.log(this.response);
+            for (var i = 0; i < data.length; i++) {
+                var table = document.getElementById("myTable");
+                var row = table.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                cell1.innerHTML = data[i].flightId;
+                cell2.innerHTML = data[i].flightName;
+                cell3.innerHTML = data[i].departureDate;
+                cell4.innerHTML = data[i].departureTime;
+            }
+        };
+        request.send();
+    </script>
+</head>
+<body>
+    <table id="myTable">
+        <tr>
+            <th>FLIGHT ID</th>
+            <th>FLIGHT NAME</th>
+            <th>DEPARTURE DATE</th>
+            <th>DEPARTURE TIME</th>
+        </tr>
+    </table>
+</body>
+</html>
+
