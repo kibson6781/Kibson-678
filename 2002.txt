@@ -1609,3 +1609,5 @@ JSP (second part):
 
 https://github.com/kibson6781/Kibson-678/blob/main/WS_PracticalJournal_TCS2223013_ChiragBhatia.pdf
 https://github.com/kibson6781/Kibson-678/blob/main/WEB%20SERVICE%20JOURNAL.pdf
+https://e-next.in/bsc-cs/
+https://github.com/kibson6781/Kibson-678/blob/main/WS%20Journal%202020%20(E-next.in).pdf
