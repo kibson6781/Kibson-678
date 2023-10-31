@@ -792,3 +792,294 @@ public class Rotator : MonoBehaviour
 
 https://raw.githubusercontent.com/kibson6781/Kibson-678/main/andk.txt
 https://github.com/kibson6781/Kibson-678/blob/main/TCS2324100%20Game%20Programming%20Journal_removed.pdf
+
+
+
+
+import pygame
+import sys
+import random
+
+# Initialize Pygame
+pygame.init()
+
+# Constants
+SCREEN_WIDTH = 400
+SCREEN_HEIGHT = 400
+GRID_SIZE = 15
+GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
+GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
+
+# Colors
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
+
+# Snake Directions
+UP = (0, -1)
+DOWN = (0, 1)
+LEFT = (-1, 0)
+RIGHT = (1, 0)
+
+# Game variables
+snake = [(5, 5)]
+snake_direction = RIGHT
+food = (random.randint(0, GRID_WIDTH - 1), random.randint(0, GRID_HEIGHT - 1))
+score = 0
+
+# Initialize the screen
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Snake Game")
+
+# Font
+font = pygame.font.Font(None, 36)
+
+# Main game loop
+clock = pygame.time.Clock()
+
+def draw_score():
+    text = font.render(f"Score: {score}", True, WHITE)
+    screen.blit(text, (10, 10))
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP and snake_direction != DOWN:
+                snake_direction = UP
+            elif event.key == pygame.K_DOWN and snake_direction != UP:
+                snake_direction = DOWN
+            elif event.key == pygame.K_LEFT and snake_direction != RIGHT:
+                snake_direction = LEFT
+            elif event.key == pygame.K_RIGHT and snake_direction != LEFT:
+                snake_direction = RIGHT
+
+    # Move the snake
+    x, y = snake[0]
+    new_head = (x + snake_direction[0], y + snake_direction[1])
+    snake.insert(0, new_head)
+
+    # Check for collisions with food
+    if snake[0] == food:
+        score += 1
+        food = (random.randint(0, GRID_WIDTH - 1), random.randint(0, GRID_HEIGHT - 1))
+    else:
+        snake.pop()
+
+    # Check for collisions with the wall
+    if (
+        snake[0][0] < 0
+        or snake[0][0] >= GRID_WIDTH
+        or snake[0][1] < 0
+        or snake[0][1] >= GRID_HEIGHT
+    ):
+        pygame.quit()
+        sys.exit()
+
+    # Check for self-collision
+    if snake[0] in snake[1:]:
+        pygame.quit()
+        sys.exit()
+
+    # Clear the screen
+    screen.fill(BLACK)
+
+    # Draw the snake
+    for segment in snake:
+        pygame.draw.rect(
+            screen,
+            GREEN,
+            (segment[0] * GRID_SIZE, segment[1] * GRID_SIZE, GRID_SIZE, GRID_SIZE),
+        )
+
+    # Draw the food
+    pygame.draw.rect(
+        screen,
+        WHITE,
+        (food[0] * GRID_SIZE, food[1] * GRID_SIZE, GRID_SIZE, GRID_SIZE),
+    )
+
+    # Draw the score
+    draw_score()
+
+    # Update the display
+    pygame.display.update()
+
+    # Control the game speed
+    clock.tick(10)
+
+---------------------------------------------------------------------------------------------
+
+
+
+import random
+import pygame
+import math
+from pygame import mixer
+
+
+# Initialization
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("Space Invader")
+# Icon Set
+icon1 = pygame.image.load("ufo.jpg")
+pygame.display.set_icon(icon1)
+#background song
+mixer.music.load("background.wav")
+mixer.music.play(-1)
+
+
+#player
+playerImg = pygame.image.load("player.jpg")
+playerX = 370
+playerY = 480
+playerX_change = 0
+
+# Bullet
+bulletImg = pygame.image.load("bullet.jpg")
+bulletX = 0
+bulletY = 480
+bulletX_change = 0
+bulletY_change = 10
+bullet_state = "ready"
+score_value=0
+#adding font for displaying score
+font=pygame.font.Font("freesansbold.ttf",32)
+textX=10
+textY=10
+#adding font for displaying game over
+over_font=pygame.font.Font("freesansbold.ttf",70)
+
+
+def show_score(x,y):
+    score=font.render("Score:"+str(score_value),True,(255,255,255))
+    screen.blit(score,(x,y))
+def game_over_text():
+    over_text=over_font.render("GAME OVER",True,(255,255,255))
+    screen.blit(over_text,(200,250))
+
+# Enemy
+enemyImg=[]
+enemyX=[]
+enemyY=[]
+enemyX_change=[]
+enemyY_change=[]
+no_of_enemies=6
+
+
+for i in range(no_of_enemies):
+    enemyImg.append(pygame.image.load("enemy.jpg"))
+
+    enemyX.append(random.randint(0, 735))
+    enemyY.append(random.randint(50, 150))
+    enemyX_change.append(3)
+    enemyY_change.append(40)
+
+# background image
+
+background = pygame.image.load("background.jpg")
+
+#collision function
+def isCollision(enemyX,enemyY,bulletX,bulletY):
+    distance=math.sqrt((math.pow(enemyX-bulletX,2))+(math.pow(enemyY-bulletY,2)))
+    if distance<27:
+        return True
+    else:
+        return False
+
+
+def fire_bullet(x, y):
+    global bullet_state
+    bullet_state = "fire"
+    screen.blit(bulletImg, (x + 16, y + 10))
+
+
+def player(x, y):
+    screen.blit(playerImg, (x, y))
+
+
+def enemy(x,y,i):
+    screen.blit(enemyImg[i], (x, y))
+
+
+running = True
+# Game Window
+while running:
+    screen.fill((200, 100, 35))
+    screen.blit(background, (0, 0))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                playerX_change = -2
+            if event.key == pygame.K_RIGHT:
+                playerX_change = 2
+            if event.key == pygame.K_SPACE:
+                if bullet_state is "ready":
+                    bullet_sound=mixer.Sound("laser.wav")
+                    bullet_sound.play()
+
+                    bulletX = playerX
+                    fire_bullet(bulletX, bulletY)
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                playerX_change = 0
+    playerX += playerX_change
+
+    # Bullet Movement
+    if bulletY <= 0:
+        bulletY = 480
+        bullet_state = "ready"
+    if bullet_state is "fire":
+        fire_bullet(bulletX, bulletY)
+        bulletY -= bulletY_change
+    playerX += playerX_change
+
+    #enemy movement
+
+    for i in range(no_of_enemies):
+        #game over
+        if enemyY[i]>400:
+            for j in range(no_of_enemies):
+                enemyY[i]=2000
+            game_over_text()
+            break
+        enemyX[i] += enemyX_change[i]
+        if enemyX[i] <= 0:
+            enemyX_change[i] = 1
+            enemyY[i] += enemyY_change[i]
+        elif enemyX[i] >= 736:
+            enemyX_change[i] = -1
+            enemyY[i] += enemyY_change[i]
+        #collision
+        collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
+        if collision:
+            explosion_sound=mixer.Sound("explosion.wav")
+            explosion_sound.play()
+            bulletY = 480
+            bullet_state = "ready"
+            score_value += 1
+
+            enemyX[i] = random.randint(0, 735)
+            enemyY[i] = random.randint(50, 150)
+        enemy(enemyX[i], enemyY[i],i)
+
+    # player boundary
+    if playerX <= 0:
+        playerX = 0
+    elif playerX >= 736:  # considering spaceship
+        playerX = 736
+
+
+
+
+
+    player(playerX, playerY)
+    show_score(textX,textY)
+
+    pygame.display.update()
