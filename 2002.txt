@@ -266,3 +266,5 @@ response = requests.get('https://raw.githubusercontent.com/kibson6781/Kibson-678
 for i, line in enumerate(response.text.splitlines()):
     print(f"Line {i}: {line}")
 
+https://github.com/kibson6781/Kibson-678/blob/main/CC%20JOURNAL-pages-deleted.pdf
+https://github.com/kibson6781/Kibson-678/blob/main/TCS2324045_WSN_JOURNAL-1%20(3).pdf
