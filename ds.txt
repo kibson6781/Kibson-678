@@ -571,7 +571,8 @@ db.Student.deleteMany({ "TotalMarks": { $lt: 200 } })
 
 
 
-
+https://github.com/kibson6781/Kibson-678/blob/main/dsf.pdf
+https://github.com/kibson6781/Kibson-678/blob/main/TCS2324045_IR_JOURNAL-1.pdf
 
 
 
