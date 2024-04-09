@@ -1,0 +1,579 @@
+Aim: Write a python program to plot word cloud for a wikipedia page of any topic.
+
+pip install wikipedia
+
+from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
+import wikipedia as wp
+
+result = wp.page('Computer Science')
+final_result = result.content
+
+def plot_wordcloud(wc):
+    plt.axis("off")
+    plt.figure(figsize=(10,10))
+    plt.imshow(wc)
+    plt.show()
+
+wc = WordCloud(width=500, height=500, background_color="blue",
+               random_state=10, stopwords=STOPWORDS).generate(final_result)
+
+wc.to_file("cs.png")
+plot_wordcloud(wc)
+
+----------------------------------------------------------------------------------------------------------------------
+Practical 2
+Web scraping : Web scraping is the process of collecting and parsing raw data
+from the Web.
+
+Aim: Write a python program to perform Web Scrapping
+01.Html scrapping- use Beautiful Soup
+
+
+import pandas as pd
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
+
+url = "https://en.wikipedia.org/wiki/List_of_Asian_countries_by_area"
+page = urlopen(url)
+html_page = page.read().decode("utf-8")
+soup = BeautifulSoup(html_page, "html.parser")
+table = soup.find("table")
+
+SrNo = []
+Country = []
+Area = []
+
+rows = table.find("tbody").find_all("tr")
+
+for row in rows:
+    cells = row.find_all("td")
+    if(cells):
+        SrNo.append(cells[0].get_text().strip("\n"))
+        Country.append(cells[1].get_text().strip("\xa0").strip("\n").strip("\[2]*"))
+        Area.append(cells[3].get_text().strip("\n").replace(",",""))
+
+countries_df = pd.DataFrame()
+countries_df["ID"] = SrNo
+countries_df["Country Name"] = Country
+countries_df["Area"] = Area
+
+print(countries_df.head(10))
+
+
+02.json scrapping
+
+import pandas as pd
+import urllib.request
+import json
+
+url = "https://jsonplaceholder.typicode.com/users"
+response = urllib.request.urlopen(url)
+data = json.loads(response.read())
+
+id = []
+username = []
+email = []
+
+for item in data:
+    if "id" in item.keys():
+        id.append(item["id"])
+    else:
+        id.append("NA")
+
+    if "username" in item.keys():
+        username.append(item["username"])
+    else:
+        username.append("NA")
+
+    if "email" in item.keys():
+        email.append(item["email"])
+    else:
+        email.append("NA")
+
+user_df = pd.DataFrame()
+user_df["User ID"] = id
+user_df["User Name"] = username
+user_df["Email Address"] = email
+
+print(user_df.head(10))
+
+------------------------------------------------------------------------------------------------------------------
+Practical 3
+
+Exploratory Data Analysis of mtcars.csv Dataset in R ( Use functions of
+dplyr like select, filter, mutate , rename, arrange, group by, summarize and data
+visualizations) mtcars.csv:
+
+
+
+# Read the CSV file into cars_df
+cars_df <- read.csv("mtcars.csv")
+
+# View the dataframe
+View(cars_df)
+
+# Display structure of the dataframe
+str(cars_df)
+
+# Display dimensions (rows x columns) of the dataframe
+dim(cars_df)
+
+# Display column names
+names(cars_df)
+
+# Display row names
+row.names(cars_df)
+
+# Set row names using the 'model' column
+row.names(cars_df) <- cars_df$model
+
+# Remove the 'model' column from the dataframe
+cars_df <- cars_df[, -1]
+
+# View the modified dataframe
+View(cars_df)
+
+# Load the dplyr library for data manipulation
+library(dplyr)
+
+# Select specific columns using select() function
+df1 <- cars_df %>% select(mpg:hp)
+View(df1)
+
+# Filter rows based on specific condition (gear == 4)
+df1 <- cars_df %>% filter(gear == 4) %>% select(mpg, disp, wt, gear)
+View(df1)
+
+# Filter rows based on multiple conditions (cyl == 4 or mpg > 20)
+df1 <- cars_df %>% filter(cyl == 4 | mpg > 20) %>% select(mpg, cyl)
+View(df1)
+
+# Filter rows based on specific conditions (mpg < 20 and carb == 3)
+df1 <- cars_df %>% filter(mpg < 20 & carb == 3) %>% select(mpg, carb)
+View(df1)
+
+# Arrange rows based on specific columns (cyl, descending mpg)
+df1 <- cars_df %>% arrange(cyl, desc(mpg))
+View(df1)
+
+# Rename columns using rename()
+df1 <- cars_df %>%
+  rename(MilesPerGallon = mpg, Cylinders = cyl, Displacement = disp)
+View(df1)
+
+# Create new columns using mutate()
+df1 <- cars_df %>% mutate(Power = hp * wt)
+View(df1)
+
+# Convert 'gear' column to factor for grouping
+df1$gear <- as.factor(df1$gear)
+
+# Group by 'gear' and summarize
+summary_df <- df1 %>% 
+  group_by(gear) %>% 
+  summarise(
+    no = n(),
+    mean_mpg = mean(mpg),
+    mean_wt = mean(wt)
+  )
+summary_df
+
+# Group by 'Cylinders' and summarize
+summary_df <- df1 %>% 
+  group_by(Cylinders) %>% 
+  summarise(
+    no = n(),
+    mean_mpg = mean(mpg),
+    mean_wt = mean(wt)
+  )
+summary_df
+
+# Data Visualization
+
+# Histogram of MilesPerGallon
+hist(df1$MilesPerGallon,
+     main = "Histogram of MilePerGallon (mtcars)",
+     col = "lightgreen",
+     xlab = "Miles Per Gallon")
+
+# Box plot for MilesPerGallon
+summary(df1$MilesPerGallon)
+boxplot(df1$MilesPerGallon)
+
+# Bar plot for 'gear' variable
+table(df1$gear)
+barplot(table(df1$gear))
+
+# Scatter plot (MilesPerGallon vs. Displacement)
+plot(df1$MilesPerGallon ~ df1$Displacement)
+
+# Scatter plot (MilesPerGallon vs. Cylinders)
+plot(df1$MilesPerGallon ~ df1$Cylinders)
+
+# Scatter plot (MilesPerGallon vs. Weight)
+plot(df1$MilesPerGallon ~ df1$wt)
+
+
+
+--------------------------------------------------------------------------------------------------------------
+
+
+Practical 4
+Aim: Exploratory data analysis in Python using Titanic Dataset It is one of 
+the most popular datasets used for understanding machine learning
+basics. It contains information of all the passengers aboard the RMS
+Titanic, which unfortunately was shipwrecked. This dataset can be used
+to predict whether a given passenger survived or not.
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+import numpy as np
+from sklearn import datasets
+
+titanic = pd.read_csv("train.csv")
+titanic.head()
+titanic.info()
+titanic.describe()
+titanic.isnull().sum()
+
+titanic_cleaned = titanic.drop(['PassengerId','Name','Ticket','Fare','Cabin'],axis=1)
+titanic_cleaned.info()
+
+sns.catplot(x="Sex",hue="Survived",kind="count",data=titanic_cleaned)
+
+gender_survived = titanic_cleaned.groupby(['Sex','Survived'])['Survived'].count().unstack()
+sns.heatmap(gender_survived,annot=True,fmt="d")
+
+sns.violinplot(x="Sex",y="Age",hue="Survived",data=titanic_cleaned,split=True)
+
+print("Oldest Person on Board:",titanic_cleaned['Age'].max())
+print("Youngest Person on Board:",titanic_cleaned['Age'].min())
+print("Average age of Person on Board:",titanic_cleaned['Age'].mean())
+
+titanic_cleaned.isnull().sum()
+
+def impute(cols):
+    Age = cols[0]
+    Pclass = cols[1]
+    if pd.isnull(Age):
+        if Pclass==1:
+            return 38
+        elif Pclass==2:
+            return 29
+        else:
+            return 24
+    else:
+        return Age
+
+titanic_cleaned['Age']=titanic_cleaned[['Age','Pclass']].apply(impute,axis=1)
+titanic_cleaned.isnull().sum()
+
+print(titanic_cleaned.corr(method='pearson'))
+sns.heatmap(titanic_cleaned.corr(method="pearson"),annot=True,vmax=1)
+
+x,y,coef=datasets.make_regression(n_samples=100, n_features=1, n_informative=1, noise=10,coef=True, random_state = 0)
+
+x=np.interp(x,(x.min(),x.max()),(0,20))
+print(len(x))
+print(x)
+
+y=np.interp(y,(y.min(),y.max()),(20000,150000))
+print(len(y))
+print(y)
+
+------------------------------------------------------------------------------------------------------------------------
+Practical 5
+
+Aim: Exploratory data analysis in Python using Titanic Dataset The
+following figure illustrates simple linear regression:
+The package scikit-learn is a widely used Python library for machine
+learning, built on top of NumPy and some other packages, It provides the means
+for preprocessing data, reducing dimensionality, implementing regression,
+classification, clustering, and more. Like NumPy, scikit-learn is also open
+source.
+It is used as sklearn in python
+1)Write a python program to build a regression model that could predict the
+salary of an employee from the given experience and visualize univariate
+linear regression on it.
+
+
+
+import numpy as np
+from sklearn import datasets
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+import pandas as pd
+
+x, y, coef = datasets.make_regression(n_samples=100, n_features=1, n_informative=1, noise=10, coef=True, random_state=0)
+x = np.interp(x, (x.min(), x.max()), (0, 20))
+y = np.interp(y, (y.min(), y.max()), (20000, 150000))
+
+plt.plot(x, y, '.', label="training data")
+plt.xlabel("Years of Experience")
+plt.ylabel("Salary")
+plt.title("Experience vs Salary")
+
+reg_model = LinearRegression()
+reg_model.fit(x.reshape(-1, 1), y)
+y_pred = reg_model.predict(x.reshape(-1, 1))
+
+plt.plot(x, y_pred, color="black")
+plt.plot(x, y, '.', label="training data")
+plt.xlabel("Years of Experience")
+plt.ylabel("Salary")
+plt.title("Experience vs Salary")
+plt.legend()
+
+data = {'Experience': np.round(x.flatten()), 'Salary': np.round(y)}
+df = pd.DataFrame(data)
+df.head(10)
+
+
+Write a python program to simulate linear model
+Y=10+7*x+e for random 100 samples and visualize univariate linear
+regression on it.
+Code:
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+x1 = [[13.0]]
+y1 = reg_model.predict(x1)
+print(np.round(y1))
+
+reg_model1 = LinearRegression()
+x = np.random.rand(100, 1)
+y_intercept = 10
+slope = 7
+error = np.random.rand(100, 1)
+y = y_intercept + slope * x + error
+
+reg_model1.fit(x, y)
+y_pred = reg_model1.predict(x)
+
+plt.scatter(x, y, s=10)
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.plot(x, y_pred, color="black")
+-----------------------------------------------------------------------------------------------------------------
+
+Practical 6
+Aim: Write a python program to implement multiple linear regression on the
+Dataset Boston.csv
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import sklearn
+
+boston = pd.read_csv("Boston.csv")
+boston.head()
+boston.info()
+boston = boston.drop(columns="Unnamed: 0")
+boston.info()
+
+boston_x = pd.DataFrame(boston.iloc[:, :13])
+boston_y = pd.DataFrame(boston.iloc[:, -1])
+
+boston_x.head()
+boston_y.head()
+
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, Y_train, Y_test = train_test_split(boston_x, boston_y, test_size=0.3)
+print("xtrain shape", X_train.shape)
+print("ytrain shape", Y_train.shape)
+print("xtest shape", X_test.shape)
+print("ytest shape", Y_test.shape)
+
+from sklearn.linear_model import LinearRegression
+
+regression = LinearRegression()
+regression.fit(X_train, Y_train)
+Y_pred_linear = regression.predict(X_test)
+Y_pred_df = pd.DataFrame(Y_pred_linear, columns=["Predicted"])
+Y_pred_df.head()
+
+plt.scatter(Y_test, Y_pred_linear, c="green")
+plt.xlabel("Actual Price (medv)")
+plt.ylabel("Predicted Price (medv)")
+plt.title("Actual vs Prediction")
+plt.show()
+
+---------------------------------------------------------------------------------------------------------------------
+
+Practical 7:
+K Nearest Neighbor classification Algorithm
+Aim: Write a python program to implement KNN algorithm to predict breast
+cancer using breast cancer wisconsin dataset .
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import load_breast_cancer
+from sklearn.metrics import confusion_matrix
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+
+breast_cancer_df = load_breast_cancer()
+x = pd.DataFrame(breast_cancer_df.data, columns=breast_cancer_df.feature_names)
+x.head()
+
+columns_to_select = ["mean area", "mean compactness"]
+x = x[columns_to_select]
+x.head()
+
+y = pd.Categorical.from_codes(breast_cancer_df.target, breast_cancer_df.target_names)
+y = pd.get_dummies(y, drop_first=True)
+print(y)
+
+X_train, X_test, Y_train, Y_test = train_test_split(x, y, random_state=1)
+
+knn = KNeighborsClassifier(n_neighbors=5, metric="euclidean")
+knn.fit(X_train, Y_train)
+
+sns.set()
+sns.scatterplot(x="mean area", y="mean compactness", hue="benign", data=X_test.join(Y_test))
+
+y_pred = knn.predict(X_test)
+plt.scatter(X_test["mean area"], X_test["mean compactness"], c=y_pred, cmap="coolwarm", alpha=0.7)
+
+cf = confusion_matrix(Y_test, y_pred)
+print(cf)
+
+labels = np.asarray(labels).reshape(2, 2)
+categories = ["Zero", "One"]
+ax = plt.subplot()
+sns.heatmap(cf, annot=True, ax=ax, fmt="d")
+ax.set_xlabel("Predicted Values")
+ax.set_ylabel("Actual Values")
+ax.set_title("Confusion Matrix")
+ax.xaxis.set_ticklabels(["Malignant", "Benign"])
+ax.yaxis.set_ticklabels(["Malignant", "Benign"])
+
+---------------------------------------------------------------------------------------------------------
+
+Practical 8:
+Aim: Introduction to NOSQL using MongoDB
+
+use Institution
+
+db.createCollection("Staff")
+
+db (show output of Instition then its correct)
+
+db.Staff.insertMany([
+    { "empid": 1, "empname": "John Doe", "salary": 60000, "designation": "Manager" },
+    { "empid": 2, "empname": "Jane Smith", "salary": 55000, "designation": "Accountant" },
+    { "empid": 3, "empname": "Michael Johnson", "salary": 70000, "designation": "Manager" },
+    { "empid": 4, "empname": "Emily Brown", "salary": 45000, "designation": "Accountant" },
+    { "empid": 5, "empname": "David Wilson", "salary": 80000, "designation": "Developer" },
+    { "empid": 6, "empname": "Sarah Lee", "salary": 95000, "designation": "Manager" },
+    { "empid": 7, "empname": "Christopher Martinez", "salary": 50000, "designation": "Accountant" },
+    { "empid": 8, "empname": "Amanda Davis", "salary": 120000, "designation": "Manager" },
+    { "empid": 9, "empname": "Jason Rodriguez", "salary": 40000, "designation": "Intern" },
+    { "empid": 10, "empname": "Jessica Taylor", "salary": 110000, "designation": "Manager" }
+]);
+
+
+-Display all documents in Staff and display only empid and designation. 
+
+db.Staff.find().pretty();
+
+db.Staff.find({}, { "empid": 1, "designation": 1, "_id": 0 }).pretty();
+
+-Sort the documents in descending order of Salary
+
+db.Staff.find().sort({ "salary": -1 }).forEach(function(doc) {
+    printjson(doc);
+});
+
+- Display employee with designation with “Manager” or salary
+greater than Rs. 50,000/-
+
+db.Staff.find({
+    $or: [
+        { "designation": "Manager" },
+        { "salary": { $gt: 50000 } }
+    ]
+}).forEach(function(doc) {
+    printjson(doc);
+});
+
+-Update the salary of all employees with designation as
+“Accountant” to Rs.45000
+
+db.Staff.updateMany(
+    { "designation": "Accountant" }, // Filter: Update documents where designation is "Accountant"
+    { $set: { "salary": 45000 } }    // Update: Set the salary field to 45000
+);
+
+db.Staff.find({ "designation": "Accountant" }).forEach(function(doc) {
+    printjson(doc);
+});
+
+
+- Remove the documents of employees whose salary is greater than
+Rs100000
+
+db.Staff.deleteMany({ "salary": { $gt: 100000 } });
+
+
+
+2. Create a database Institution .Create a Collection Student and Insert ten
+documents in it with fields: RollNo,Name,Class and TotalMarks(out of 500).
+
+
+dbcreateCollection("Student")
+
+db (show output as Institution means correct)
+
+db.Student.insertMany([
+    { "RollNo": 101, "Name": "Alice Johnson", "Class": "BSc", "TotalMarks": 480 },
+    { "RollNo": 102, "Name": "Bob Smith", "Class": "MSc", "TotalMarks": 450 },
+    { "RollNo": 103, "Name": "Charlie Brown", "Class": "MSc", "TotalMarks": 420 },
+    { "RollNo": 104, "Name": "David Davis", "Class": "BSc", "TotalMarks": 400 },
+    { "RollNo": 105, "Name": "Eva Wilson", "Class": "MSc", "TotalMarks": 490 },
+    { "RollNo": 106, "Name": "Frank Martinez", "Class": "BSc", "TotalMarks": 360 },
+    { "RollNo": 107, "Name": "Grace Lee", "Class": "MSc", "TotalMarks": 510 },
+    { "RollNo": 108, "Name": "Henry Taylor", "Class": "BSc", "TotalMarks": 320 },
+    { "RollNo": 109, "Name": "Isabel Rodriguez", "Class": "MSc", "TotalMarks": 380 }
+]);
+
+- Display all documents in Student.
+
+db.Student.find({});
+
+- Sort the documents in descending order of TotalMarks.
+
+db.Student.find().sort({ "TotalMarks": -1 })
+
+Display students of class “MSc” or marks greater than 400.
+
+db.Student.find({
+  $or: [
+    { "Class": "MSc" },
+    { "TotalMarks": { $gt: 400 } }
+  ]
+})
+ 
+or
+
+db.Student.find({ $or: [{ "Class": "MSc" }, { "TotalMarks": { $gt: 400 } }] })
+
+- Remove all the documents with TotalMarks<200
+
+db.Student.deleteMany({ "TotalMarks": { $lt: 200 } })
+
+
+
+
+
+
+
+db.Staff.find().pretty();
+
