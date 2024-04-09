@@ -578,3 +578,74 @@ https://github.com/kibson6781/Kibson-678/blob/main/TCS2324045_IR_JOURNAL-1.pdf
 
 db.Staff.find().pretty();
 
+
+
+
+
+# Load necessary libraries
+library(dplyr)
+
+# Read the dataset
+cars_df <- read.csv("mtcars.csv")
+
+# View the dataset
+View(cars_df)
+
+# Summary of the dataset
+str(cars_df)
+dim(cars_df)
+names(cars_df)
+row.names(cars_df)
+row.names(cars_df) <- cars_df$model
+cars_df <- cars_df[,-1]
+View(cars_df)
+
+# Select specific columns
+df1 <- cars_df %>% select(mpg:hp)
+View(df1)
+
+df1 <- cars_df %>% select(c(mpg, disp, wt, gear))
+View(df1)
+
+# Filter specific rows
+df1 <- cars_df %>% filter(gear == 4) %>% select(c(mpg, disp, wt, gear))
+View(df1)
+
+df1 <- cars_df %>% filter(cyl == 4 | mpg > 20) %>% select(c(mpg, cyl))
+View(df1)
+
+df1 <- cars_df %>% filter(mpg < 20 & carb == 3) %>% select(c(mpg, carb))
+View(df1)
+
+# Arrange rows
+df1 <- cars_df %>% arrange(cyl, desc(mpg))
+View(df1)
+
+# Rename columns
+df1 <- cars_df %>% rename(MilesPerGallon = mpg, Cylinders = cyl, Displacement = disp)
+View(df1)
+
+# Mutate - Create new columns
+df1 <- cars_df %>% mutate(Power = hp * wt)
+View(df1)
+
+# Group by and summarize
+df1$gear <- as.factor(df1$gear)
+str(df1)
+
+summary_df <- df1 %>% group_by(gear) %>% summarise(no = n(), mean_mpg = mean(mpg), mean_wt = mean(wt))
+summary_df
+
+summary_df <- df1 %>% group_by(Cylinders) %>% summarise(no = n(), mean_mpg = mean(mpg), mean_wt = mean(wt))
+summary_df
+
+# Data Visualization
+hist(df1$mpg, main = "Histogram of Mile Per Gallon (mtcars)", col = "lightgreen", xlab = "Miles Per Gallon")
+boxplot(df1$mpg)
+barplot(table(df1$gear))
+
+plot(df1$mpg ~ df1$disp)
+plot(df1$mpg ~ df1$cyl)
+plot(df1$mpg ~ df1$wt)
+
+
