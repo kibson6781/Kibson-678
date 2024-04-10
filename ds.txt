@@ -648,4 +648,110 @@ plot(df1$mpg ~ df1$disp)
 plot(df1$mpg ~ df1$cyl)
 plot(df1$mpg ~ df1$wt)
 
+------------------------------------------------------
+
+# Read the CSV file into cars_df
+cars_df <- read.csv("mtcars.csv")
+
+# View the dataframe
+View(cars_df)
+
+# Display structure of the dataframe
+str(cars_df)
+
+# Display dimensions (rows x columns) of the dataframe
+dim(cars_df)
+
+# Display column names
+names(cars_df)
+
+# Display row names
+row.names(cars_df)
+
+# Set row names using the 'model' column
+row.names(cars_df) <- cars_df$model
+
+# Remove the 'model' column from the dataframe
+cars_df <- cars_df[, -1]
+
+# View the modified dataframe
+View(cars_df)
+
+# Load the dplyr library for data manipulation
+library(dplyr)
+
+# Select specific columns using select() function
+df1 <- cars_df %>% select(mpg:hp)
+View(df1)
+
+# Filter rows based on specific condition (gear == 4)
+df1 <- cars_df %>% filter(gear == 4) %>% select(mpg, disp, wt, gear)
+View(df1)
+
+# Filter rows based on multiple conditions (cyl == 4 or mpg > 20)
+df1 <- cars_df %>% filter(cyl == 4 | mpg > 20) %>% select(mpg, cyl)
+View(df1)
+
+# Filter rows based on specific conditions (mpg < 20 and carb == 3)
+df1 <- cars_df %>% filter(mpg < 20 & carb == 3) %>% select(mpg, carb)
+View(df1)
+
+# Arrange rows based on specific columns (cyl, descending mpg)
+df1 <- cars_df %>% arrange(cyl, desc(mpg))
+View(df1)
+
+# Rename columns using rename()
+df1 <- cars_df %>%
+  rename(MilesPerGallon = mpg, Cylinders = cyl, Displacement = disp)
+View(df1)
+
+# Create new columns using mutate()
+df1 <- cars_df %>% mutate(Power = hp * wt)
+View(df1)
+
+# Convert 'gear' column to factor for grouping
+df1$gear <- as.factor(df1$gear)
+
+# Group by 'gear' and summarize
+summary_df <- df1 %>% 
+  group_by(gear) %>% 
+  summarise(
+    no = n(),
+    mean_mpg = mean(MilesPerGallon),
+    mean_wt = mean(wt)
+  )
+summary_df
+
+# Group by 'Cylinders' and summarize
+summary_df <- df1 %>% 
+  group_by(Cylinders) %>% 
+  summarise(
+    no = n(),
+    mean_mpg = mean(MilesPerGallon),
+    mean_wt = mean(wt)
+  )
+summary_df
+
+# Data Visualization
+
+# Histogram of MilesPerGallon
+hist(df1$MilesPerGallon,
+     main = "Histogram of MilePerGallon (mtcars)",
+     col = "lightgreen",
+     xlab = "Miles Per Gallon")
+
+# Box plot for MilesPerGallon
+boxplot(df1$MilesPerGallon)
+
+# Bar plot for 'gear' variable
+barplot(table(df1$gear))
+
+# Scatter plot (MilesPerGallon vs. Displacement)
+plot(df1$MilesPerGallon ~ df1$Displacement)
+
+# Scatter plot (MilesPerGallon vs. Cylinders)
+plot(df1$MilesPerGallon ~ df1$Cylinders)
+
+# Scatter plot (MilesPerGallon vs. Weight)
+plot(df1$MilesPerGallon ~ df1$wt)
 
