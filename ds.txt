@@ -755,3 +755,59 @@ plot(df1$MilesPerGallon ~ df1$Cylinders)
 # Scatter plot (MilesPerGallon vs. Weight)
 plot(df1$MilesPerGallon ~ df1$wt)
 
+-------------------------------------------------------------------------------------------------------
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+titanic = pd.read_csv("train.csv")
+titanic.head()
+titanic.info()
+titanic.describe()
+titanic.isnull().sum()
+
+titanic_clean = titanic.drop(['PassengerId', 'Name', 'Ticket', 'Cabin', 'Fare'], axis=1)
+print(titanic_clean)
+
+sns.catplot(x='Sex', hue='Survived', kind='count', data=titanic_clean)
+
+group1 = titanic_clean.groupby(['Sex', 'Survived'])
+gender_survived = group1.size().unstack()
+sns.heatmap(gender_survived, annot=True, fmt='d')
+
+group2 = titanic_clean.groupby(['Pclass', 'Survived'])
+Pclass_survived = group2.size().unstack()
+sns.heatmap(Pclass_survived, annot=True, fmt='d')
+
+sns.violinplot(x='Sex', y='Age', hue='Survived', data=titanic_clean, split=True)
+
+print("Oldest person on board: ", titanic_clean['Age'].max())
+print("Youngest person on board: ", titanic_clean['Age'].min())
+print("Average age of people on board: ", titanic_clean['Age'].mean())
+
+def impute(cols):
+    Age = cols[0]
+    Pclass = cols[1]
+    if pd.isnull(Age):
+        if Pclass == 1:
+            return 38
+        elif Pclass == 2:
+            return 29
+        else:
+            return 24
+    else:
+        return Age
+
+titanic_clean['Age'] = titanic_clean[['Age', 'Pclass']].apply(impute, axis=1)
+titanic_clean.isnull().sum()
+
+correlation = titanic_clean.corr('pearson')
+sns.heatmap(correlation, annot=True, vmax=1)
+
+-----------------------------------------------------------------------------------------
+
+
+
