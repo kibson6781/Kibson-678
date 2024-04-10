@@ -812,3 +812,60 @@ sns.heatmap(correlation, annot=True, vmax=1)
 https://github.com/kibson6781/Kibson-678/blob/main/ds%20jour.docx.pdf
 
 
+from sklearn.datasets import load_breast_cancer
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+import seaborn as sns
+
+breast_cancer_df = load_breast_cancer()
+
+x = pd.DataFrame(breast_cancer_df.data, columns=breast_cancer_df.feature_names)
+x.head()
+
+x = x[["mean area", "mean compactness"]]
+x.head()
+
+y = pd.Categorical.from_codes(breast_cancer_df.target, breast_cancer_df.target_names)
+print(y)
+
+y = pd.get_dummies(y, drop_first=True)
+print(y)
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=1)
+print(f'XTrain Shape {x_train.shape}\nYTrain Shape {y_train.shape}\nXTest Shape: {x_test.shape}\nYTest Shape: {y_test.shape}')
+
+Knn = KNeighborsClassifier(n_neighbors=5, metric="euclidean")
+Knn.fit(x_train, y_train)
+
+sns.set()
+sns.scatterplot(x="mean area", y="mean compactness", hue="benign", data=x_test.join(y_test, how="outer"))
+
+predicted_y = Knn.predict(x_test)
+plt.scatter(x_test["mean area"], x_test["mean compactness"], c=predicted_y, cmap="coolwarm", alpha=0.7)
+
+
+
+
+
+
+cf = confusion_matrix(y_test, predicted_y)
+print(cf)
+
+labels = ["True Positive", "True Negative", "False Positive", "False Negative"]
+labels = np.asarray(labels).reshape(2, 2)
+
+categories = ["Zero", "One"]
+ax = plt.subplot()
+sns.heatmap(cf, annot=True, ax=ax)
+ax.set_xlabel("Predicted Values")
+ax.set_ylabel("Actual Values")
+ax.set_title("Confusion Matrix")
+ax.xaxis.set_ticklabels(("Malignant", "Benign"))
+ax.yaxis.set_ticklabels(("Malignant", "Benign"))
+
+
+
