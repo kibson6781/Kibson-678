@@ -1,3 +1,25 @@
+1.Use Google and Whois for Reconnaisasance.
+2. 2.1) Use CryptTool to encrypt and decrypt passwords 
+using RC4 algorithm.
+2.2) Use Cain and Abel for cracking Windows account 
+password using Dictionary attack and to decode 
+wireless network passwords
+3. 3.1) Using TraceRoute, ping, ifconfig, netstat 
+Command .
+3.2) Perform ARP Poisoning in Windows .
+4. Using Nmap scanner to perform port scanning of various 
+forms – ACK, SYN, NULL, XMAS.
+5. Use WireShark sniffer to capture network traffic and
+analyze.
+6. Simulate persistant Cross Site Scripting attack. 
+7. Session impersonation using Firefox and Tamper Data 
+add-on
+8. Perform SQL injection attack. 
+9. Create a simple keylogger using PHP JAVASCRIPT AND 
+HTML
+10. Using Metasploit to exploit 
+
+--------------------------------------------------------------------------------------------------------
 
 PRACTICAL : 01
 AIM : Use Google and Whois for Reconnaisasance.
