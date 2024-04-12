@@ -182,6 +182,11 @@ STEPS
     "id": 7
 }
 
+login
+test%2Ftest
+cookie editor click add and continue
+
+
 
 
 Tamper DATA add-on
