@@ -112,7 +112,7 @@ Command: nmap -sX -T4 scanme.nmap.org
 --------------------------------------------------------------------------------------------------------------
 
 PRACTICAL : 05
-AIM:Use WireShark sniffer to capture network traffic and analyze.
+AIM:Use WireShark sniffer to capture network traffic and analyze.  acunetix login 
 Performed :
 Step 1: Install and open WireShark .
 Step 2: select Interface option and click on start.
