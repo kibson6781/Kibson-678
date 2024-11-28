@@ -295,3 +295,7 @@ SELECT employee_id FROM employees_track_time AS OF PERIOD FOR
 emp_track_time TIMESTAMP '2012-12-01 12:00:01 Europe/Paris'
 
 --------------------------------------------------------------------------------------------------
+
+https://github.com/kibson6781/Kibson-678/blob/main/ADBMS.pdf
+
+--------------------------------------------------------------------------------------------------------------
